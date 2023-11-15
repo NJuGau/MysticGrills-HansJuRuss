@@ -38,8 +38,6 @@ public class MenuItemManagementView extends BorderPane {
 		
 		actions = new HBox();
 		addMenuItemBtn = new Button("Add Menu Items");
-		updateMenuItemBtn = new Button("Update Menu Items");
-		deleteMenuItemBtn = new Button("Delete Menu Items");
 		actions.getChildren().addAll(addMenuItemBtn);
 		HBox.setMargin(addMenuItemBtn, new Insets(0, 10, 0, 10));
 		this.setBottom(actions);
@@ -66,14 +64,14 @@ public class MenuItemManagementView extends BorderPane {
 		TableColumn<model.MenuItem, String> priceColumn = new TableColumn<>("price"); // Header
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemPrice")); // Tipe variable pada model
 		
-		TableColumn<model.MenuItem, String> updateAction = new TableColumn<>("Action"); // Header
+		TableColumn<model.MenuItem, String> updateAction = new TableColumn<>("Update"); // Header
 		updateAction.setCellValueFactory(new PropertyValueFactory<>("menuItemName"));
 		updateAction.setCellFactory(new Callback<TableColumn<MenuItem,String>, TableCell<MenuItem,String>>() {
 			
 			@Override
 			public TableCell<MenuItem, String> call(TableColumn<MenuItem, String> arg0) {
 				TableCell<MenuItem, String> cell = new TableCell<MenuItem, String>(){
-					Button updateBtn = updateMenuItemBtn;
+					Button updateBtn = new Button("Update");
 					
 					@Override
 					protected void updateItem(String item, boolean empty) {
@@ -97,7 +95,38 @@ public class MenuItemManagementView extends BorderPane {
 			}
 		});
 		
-		table.getColumns().addAll(idColumn ,nameColumn , descColumn, priceColumn, updateAction);
+		TableColumn<model.MenuItem, String> deleteAction = new TableColumn<>("Delete"); // Header
+		deleteAction.setCellValueFactory(new PropertyValueFactory<>("menuItemName"));
+		deleteAction.setCellFactory(new Callback<TableColumn<MenuItem,String>, TableCell<MenuItem,String>>() {
+			
+			@Override
+			public TableCell<MenuItem, String> call(TableColumn<MenuItem, String> arg0) {
+				TableCell<MenuItem, String> cell = new TableCell<MenuItem, String>(){
+					Button deleteBtn = new Button("Delete");
+					
+					@Override
+					protected void updateItem(String item, boolean empty) {
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                        	deleteBtn.setOnAction(event -> {
+                                MenuItem menuItem = getTableView().getItems().get(getIndex());
+                                System.out.println(menuItem.getMenuItemId() + " " + menuItem.getMenuItemName());
+                            });
+                            setGraphic(deleteBtn);
+                            setText(null);
+                        }
+					}
+				};
+				
+				return cell;
+			}
+		});
+		
+		table.getColumns().addAll(idColumn ,nameColumn , descColumn, priceColumn, updateAction, deleteAction);
 		
 		// set data source untuk table
 		menuItemList = MenuItemController.getAllMenuItems();
