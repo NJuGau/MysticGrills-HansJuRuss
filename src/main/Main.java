@@ -25,10 +25,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-    public static BorderPane getMainPane() {
-        return mainPane;
-    }
 
 	@Override
 	public void start(Stage arg0) throws Exception {
