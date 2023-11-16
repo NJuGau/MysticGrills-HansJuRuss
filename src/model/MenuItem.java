@@ -52,18 +52,18 @@ public class MenuItem {
 	public static String createMenuItem(String menuItemName, String menuItemDescription, Double menuItemPrice) {		
 		//TODO: Add SQL Query to insert to database
 		
-		return "";
+		return null;
 	}
 	
 	public static String updateMenuItem(Integer menuItemId, String menuItemName, String menuItemDescription, Double menuItemPrice) {
 		// TODO: Add SQL Query to update to database
 		
-		return "";
+		return null;
 	}
 	
 	public static String deleteMenuItem(Integer menuItemId) {
 		// TODO: Add SQL Query to delete to database
-		return "";
+		return null;
 	}
 	
 	public static model.MenuItem getMenuItemByID(Integer menuItemId){		

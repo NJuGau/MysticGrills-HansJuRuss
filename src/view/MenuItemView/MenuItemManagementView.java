@@ -19,25 +19,36 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
+import main.Main;
 import model.MenuItem;
 
 public class MenuItemManagementView extends BorderPane {
 	
 	private Label titleLbl;
-	private Button addMenuItemBtn, updateMenuItemBtn, deleteMenuItemBtn;
+	private Button addMenuItemBtn;
 	private HBox actions;
 
 	public MenuItemManagementView() {
+		// TODO: Set Admin validation
+		
+		// Show Title
 		titleLbl = new Label("Menu Item Management");
 		titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
 		this.setTop(titleLbl);
 		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
 		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
 		
+		// TODO: Add Back Button
+		
+		// Show Table
 		initTable();
 		
+		// Add New Menu Items
 		actions = new HBox();
 		addMenuItemBtn = new Button("Add Menu Items");
+		addMenuItemBtn.setOnAction(event -> {
+			navigateToAddMenu();
+		});
 		actions.getChildren().addAll(addMenuItemBtn);
 		HBox.setMargin(addMenuItemBtn, new Insets(0, 10, 0, 10));
 		this.setBottom(actions);
@@ -61,7 +72,7 @@ public class MenuItemManagementView extends BorderPane {
 		TableColumn<model.MenuItem, String> descColumn = new TableColumn<>("Description"); // Header
 		descColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemDescription")); // Tipe variable pada model
 		
-		TableColumn<model.MenuItem, String> priceColumn = new TableColumn<>("price"); // Header
+		TableColumn<model.MenuItem, String> priceColumn = new TableColumn<>("Price"); // Header
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemPrice")); // Tipe variable pada model
 		
 		TableColumn<model.MenuItem, String> updateAction = new TableColumn<>("Update"); // Header
@@ -83,7 +94,7 @@ public class MenuItemManagementView extends BorderPane {
                         } else {
                         	updateBtn.setOnAction(event -> {
                                 MenuItem menuItem = getTableView().getItems().get(getIndex());
-                                System.out.println(menuItem.getMenuItemId() + " " + menuItem.getMenuItemName());
+                                Main.getMainPane().setCenter(new MenuItemUpdateView(menuItem));     
                             });
                             setGraphic(updateBtn);
                             setText(null);
@@ -114,7 +125,7 @@ public class MenuItemManagementView extends BorderPane {
                         } else {
                         	deleteBtn.setOnAction(event -> {
                                 MenuItem menuItem = getTableView().getItems().get(getIndex());
-                                System.out.println(menuItem.getMenuItemId() + " " + menuItem.getMenuItemName());
+                                Main.getMainPane().setCenter(new MenuItemDeleteView(menuItem));
                             });
                             setGraphic(deleteBtn);
                             setText(null);
@@ -143,8 +154,8 @@ public class MenuItemManagementView extends BorderPane {
 		this.setCenter(table);
 	}
 	
-	public void navigateToUpdateMenuView(Integer id) {
-		
+	public void navigateToAddMenu() {
+		Main.getMainPane().setCenter(new MenuItemAddView());
 	}
 	
 }

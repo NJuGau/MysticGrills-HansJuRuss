@@ -5,7 +5,7 @@ import java.util.Vector;
 public class MenuItemController {
 	
 	// CRUD Method
-	public static String createMenuItem(String menuItemName, String menuItemDescription, Double menuItemPrice) {
+	public static String createMenuItem(String menuItemName, String menuItemDescription, String menuItemPrice) {
 		String nameValidation = validateMenuItemName(menuItemName);
 		if(nameValidation != null) {
 			return nameValidation;
@@ -21,10 +21,10 @@ public class MenuItemController {
 			return priceValidation;
 		}
 		
-		return model.MenuItem.createMenuItem(menuItemName, menuItemDescription, menuItemPrice);
+		return model.MenuItem.createMenuItem(menuItemName, menuItemDescription, Double.parseDouble(menuItemPrice));
 	}
 	
-	public static String updateMenuItem(Integer menuItemId, String menuItemName, String menuItemDescription, Double menuItemPrice) {
+	public static String updateMenuItem(Integer menuItemId, String menuItemName, String menuItemDescription, String menuItemPrice) {
 		String nameValidation = validateMenuItemName(menuItemName);
 		if(nameValidation != null) {
 			return nameValidation;
@@ -39,7 +39,7 @@ public class MenuItemController {
 		if(priceValidation != null) {
 			return priceValidation;
 		}	
-		return model.MenuItem.updateMenuItem(menuItemId, menuItemName, menuItemDescription, menuItemPrice);
+		return model.MenuItem.updateMenuItem(menuItemId, menuItemName, menuItemDescription, Double.parseDouble(menuItemPrice));
 	}
 	
 	public static String deleteMenuItem(Integer menuItemId) {
@@ -66,15 +66,19 @@ public class MenuItemController {
 	
 	private static String validateMenuItemDescription(String input) {
 		if(input.length() <= 10) {
-			return "Must be more than 10 character(s)";
+			return "Description must be more than 10 character(s)";
 		}
 		
 		return null;
 	}
 	
-	private static String validateMenuItemPrice(Double i) {
-		if(i < 2.5) {
-			return "Must be a number that is greater than or equal to (>=) 2.5";
+	private static String validateMenuItemPrice(String i) {
+		if(i.isEmpty()) {
+			return "Price must not be empty";
+		}
+		
+		if(Double.parseDouble(i) < 2.5) {
+			return "Price must be a number that is greater than or equal to (>=) 2.5";
 		}
 		
 		return null;

@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.LoginView;
+import view.MenuItemView.MenuItemAddView;
 import view.MenuItemView.MenuItemManagementView;
 
 public class Main extends Application {
@@ -28,8 +29,10 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		BorderPane pane = new MenuItemManagementView();
-		scene = new Scene(pane, 700, 500);
+		mainPane = new BorderPane();
+		mainPane.setCenter(new MenuItemManagementView());
+		
+		scene = new Scene(mainPane, 700, 500);
 		arg0.setTitle("Mystic Grills");
 		arg0.setResizable(true);
 		arg0.getIcons().clear();
