@@ -1,4 +1,4 @@
-package view.MenuItemView;
+package view.MenuItemViewAdmin;
 
 import java.util.Vector;
 
@@ -21,6 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 import main.Main;
 import model.MenuItem;
+import view.MenuItemViewCustomer.MenuCustomerView;
 
 public class MenuItemManagementView extends BorderPane {
 	
@@ -29,7 +30,9 @@ public class MenuItemManagementView extends BorderPane {
 	private HBox actions;
 
 	public MenuItemManagementView() {
-		// TODO: Set Admin validation
+		if(Main.getCurrentUser().getUserRole() != "admin") {
+			Main.getMainPane().setCenter(new MenuCustomerView());
+		}
 		
 		// Show Title
 		titleLbl = new Label("Menu Item Management");
@@ -61,7 +64,7 @@ public class MenuItemManagementView extends BorderPane {
 	Vector<model.MenuItem> menuItemList;
 	
 	@SuppressWarnings("unchecked")
-	public void initTable() {
+	private void initTable() {
 		table = new TableView<model.MenuItem>();
 		TableColumn<model.MenuItem, Integer> idColumn = new TableColumn<>("ID"); // Header
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemId")); // Tipe variable pada model
@@ -154,7 +157,7 @@ public class MenuItemManagementView extends BorderPane {
 		this.setCenter(table);
 	}
 	
-	public void navigateToAddMenu() {
+	private void navigateToAddMenu() {
 		Main.getMainPane().setCenter(new MenuItemAddView());
 	}
 	

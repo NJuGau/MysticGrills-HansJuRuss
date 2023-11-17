@@ -1,9 +1,45 @@
 package controller;
 
+import java.sql.Date;
+import java.util.Vector;
+
+import model.Order;
+import model.OrderItem;
+import model.User;
+
 public class OrderController {
 
-	public OrderController() {
-		// TODO Auto-generated constructor stub
+	public static String createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
+		
+		return Order.createOrder(orderUser, orderItems, orderDate);
+	}
+	
+	public static String updateOrder(String orderId, Vector<OrderItem> orderItems, Date orderDate) {
+		if(orderId.isEmpty()) {
+			return "Order Id must be chosen";
+		}
+		
+		return Order.updateOrder(Integer.parseInt(orderId), orderItems, orderDate);
+	}
+	
+	public static String deleteOrder(Integer orderId) {
+		
+		return Order.deleteOrder(orderId);
+	}
+	
+	public static Order getOrdersByCustomerId(Integer customerId) {
+		
+		return Order.getOrdersByCustomerId(customerId);
+	}
+	
+	public static Vector<Order> getAllOrders() {
+		
+		return Order.getAllOrders();
+	}
+	
+	public static Order getOrderByOrderId(Integer orderId) {
+		
+		return Order.getOrderByOrderId(orderId);
 	}
 
 }
