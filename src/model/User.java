@@ -3,24 +3,24 @@ package model;
 import java.util.Vector;
 
 public class User {
-	private Integer usserId;
+	private Integer userId;
 	private String userRole;
 	private String userName;
 	private String userEmail;
 	private String userPassword;
-	public User(Integer usserId, String userRole, String userName, String userEmail, String userPassword) {
+	public User(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
 		super();
-		this.usserId = usserId;
+		this.userId = userId;
 		this.userRole = userRole;
 		this.userName = userName;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
 	}
-	public Integer getUsserId() {
-		return usserId;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setUsserId(Integer usserId) {
-		this.usserId = usserId;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getUserRole() {
 		return userRole;
@@ -69,7 +69,7 @@ public class User {
 	
 	public static Vector<User> getAllUsers(){
 		//TODO: Connect to database
-		return null;
+		return new Vector<User>();
 	}
 	
 	public static User authenticateUser(String userEmail, String userPassword) {
