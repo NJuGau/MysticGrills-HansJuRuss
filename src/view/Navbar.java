@@ -6,10 +6,11 @@ import javafx.scene.control.MenuBar;
 import main.Main;
 import view.MenuItemViewAdmin.MenuItemManagementView;
 import view.MenuItemViewCustomer.MenuCustomerView;
+import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
-	Label menuItemManagementLbl, homeLbl;
-	Menu menuItemManagementMenu, homeMenu;
+	Label menuItemManagementLbl, homeLbl, userManagementLbl;
+	Menu menuItemManagementMenu, homeMenu, userManagementMenu;
 
 	public Navbar() {
 		
@@ -28,7 +29,13 @@ public class Navbar extends MenuBar{
 				Main.getMainPane().setCenter(new MenuItemManagementView());
 			});
 			
-			this.getMenus().addAll(menuItemManagementMenu);
+			userManagementLbl = new Label("User Management");
+			userManagementMenu = new Menu("", userManagementLbl);
+			userManagementLbl.setOnMouseClicked(event -> {
+				Main.getMainPane().setCenter(new UserManagementView());
+			});
+			
+			this.getMenus().addAll(menuItemManagementMenu, userManagementMenu);
 		}
 	}
 

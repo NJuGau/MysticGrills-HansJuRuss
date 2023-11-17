@@ -9,7 +9,7 @@ public class Order {
 	private Vector<OrderItem> orderItems;
 	private String orderStatus;
 	private Date orderDate;
-	// TODO Missing Order Total but i don't know what is that for
+	private Integer orderTotal;
 	
 	public Order(Integer orderId, User orderUser, Vector<OrderItem> orderItems, String orderStatus, Date orderDate) {
 		super();
@@ -18,6 +18,7 @@ public class Order {
 		this.orderItems = orderItems;
 		this.orderStatus = orderStatus;
 		this.orderDate = orderDate;
+		orderTotal = 0;
 	}
 	
 	public Integer getOrderId() {
@@ -60,7 +61,11 @@ public class Order {
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
-	
+
+	public Integer getOrderTotal() {
+		return orderTotal;
+	}
+
 	// CRUD Method
 	public static String createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
 		// TODO Add SQL Query to create order

@@ -32,6 +32,7 @@ public class MenuItemManagementView extends BorderPane {
 	public MenuItemManagementView() {
 		if(Main.getCurrentUser().getUserRole() != "admin") {
 			Main.getMainPane().setCenter(new MenuCustomerView());
+			return;
 		}
 		
 		// Show Title
@@ -40,8 +41,6 @@ public class MenuItemManagementView extends BorderPane {
 		this.setTop(titleLbl);
 		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
 		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
-		
-		// TODO: Add Back Button
 		
 		// Show Table
 		initTable();
@@ -79,7 +78,6 @@ public class MenuItemManagementView extends BorderPane {
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemPrice")); // Tipe variable pada model
 		
 		TableColumn<model.MenuItem, String> updateAction = new TableColumn<>("Update"); // Header
-		updateAction.setCellValueFactory(new PropertyValueFactory<>("menuItemName"));
 		updateAction.setCellFactory(new Callback<TableColumn<MenuItem,String>, TableCell<MenuItem,String>>() {
 			
 			@Override
@@ -110,7 +108,6 @@ public class MenuItemManagementView extends BorderPane {
 		});
 		
 		TableColumn<model.MenuItem, String> deleteAction = new TableColumn<>("Delete"); // Header
-		deleteAction.setCellValueFactory(new PropertyValueFactory<>("menuItemName"));
 		deleteAction.setCellFactory(new Callback<TableColumn<MenuItem,String>, TableCell<MenuItem,String>>() {
 			
 			@Override
