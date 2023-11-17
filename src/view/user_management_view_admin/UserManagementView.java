@@ -36,12 +36,15 @@ public class UserManagementView extends BorderPane {
 		}
 		
 		titleLbl = new Label("User Management");
+		
 		titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
-		this.setTop(titleLbl);
 		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
 		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
 		
 		initTable();
+		
+		this.setTop(titleLbl);
+		this.setCenter(table);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -74,7 +77,7 @@ public class UserManagementView extends BorderPane {
 						}else {
 							removeBtn.setOnAction(e -> {
 								User user = getTableView().getItems().get(getIndex());
-								Main.getMainPane().setCenter(new UserManagementRemoveView());
+								Main.getMainPane().setCenter(new UserManagementRemoveView(user));
 							});
 							setGraphic(removeBtn);
 							setText(null);
@@ -101,7 +104,7 @@ public class UserManagementView extends BorderPane {
 						}else {
 							changeRoleBtn.setOnAction(e -> {
 								User user = getTableView().getItems().get(getIndex());
-								Main.getMainPane().setCenter(new UserManagementChangeRoleView());
+								Main.getMainPane().setCenter(new UserManagementChangeRoleView(user));
 							});
 							setGraphic(changeRoleBtn);
 							setText(null);
@@ -121,8 +124,6 @@ public class UserManagementView extends BorderPane {
 		userList.add(new User(3, "Customer", "Rita", "Rita@sinub.ac.id", "r1tA"));
 		
 		userData = FXCollections.observableArrayList(userList);
-		table.setItems(userData);
-		
-		this.setCenter(table);
+		table.setItems(userData);		
 	}
 }

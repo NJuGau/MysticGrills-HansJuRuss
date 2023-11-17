@@ -45,6 +45,7 @@ public class Main extends Application {
 		mainPane = new BorderPane();
 		mainPane.setTop(new Navbar());
 		mainPane.setCenter(new MenuCustomerView()); // Default page
+		mainPane.setCenter(new LoginView()); // Default page
 		
 		scene = new Scene(mainPane, 700, 500);
 		arg0.setTitle("Mystic Grills");
