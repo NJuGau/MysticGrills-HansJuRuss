@@ -1,4 +1,4 @@
-package view.MenuItemViewCustomer;
+package view.menu_item_view_customer;
 
 import java.util.Vector;
 
@@ -20,8 +20,8 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 import main.Main;
 import model.MenuItem;
-import view.MenuItemViewAdmin.MenuItemDeleteView;
-import view.MenuItemViewAdmin.MenuItemUpdateView;
+import view.menu_item_view_admin.MenuItemDeleteView;
+import view.menu_item_view_admin.MenuItemUpdateView;
 
 public class MenuCustomerView extends BorderPane {
 	private Label titleLbl;

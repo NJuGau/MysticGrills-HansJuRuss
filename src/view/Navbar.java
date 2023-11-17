@@ -4,8 +4,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import main.Main;
-import view.MenuItemViewAdmin.MenuItemManagementView;
-import view.MenuItemViewCustomer.MenuCustomerView;
+import view.menu_item_view_admin.MenuItemManagementView;
+import view.menu_item_view_customer.MenuCustomerView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{

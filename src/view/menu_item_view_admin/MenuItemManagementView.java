@@ -1,4 +1,4 @@
-package view.MenuItemViewAdmin;
+package view.menu_item_view_admin;
 
 import java.util.Vector;
 
@@ -21,7 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 import main.Main;
 import model.MenuItem;
-import view.MenuItemViewCustomer.MenuCustomerView;
+import view.menu_item_view_customer.MenuCustomerView;
 
 public class MenuItemManagementView extends BorderPane {
 	

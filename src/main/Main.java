@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 import model.User;
 import view.LoginView;
 import view.Navbar;
-import view.MenuItemViewAdmin.MenuItemAddView;
-import view.MenuItemViewAdmin.MenuItemManagementView;
-import view.MenuItemViewCustomer.MenuCustomerView;
+import view.menu_item_view_admin.MenuItemAddView;
+import view.menu_item_view_admin.MenuItemManagementView;
+import view.menu_item_view_customer.MenuCustomerView;
 
 public class Main extends Application {
 	private Scene scene;
