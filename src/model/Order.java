@@ -1,7 +1,10 @@
 package model;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Vector;
+
+import main.Main;
 
 public class Order {
 	private Integer orderId;
@@ -67,10 +70,10 @@ public class Order {
 	}
 
 	// CRUD Method
-	public static String createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
+	public static Integer createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
 		// TODO Add SQL Query to create order
 		
-		return null;
+		return 1;
 	}
 	
 	public static String updateOrder(Integer orderId, Vector<OrderItem> orderItems, Date orderDate) {
@@ -85,22 +88,22 @@ public class Order {
 		return null;
 	}
 	
-	public static Order getOrdersByCustomerId(Integer customerId) {
+	public static Vector<Order> getOrdersByCustomerId(Integer customerId) {
 		// TODO Add SQL Query to get order by customer id
 		
-		return null;
+		return new Vector<Order>();
 	}
 	
 	public static Vector<Order> getAllOrders() {
 		// TODO Add SQL Query to get all order
 		
-		return null;
+		return new Vector<Order>();
 	}
 	
 	public static Order getOrderByOrderId(Integer orderId) {
 		// TODO Add SQL Query to get order by order id
 		
-		return null;
+		return new Order(1, Main.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis()));
 	}
 	
 	
