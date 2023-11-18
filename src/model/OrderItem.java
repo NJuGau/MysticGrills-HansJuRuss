@@ -41,6 +41,7 @@ public class OrderItem {
 	// CRUD
 	public static String createOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
 		// TODO add SQL Query to add orderItem to Database
+		// Don't forget to update orderTotal in order in database
 		
 		return null;
 	}
@@ -53,6 +54,7 @@ public class OrderItem {
 	
 	public static String deleteOrderItem(Integer orderId) {
 		// TODO add SQL Query to delete orderItem from database
+		// Don't forget to update orderTotal in order in database
 		
 		return null;
 	}
@@ -60,7 +62,7 @@ public class OrderItem {
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(Integer orderId) {
 		// TODO add SQL Query to get all order item by orderId from database
 		
-		return null;
+		return new Vector<OrderItem>();
 	}
 	
 

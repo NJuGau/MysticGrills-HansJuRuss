@@ -77,7 +77,7 @@ public class MenuCustomerView extends BorderPane {
                         } else {
                         	actionBtn.setOnAction(event -> {
                                 MenuItem menuItem = getTableView().getItems().get(getIndex());
-                                // TODO Add Navigator to MenuDetailsCustomerView   
+                                Main.getMainPane().setCenter(new MenuDetailsCustomerView(menuItem));
                             });
                             setGraphic(actionBtn);
                             setText(null);
