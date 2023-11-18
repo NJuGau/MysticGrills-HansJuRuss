@@ -1,5 +1,6 @@
 package view.user_management_view_admin;
 
+import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -84,5 +85,14 @@ public class UserManagementRemoveView extends BorderPane {
 		this.setTop(titleLbl);
 		this.setCenter(contentPane);
 		this.setBottom(confirmGroup);
+		
+		confirmBtn.setOnAction(e -> {
+			UserController.deleteUser(user.getUserId());
+			Main.getMainPane().setCenter(new UserManagementView());
+		});
+		
+		declineBtn.setOnAction(e -> {
+			Main.getMainPane().setCenter(new UserManagementView());
+		});
 	}
 }
