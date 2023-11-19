@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import controller.MenuItemController;
 import controller.OrderController;
+import controller.UserController;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -91,11 +92,11 @@ public class OrderListView extends BorderPane{
 		table.getColumns().addAll(idColumn ,nameColumn , statusColumn, dateColumn, totalColumn, actionColumn);
 		
 		// set data source untuk table
-		orderList = OrderController.getOrdersByCustomerId(Main.getCurrentUser().getUserId());
+		orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
 		
-		orderList.add(new Order(1, Main.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
-		orderList.add(new Order(2, Main.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
-		orderList.add(new Order(3, Main.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
+		orderList.add(new Order(1, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
+		orderList.add(new Order(2, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
+		orderList.add(new Order(3, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
 		
 		// observable
 		orderData = FXCollections.observableArrayList(orderList);

@@ -22,7 +22,7 @@ public class Main extends Application {
 	private Scene scene;
 	private static BorderPane mainPane;
 	
-	private User admin = new User(0, "Cashier", "AdminName", "admin@admin.com", "123admin");
+	private User admin = new User(0, "Admin", "AdminName", "admin@admin.com", "123admin");
 	
 	public Main() {
 		// TODO Auto-generated constructor stub
@@ -42,13 +42,17 @@ public class Main extends Application {
 	public void start(Stage arg0) throws Exception {
 		//TEMPORARY
 		UserController.setCurrentUser(admin);
-		
 		mainPane = new BorderPane();
-		mainPane.setTop(new Navbar());
-		mainPane.setCenter(new MenuCustomerView()); // Default page
-		mainPane.setCenter(new LoginView()); // Default page
-		
 		scene = new Scene(mainPane, 700, 500);
+		
+		if(UserController.getCurrentUser() != null) {
+			mainPane.setTop(new Navbar());
+			mainPane.setCenter(new MenuCustomerView());
+		}
+		else {
+			mainPane.setCenter(new LoginView()); 
+		}
+		
 		arg0.setTitle("Mystic Grills");
 		arg0.setResizable(false);
 		arg0.getIcons().clear();

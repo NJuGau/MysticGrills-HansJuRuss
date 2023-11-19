@@ -37,11 +37,6 @@ public class MenuDetailsCustomerView extends BorderPane{
 
 	public MenuDetailsCustomerView(model.MenuItem item) {	
 		this.item = item;
-    //Gapake ini gasi?
-//		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
-//			// TODO Fill node with homepage
-//			Main.getMainPane().setCenter(new MenuCustomerView());
-//		}
 		
 		showTopComponent();
 		this.setTop(titleLbl);
@@ -63,12 +58,12 @@ public class MenuDetailsCustomerView extends BorderPane{
 		submitBtn.setMinWidth(100);
 		submitBtn.setOnAction(event -> {
 			
-			// TODO If orderID is empty and user click add to orderlist
+			// If orderID is empty and user click add to orderlist
 			// then create new order row in mysql
 			// should return orderID from newly created orderID in SQL
 			if(OrderListView.getOrderID() == null) {
 				OrderListView.setOrderID(OrderController.createOrder(
-						Main.getCurrentUser(), null, new Date(Calendar.getInstance().getTimeInMillis())));
+						UserController.getCurrentUser(), null, new Date(Calendar.getInstance().getTimeInMillis())));
 			}
 			
 			// Add menu item that is bought into database
