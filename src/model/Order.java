@@ -81,7 +81,7 @@ public class Order {
 		return 1;
 	}
 	
-	public static String updateOrder(Integer orderId, Vector<OrderItem> orderItems, Date orderDate) {
+	public static String updateOrder(Integer orderId, Vector<OrderItem> orderItems, String orderStatus) {
 		// TODO Add SQL Query to update order
 		
 		return null;

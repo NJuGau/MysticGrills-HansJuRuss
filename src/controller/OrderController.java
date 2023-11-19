@@ -14,12 +14,12 @@ public class OrderController {
 		return Order.createOrder(orderUser, orderItems, orderDate);
 	}
 	
-	public static String updateOrder(String orderId, Vector<OrderItem> orderItems, Date orderDate) {
+	public static String updateOrder(String orderId, Vector<OrderItem> orderItems, String orderStatus) {
 		if(orderId.isEmpty()) {
 			return "Order Id must be chosen";
 		}
 		
-		return Order.updateOrder(Integer.parseInt(orderId), orderItems, orderDate);
+		return Order.updateOrder(Integer.parseInt(orderId), orderItems, orderStatus);
 	}
 	
 	public static String deleteOrder(Integer orderId) {
