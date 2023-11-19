@@ -2,6 +2,7 @@ package view.menu_item_view_customer;
 
 import controller.MenuItemController;
 import controller.OrderItemController;
+import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,10 +29,12 @@ public class MenuDetailsCustomerView extends BorderPane{
 	private HBox actionBtnContainer;
 
 	public MenuDetailsCustomerView(model.MenuItem item) {
-		if(Main.getCurrentUser().getUserRole() != "admin") {
-			// TODO Fill node with homepage
-			Main.getMainPane().setCenter(new MenuCustomerView());
-		}
+		
+		//Gapake ini gasi?
+//		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
+//			// TODO Fill node with homepage
+//			Main.getMainPane().setCenter(new MenuCustomerView());
+//		}
 		
 		showTopComponent();
 		this.setTop(titleLbl);

@@ -23,7 +23,7 @@ public class UserManagementRemoveView extends BorderPane {
 	HBox confirmGroup;
 	
 	public UserManagementRemoveView(User user) {
-		if(Main.getCurrentUser().getUserRole() != "admin") {
+		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new LoginView());
 			return;
 		}

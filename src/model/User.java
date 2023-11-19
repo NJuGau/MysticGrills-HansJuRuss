@@ -47,9 +47,9 @@ public class User {
 		this.userPassword = userPassword;
 	}
 	
-	public static Boolean deleteUser(Integer userId) {
+	public static String deleteUser(Integer userId) {
 		//TODO: Connect to database
-		return true;
+		return null;
 	}
 	
 	public static User getUserById(Integer userId) {
@@ -57,14 +57,14 @@ public class User {
 		return null;
 	}
 	
-	public static Boolean createUser(String userRole, String userName, String userEmail, String userPassword) {
+	public static String createUser(String userRole, String userName, String userEmail, String userPassword) {
 		//TODO: Connect to database
-		return true;
+		return null;
 	}
 	
-	public static Boolean updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
+	public static String updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
 		//TODO: Connect to database
-		return true;
+		return null;
 	}
 	
 	public static Vector<User> getAllUsers(){

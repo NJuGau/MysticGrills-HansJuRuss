@@ -9,7 +9,7 @@ public class Order {
 	private Vector<OrderItem> orderItems;
 	private String orderStatus;
 	private Date orderDate;
-	private Integer orderTotal;
+	private Double orderTotal;
 	
 	public Order(Integer orderId, User orderUser, Vector<OrderItem> orderItems, String orderStatus, Date orderDate) {
 		super();
@@ -18,7 +18,7 @@ public class Order {
 		this.orderItems = orderItems;
 		this.orderStatus = orderStatus;
 		this.orderDate = orderDate;
-		orderTotal = 0;
+		orderTotal = (double) 0;
 	}
 	
 	public Integer getOrderId() {
@@ -62,7 +62,7 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public Integer getOrderTotal() {
+	public Double getOrderTotal() {
 		return orderTotal;
 	}
 

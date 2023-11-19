@@ -32,11 +32,11 @@ public class UserController {
 		}else if(confirmPasswordValidation != null) {
 			return confirmPasswordValidation;
 		}
-		Boolean isCreated = User.createUser(userRole, userName, userEmail, userPassword);
-		if(isCreated) {
+		String dbValidation = User.createUser(userRole, userName, userEmail, userPassword);
+		if(dbValidation != null) {
 			return null;
 		}else {
-			return "Error in Database: User failed to be created"; 
+			return dbValidation; 
 		}
 	}
 	
@@ -55,20 +55,20 @@ public class UserController {
 		}else if(roleValidation != null) {
 			return roleValidation;
 		}
-		Boolean isUpdated = User.updateUser(userId, userRole, userName, userEmail, userPassword); 
-		if(isUpdated) {
+		String dbValidation = User.updateUser(userId, userRole, userName, userEmail, userPassword); 
+		if(dbValidation != null) {
 			return null;
 		}else {
-			return "Error in Database: User failed to be updated";
+			return dbValidation;
 		}
 	}
 	
 	public static String deleteUser(Integer userId) {
-		Boolean isDeleted = User.deleteUser(userId);
-		if(isDeleted) {
+		String dbValidation = User.deleteUser(userId);
+		if(dbValidation != null) {
 			return null;
 		}else {
-			return "User failed to be deleted";
+			return dbValidation;
 		}
 	}
 	

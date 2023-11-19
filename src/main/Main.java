@@ -1,5 +1,6 @@
 package main;
 
+import controller.UserController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,9 +19,8 @@ import view.menu_item_view_customer.MenuCustomerView;
 public class Main extends Application {
 	private Scene scene;
 	private static BorderPane mainPane;
-	private static User currentUser;
 	
-	private User admin = new User(0, "admin", "Admin", "admin@admin.com", "123admin");
+	private User admin = new User(0, "Cashier", "AdminName", "admin@admin.com", "123admin");
 	
 	public Main() {
 		// TODO Auto-generated constructor stub
@@ -30,9 +30,7 @@ public class Main extends Application {
 		return mainPane;
 	}
 	
-	public static User getCurrentUser() {
-		return currentUser;
-	}
+	
 
 	public static void main(String[] args) {
 		launch(args);
@@ -40,7 +38,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		currentUser = admin;
+		//TEMPORARY
+		UserController.setCurrentUser(admin);
 		
 		mainPane = new BorderPane();
 		mainPane.setTop(new Navbar());
