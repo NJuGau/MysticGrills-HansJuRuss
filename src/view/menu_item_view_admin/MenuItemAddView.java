@@ -1,6 +1,7 @@
 package view.menu_item_view_admin;
 
 import controller.MenuItemController;
+import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class MenuItemAddView extends BorderPane {
 	private HBox actionBtnContainer;
 
 	public MenuItemAddView() {
-		if(Main.getCurrentUser().getUserRole() != "admin") {
+		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new MenuCustomerView());
 			return;
 		}

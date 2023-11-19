@@ -1,5 +1,6 @@
 package view;
 
+import controller.UserController;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -7,13 +8,13 @@ import javafx.scene.control.MenuItem;
 import main.Main;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
-import view.order_view.OrderListView;
+
+import view.receipt_cashier.ReceiptManagementView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
-	private Label homeLbl, myOrderLbl;
-	private Menu homeMenu, myOrderMenu, adminMenu;
-	private MenuItem userManagementMenu, menuItemManagementMenu;
+	Label menuItemManagementLbl, homeLbl, userManagementLbl, receiptManagementLbl;
+	Menu menuItemManagementMenu, homeMenu, userManagementMenu, receiptManagementMenu;
 
 	public Navbar() {
 		
@@ -31,11 +32,10 @@ public class Navbar extends MenuBar{
 				
 		this.getMenus().addAll(homeMenu, myOrderMenu);
 		
-		if(Main.getCurrentUser().getUserRole() == "admin") {
-			adminMenu = new Menu("Admin");
-			
-			menuItemManagementMenu = new MenuItem("Menu Item Management");
-			menuItemManagementMenu.setOnAction(event -> {
+		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
+			menuItemManagementLbl = new Label("Menu Item Management");
+			menuItemManagementMenu = new Menu("", menuItemManagementLbl);
+			menuItemManagementLbl.setOnMouseClicked(event -> {
 				Main.getMainPane().setCenter(new MenuItemManagementView());
 			});
 			
@@ -43,10 +43,17 @@ public class Navbar extends MenuBar{
 			userManagementMenu.setOnAction(event -> {
 				Main.getMainPane().setCenter(new UserManagementView());
 			});
-			
-			adminMenu.getItems().addAll(menuItemManagementMenu, userManagementMenu);
-			this.getMenus().add(adminMenu);
+			this.getMenus().addAll(menuItemManagementMenu, userManagementMenu);
+		}else if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
+			receiptManagementLbl = new Label("Receipt Management");
+			receiptManagementMenu = new Menu("", receiptManagementLbl);
+			receiptManagementLbl.setOnMouseClicked(event -> {
+				Main.getMainPane().setCenter(new ReceiptManagementView());
+			});
+			this.getMenus().addAll(receiptManagementMenu);
 		}
+		
+		
 	}
 
 }

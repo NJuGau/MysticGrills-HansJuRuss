@@ -30,7 +30,8 @@ public class UserManagementView extends BorderPane {
 	private Vector<User> userList;
 	
 	public UserManagementView() {
-		if(Main.getCurrentUser().getUserRole() != "admin") {
+		
+		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new LoginView());
 			return;
 		}

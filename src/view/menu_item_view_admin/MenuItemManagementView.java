@@ -3,6 +3,7 @@ package view.menu_item_view_admin;
 import java.util.Vector;
 
 import controller.MenuItemController;
+import controller.UserController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -30,7 +31,7 @@ public class MenuItemManagementView extends BorderPane {
 	private HBox actions;
 
 	public MenuItemManagementView() {
-		if(Main.getCurrentUser().getUserRole() != "admin") {
+		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new MenuCustomerView());
 			return;
 		}

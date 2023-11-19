@@ -6,6 +6,7 @@ import java.util.Calendar;
 import controller.MenuItemController;
 import controller.OrderController;
 import controller.OrderItemController;
+import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -36,6 +37,11 @@ public class MenuDetailsCustomerView extends BorderPane{
 
 	public MenuDetailsCustomerView(model.MenuItem item) {	
 		this.item = item;
+    //Gapake ini gasi?
+//		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
+//			// TODO Fill node with homepage
+//			Main.getMainPane().setCenter(new MenuCustomerView());
+//		}
 		
 		showTopComponent();
 		this.setTop(titleLbl);

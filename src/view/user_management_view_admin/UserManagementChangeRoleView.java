@@ -14,6 +14,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
 import model.User;
+import view.LoginView;
 
 public class UserManagementChangeRoleView extends BorderPane{
 	
@@ -27,7 +28,10 @@ public class UserManagementChangeRoleView extends BorderPane{
 	private HBox btnGroup;
 	
 	public UserManagementChangeRoleView(User user) {
-		
+		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
+			Main.getMainPane().setCenter(new LoginView());
+			return;
+		}
 		contentPane = new GridPane();
 		
 		titleLbl = new Label("Change Role");
