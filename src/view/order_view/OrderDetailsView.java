@@ -112,8 +112,7 @@ public class OrderDetailsView extends BorderPane{
 		table.getColumns().addAll(nameColumn , descriptionColumn, priceColumn, quantityColumn);
 		
 		// If order hasn't been submitted, customer can still update order
-		// TODO Delete this true for release, true only for debugging
-		if(OrderListView.getOrderID() == order.getOrderId() || true) {
+		if(OrderListView.getOrderID() == order.getOrderId()) {
 			TableColumn<OrderItem, String> selectActionColumn = new TableColumn<>("Select"); // Header
 			selectActionColumn.setCellFactory(new Callback<TableColumn<OrderItem,String>, TableCell<OrderItem,String>>() {
 				
