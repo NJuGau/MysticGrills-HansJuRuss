@@ -1,7 +1,5 @@
 package view.order_view;
 
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.Vector;
 
 import controller.OrderController;
@@ -16,9 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -29,14 +27,17 @@ import main.Main;
 import model.MenuItem;
 import model.Order;
 import model.OrderItem;
+import view.menu_item_view_customer.MenuCustomerView;
 
 public class OrderDetailsView extends BorderPane{
 	private Order order;
 	
 	private Label titleLbl, orderIdLbl, orderIdTxt, userLbl, userTxt, statusLbl, statusTxt,
-					dateLbl, dateTxt, totalLbl, totalTxt;
+					dateLbl, dateTxt, totalLbl, totalTxt, submitStatusLbl;
 	private GridPane dataPane;
 	private VBox middlePane;
+	private HBox actionBtnContainer;
+	private Button addButton, submitOrderButton;
 
 	public OrderDetailsView(Order order) {
 		this.order = order;
@@ -47,14 +48,54 @@ public class OrderDetailsView extends BorderPane{
 		this.setCenter(middlePane);
 		showOrderData();
 		
+		// TODO if customer satisfied with all the orders, customer should click submit button here
+		// then set currentOrderId to null
+		// so that if customer add new orderItem, it should create new order
+		// TODO add button to add new order too (just navigate to menus page)
+		showActionButton();
+		
 		initTable();
+	}
+	
+	private void showActionButton() {
+		actionBtnContainer = new HBox();
+		submitStatusLbl = new Label();
+		
+		addButton = new Button("Add new order");
+		addButton.setOnAction(event -> {
+			Main.getMainPane().setCenter(new MenuCustomerView());
+		});
+		
+		submitOrderButton = new Button("Submit Order");
+		submitOrderButton.setOnAction(event -> {
+			OrderListView.setOrderID(null);
+			submitStatusLbl.setText("Success");
+			submitStatusLbl.setTextFill(Color.GREEN);
+			submitOrderButton.setDisable(true);
+			addButton.setDisable(true);
+		});
+		
+		// if current orderId is not the same id with temp id at orderListView
+		// it means that the user has already submitted, hence the currentOrder can't be editted
+		// or be submitted again
+		if(OrderListView.getOrderID() != order.getOrderId()) {
+			submitStatusLbl.setText("Can't edit order because order has been submitted");
+			submitStatusLbl.setTextFill(Color.GREEN);
+			submitOrderButton.setDisable(true);
+			addButton.setDisable(true);
+		}
+		
+		actionBtnContainer.getChildren().addAll(addButton, submitOrderButton);
+		HBox.setMargin(addButton,new Insets(0, 10, 0, 0));
+		VBox.setMargin(actionBtnContainer, new Insets(20, 0, 0, 0));
+		middlePane.getChildren().addAll(actionBtnContainer, submitStatusLbl);
 	}
 	
 	private TableView<OrderItem> table;
 	private ObservableList<OrderItem> orderItemData;
 	private Vector<OrderItem> orderItemList;
 	@SuppressWarnings("unchecked")
-	public void initTable() {
+	private void initTable() {
 		table = new TableView<OrderItem>();
 		TableColumn<OrderItem, String> nameColumn = new TableColumn<>("Menu Item Name"); // Header
 		nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMenuItem().getMenuItemName()));
@@ -65,40 +106,78 @@ public class OrderDetailsView extends BorderPane{
 		TableColumn<OrderItem, String> priceColumn = new TableColumn<>("Menu Item Price"); // Header
 		priceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMenuItem().getMenuItemPrice().toString()));
 		
-		TableColumn<OrderItem, String> quantityColumn = new TableColumn<>("Menu Item Quantity"); // Header
+		TableColumn<OrderItem, String> quantityColumn = new TableColumn<>("Quantity"); // Header
 		quantityColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getQuantity().toString()));
 		
-		TableColumn<OrderItem, String> actionColumn = new TableColumn<>("Action"); // Header
-		actionColumn.setCellFactory(new Callback<TableColumn<OrderItem,String>, TableCell<OrderItem,String>>() {
-			
-			@Override
-			public TableCell<OrderItem, String> call(TableColumn<OrderItem, String> arg0) {
-				TableCell<OrderItem, String> cell = new TableCell<OrderItem, String>(){
-					Button actionBtn = new Button("Update Order");
-					
-					@Override
-					protected void updateItem(String item, boolean empty) {
-						// TODO Auto-generated method stub
-						super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                            setText(null);
-                        } else {
-                        	actionBtn.setOnAction(event -> {
-                                OrderItem orderItem = getTableView().getItems().get(getIndex());
-                                Main.getMainPane().setCenter(new OrderItemsUpdateView(orderItem));
-                            });
-                            setGraphic(actionBtn);
-                            setText(null);
-                        }
-					}
-				};
-				
-				return cell;
-			}
-		});
+		table.getColumns().addAll(nameColumn , descriptionColumn, priceColumn, quantityColumn);
 		
-		table.getColumns().addAll(nameColumn , descriptionColumn, priceColumn, quantityColumn, actionColumn);
+		// If order hasn't been submitted, customer can still update order
+		// TODO Delete this true for release, true only for debugging
+		if(OrderListView.getOrderID() == order.getOrderId() || true) {
+			TableColumn<OrderItem, String> selectActionColumn = new TableColumn<>("Select"); // Header
+			selectActionColumn.setCellFactory(new Callback<TableColumn<OrderItem,String>, TableCell<OrderItem,String>>() {
+				
+				@Override
+				public TableCell<OrderItem, String> call(TableColumn<OrderItem, String> arg0) {
+					TableCell<OrderItem, String> cell = new TableCell<OrderItem, String>(){
+						Button actionBtn = new Button("Update");
+						
+						@Override
+						protected void updateItem(String item, boolean empty) {
+							// TODO Auto-generated method stub
+							super.updateItem(item, empty);
+	                        if (empty) {
+	                            setGraphic(null);
+	                            setText(null);
+	                        } else {
+	                        	actionBtn.setOnAction(event -> {
+	                                OrderItem orderItem = getTableView().getItems().get(getIndex());
+	                                Main.getMainPane().setCenter(new OrderItemsUpdateView(orderItem));
+	                            });
+	                            setGraphic(actionBtn);
+	                            setText(null);
+	                        }
+						}
+					};
+					
+					return cell;
+				}
+			});
+			
+			TableColumn<OrderItem, String> deleteActionColumn = new TableColumn<>("Delete"); // Header
+			deleteActionColumn.setCellFactory(new Callback<TableColumn<OrderItem,String>, TableCell<OrderItem,String>>() {
+				
+				@Override
+				public TableCell<OrderItem, String> call(TableColumn<OrderItem, String> arg0) {
+					TableCell<OrderItem, String> cell = new TableCell<OrderItem, String>(){
+						Button actionBtn = new Button("Remove");
+						
+						@Override
+						protected void updateItem(String item, boolean empty) {
+							// TODO Auto-generated method stub
+							super.updateItem(item, empty);
+	                        if (empty) {
+	                            setGraphic(null);
+	                            setText(null);
+	                        } else {
+	                        	actionBtn.setOnAction(event -> {
+	                                OrderItem orderItem = getTableView().getItems().get(getIndex());
+	                                Main.getMainPane().setCenter(new OrderItemsDeleteView(orderItem));
+	                            });
+	                            setGraphic(actionBtn);
+	                            setText(null);
+	                        }
+						}
+					};
+					
+					return cell;
+				}
+			});
+			
+			table.getColumns().addAll(selectActionColumn, deleteActionColumn);
+		}
+		
+		
 		
 		// set data source untuk table
 		orderItemList = OrderItemController.getAllOrderItemsByOrderId(order.getOrderId().toString());

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Vector;
 
+import controller.UserController;
 import main.Main;
 
 public class Order {
@@ -68,6 +69,10 @@ public class Order {
 	public Double getOrderTotal() {
 		return orderTotal;
 	}
+	
+	public void setOrderTotal(Double orderTotal) {
+		this.orderTotal = orderTotal;
+	}
 
 	// CRUD Method
 	public static Integer createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
@@ -103,7 +108,7 @@ public class Order {
 	public static Order getOrderByOrderId(Integer orderId) {
 		// TODO Add SQL Query to get order by order id
 		
-		return new Order(1, Main.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis()));
+		return new Order(1, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis()));
 	}
 	
 	

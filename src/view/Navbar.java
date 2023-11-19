@@ -8,17 +8,18 @@ import javafx.scene.control.MenuItem;
 import main.Main;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
-
+import view.order_view.OrderListView;
 import view.receipt_cashier.ReceiptManagementView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
-	Label menuItemManagementLbl, homeLbl, userManagementLbl, receiptManagementLbl;
-	Menu menuItemManagementMenu, homeMenu, userManagementMenu, receiptManagementMenu;
+	private Label homeLbl, receiptManagementLbl, myOrderLbl;
+	private Menu homeMenu, receiptManagementMenu, myOrderMenu, adminMenu;
+	private MenuItem menuItemManagementMenu, userManagementMenu;
 
 	public Navbar() {
 		
-		homeLbl = new Label("Menu");
+		homeLbl = new Label("Menu List");
 		homeMenu = new Menu("", homeLbl);
 		homeLbl.setOnMouseClicked(event -> {
 			Main.getMainPane().setCenter(new MenuCustomerView());
@@ -33,9 +34,8 @@ public class Navbar extends MenuBar{
 		this.getMenus().addAll(homeMenu, myOrderMenu);
 		
 		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
-			menuItemManagementLbl = new Label("Menu Item Management");
-			menuItemManagementMenu = new Menu("", menuItemManagementLbl);
-			menuItemManagementLbl.setOnMouseClicked(event -> {
+			menuItemManagementMenu = new MenuItem("Menu Item Management");
+			menuItemManagementMenu.setOnAction(event -> {
 				Main.getMainPane().setCenter(new MenuItemManagementView());
 			});
 			
@@ -43,8 +43,14 @@ public class Navbar extends MenuBar{
 			userManagementMenu.setOnAction(event -> {
 				Main.getMainPane().setCenter(new UserManagementView());
 			});
-			this.getMenus().addAll(menuItemManagementMenu, userManagementMenu);
-		}else if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
+			
+			adminMenu = new Menu("Admin");
+			adminMenu.getItems().addAll(menuItemManagementMenu, userManagementMenu);
+			
+			
+			this.getMenus().addAll(adminMenu);
+		}
+		else if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
 			receiptManagementLbl = new Label("Receipt Management");
 			receiptManagementMenu = new Menu("", receiptManagementLbl);
 			receiptManagementLbl.setOnMouseClicked(event -> {
