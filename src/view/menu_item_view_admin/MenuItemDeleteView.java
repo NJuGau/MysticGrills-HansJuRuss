@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
+import view.menu_item_view_customer.MenuCustomerView;
 
 public class MenuItemDeleteView extends BorderPane{
 	private Button backBtn, submitBtn;
@@ -24,6 +25,7 @@ public class MenuItemDeleteView extends BorderPane{
 	private HBox actionBtnContainer;
 
 	public MenuItemDeleteView(model.MenuItem item) {
+
 		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			// TODO Fill node with homepage
 			Main.getMainPane().setCenter(new BorderPane());
@@ -46,6 +48,7 @@ public class MenuItemDeleteView extends BorderPane{
 	public void showActionBtn() {
 //		TODO: Add Logic to submit MenuItem
 		submitBtn = new Button("Yes");
+		submitBtn.setMinWidth(100);
 		submitBtn.setOnAction(event -> {
 			String status = 
 					MenuItemController.deleteMenuItem(Integer.parseInt(idTxt.getText()));
@@ -62,17 +65,19 @@ public class MenuItemDeleteView extends BorderPane{
 		
 		// Show Back Button
 		backBtn = new Button("No");
+		backBtn.setMinWidth(100);
 		backBtn.setOnAction(event -> {
 			Main.getMainPane().setCenter(new MenuItemManagementView());
 		});
 		
 		Label confirmLbl = new Label("Confirm Deletion");
+		confirmLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		HBox.setMargin(confirmLbl, new Insets(0, 10, 0, 0));
 		
 		actionBtnContainer = new HBox();
 		actionBtnContainer.getChildren().addAll(confirmLbl, submitBtn, backBtn);
 		HBox.setMargin(backBtn, new Insets(0, 0, 0, 10));
-		BorderPane.setAlignment(actionBtnContainer, Pos.CENTER);
+		actionBtnContainer.setAlignment(Pos.CENTER_LEFT);
 		this.setBottom(actionBtnContainer);
 	}
 	

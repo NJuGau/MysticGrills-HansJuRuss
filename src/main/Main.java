@@ -1,6 +1,8 @@
 package main;
 
 import controller.UserController;
+import java.sql.Date;
+import java.util.Calendar;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,7 +50,7 @@ public class Main extends Application {
 		
 		scene = new Scene(mainPane, 700, 500);
 		arg0.setTitle("Mystic Grills");
-		arg0.setResizable(true);
+		arg0.setResizable(false);
 		arg0.getIcons().clear();
 		arg0.getIcons().add(new Image("./assets/MysticGrills.jpg"));
 		arg0.setScene(scene);

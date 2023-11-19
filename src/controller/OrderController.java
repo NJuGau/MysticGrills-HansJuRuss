@@ -9,7 +9,7 @@ import model.User;
 
 public class OrderController {
 
-	public static String createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
+	public static Integer createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
 		
 		return Order.createOrder(orderUser, orderItems, orderDate);
 	}
@@ -27,7 +27,7 @@ public class OrderController {
 		return Order.deleteOrder(orderId);
 	}
 	
-	public static Order getOrdersByCustomerId(Integer customerId) {
+	public static Vector<Order> getOrdersByCustomerId(Integer customerId) {
 		
 		return Order.getOrdersByCustomerId(customerId);
 	}

@@ -1,6 +1,10 @@
 package view.menu_item_view_customer;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import controller.MenuItemController;
+import controller.OrderController;
 import controller.OrderItemController;
 import controller.UserController;
 import javafx.geometry.Insets;
@@ -16,7 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
-import view.OrderView;
+import model.OrderItem;
+import view.order_view.OrderListView;
 
 public class MenuDetailsCustomerView extends BorderPane{
 
@@ -27,10 +32,12 @@ public class MenuDetailsCustomerView extends BorderPane{
 	private Label idLbl, idTxt, nameLbl, descLbl, priceLbl, statusLbl, nameTxt, priceTxt, descTxt, qtyLbl;
 	private Spinner<Integer> qtySpinner;
 	private HBox actionBtnContainer;
+	
+	private model.MenuItem item;
 
-	public MenuDetailsCustomerView(model.MenuItem item) {
-		
-		//Gapake ini gasi?
+	public MenuDetailsCustomerView(model.MenuItem item) {	
+		this.item = item;
+    //Gapake ini gasi?
 //		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
 //			// TODO Fill node with homepage
 //			Main.getMainPane().setCenter(new MenuCustomerView());
@@ -41,7 +48,7 @@ public class MenuDetailsCustomerView extends BorderPane{
 		BorderPane.setMargin(this, new Insets(20, 0, 50, 0));
 		
 		// Show Prompt to Add
-		showPromptToAdd(item);
+		showPromptToAdd();
 		this.setCenter(promptPane);
 		BorderPane.setMargin(promptPane, new Insets(20, 0, 0, 50));
 		
@@ -53,13 +60,30 @@ public class MenuDetailsCustomerView extends BorderPane{
 	public void showActionBtn() {
 //		TODO: Add Logic to submit MenuItem
 		submitBtn = new Button("Add");
+		submitBtn.setMinWidth(100);
 		submitBtn.setOnAction(event -> {
 			
+			// TODO If orderID is empty and user click add to orderlist
+			// then create new order row in mysql
+			// should return orderID from newly created orderID in SQL
+			if(OrderListView.getOrderID() == null) {
+				OrderListView.setOrderID(OrderController.createOrder(
+						Main.getCurrentUser(), null, new Date(Calendar.getInstance().getTimeInMillis())));
+			}
 			
-			String status = "Deez Nuts";
+			// Add menu item that is bought into database
+			String status = OrderItemController.createOrderItem(
+					OrderListView.getOrderID().toString(), item, qtySpinner.getValue().toString());
 			
 			if(status == null) {
+				statusLbl.setText("Success");
+				statusLbl.setTextFill(Color.GREEN);
 				
+				submitBtn.setDisable(true);
+				nameTxt.setDisable(true);
+				descTxt.setDisable(true);
+				priceTxt.setDisable(true);
+				qtySpinner.setDisable(true);
 			}
 			else {
 				statusLbl.setText(status);
@@ -68,22 +92,22 @@ public class MenuDetailsCustomerView extends BorderPane{
 		});
 		
 		// Show Back Button
-		backBtn = new Button("Cancel");
+		backBtn = new Button("Back");
 		backBtn.setOnAction(event -> {
 			Main.getMainPane().setCenter(new MenuCustomerView());
 		});
 		
-		Label confirmLbl = new Label("Add to cart");
+		Label confirmLbl = new Label("Add order item: ");
 		HBox.setMargin(confirmLbl, new Insets(0, 10, 0, 0));
 		
 		actionBtnContainer = new HBox();
 		actionBtnContainer.getChildren().addAll(confirmLbl, submitBtn, backBtn);
 		HBox.setMargin(backBtn, new Insets(0, 0, 0, 10));
-		BorderPane.setAlignment(actionBtnContainer, Pos.CENTER);
+		actionBtnContainer.setAlignment(Pos.CENTER_LEFT);
 		this.setBottom(actionBtnContainer);
 	}
 	
-	public void showPromptToAdd(model.MenuItem item) {
+	public void showPromptToAdd() {
 		promptPane = new GridPane();
 		idLbl = new Label("Id");
 		idLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
@@ -103,7 +127,7 @@ public class MenuDetailsCustomerView extends BorderPane{
 		descTxt.setText(item.getMenuItemDescription());
 		priceTxt = new Label();
 		priceTxt.setText(item.getMenuItemPrice().toString());
-		qtySpinner = new Spinner<Integer>();
+		qtySpinner = new Spinner<Integer>(1, Integer.MAX_VALUE, 1);
 		
 		promptPane.setAlignment(Pos.TOP_LEFT);
 		promptPane.setVgap(10);

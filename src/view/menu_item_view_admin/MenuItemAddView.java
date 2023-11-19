@@ -31,6 +31,7 @@ public class MenuItemAddView extends BorderPane {
 	public MenuItemAddView() {
 		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new MenuCustomerView());
+			return;
 		}
 		
 		showTopComponent();
@@ -85,8 +86,11 @@ public class MenuItemAddView extends BorderPane {
 	public void showPromptToAdd() {
 		promptPane = new GridPane();
 		nameLbl = new Label("Name");
+		nameLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		descLbl = new Label("Description");
+		descLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		priceLbl = new Label("Price");
+		priceLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		
 		nameTxt = new TextField();
 		descTxt = new TextArea();

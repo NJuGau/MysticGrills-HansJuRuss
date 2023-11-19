@@ -32,6 +32,7 @@ public class MenuItemUpdateView extends BorderPane {
 	public MenuItemUpdateView(model.MenuItem item) {
 		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new MenuCustomerView());
+			return;
 		}
 		
 		showTopComponent();
@@ -87,9 +88,13 @@ public class MenuItemUpdateView extends BorderPane {
 	public void showPromptToAdd(model.MenuItem item) {
 		promptPane = new GridPane();
 		idLbl = new Label("Id");
+		idLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		nameLbl = new Label("Name");
+		nameLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		descLbl = new Label("Description");
+		descLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		priceLbl = new Label("Price");
+		priceLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		
 		idTxt = new Label(item.getMenuItemId().toString());
 		nameTxt = new TextField();

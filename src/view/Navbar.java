@@ -4,9 +4,11 @@ import controller.UserController;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import main.Main;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
+
 import view.receipt_cashier.ReceiptManagementView;
 import view.user_management_view_admin.UserManagementView;
 
@@ -22,7 +24,13 @@ public class Navbar extends MenuBar{
 			Main.getMainPane().setCenter(new MenuCustomerView());
 		});
 		
-		this.getMenus().addAll(homeMenu);
+		myOrderLbl = new Label("My Order");
+		myOrderMenu = new Menu("", myOrderLbl);
+		myOrderLbl.setOnMouseClicked(event -> {
+			Main.getMainPane().setCenter(new OrderListView());
+		});
+				
+		this.getMenus().addAll(homeMenu, myOrderMenu);
 		
 		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			menuItemManagementLbl = new Label("Menu Item Management");
@@ -31,9 +39,8 @@ public class Navbar extends MenuBar{
 				Main.getMainPane().setCenter(new MenuItemManagementView());
 			});
 			
-			userManagementLbl = new Label("User Management");
-			userManagementMenu = new Menu("", userManagementLbl);
-			userManagementLbl.setOnMouseClicked(event -> {
+			userManagementMenu = new MenuItem("User Management");
+			userManagementMenu.setOnAction(event -> {
 				Main.getMainPane().setCenter(new UserManagementView());
 			});
 			this.getMenus().addAll(menuItemManagementMenu, userManagementMenu);
