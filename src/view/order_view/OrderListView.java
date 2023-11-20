@@ -28,14 +28,22 @@ import main.Main;
 import model.Order;
 
 public class OrderListView extends BorderPane{
-	private static Integer orderID;
+	private static Integer orderID = null;
 	
 	private Label titleLbl;
 	
 	public OrderListView() {
 		showTitle();
 		
+		
 		initTable();
+		// Get orderID which order status is empty
+		for(Order o : orderList) {
+			if(o.getOrderStatus().isEmpty()) {
+				orderID = o.getOrderId();
+				break;
+			}
+		}
 	}
 	
 	private TableView<Order> table;
@@ -94,7 +102,7 @@ public class OrderListView extends BorderPane{
 		// set data source untuk table
 		orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
 		
-		orderList.add(new Order(1, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
+		orderList.add(new Order(1, UserController.getCurrentUser(), null, "", new Date(Calendar.getInstance().getTimeInMillis())));
 		orderList.add(new Order(2, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
 		orderList.add(new Order(3, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
 		
