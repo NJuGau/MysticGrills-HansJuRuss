@@ -38,6 +38,8 @@ public class OrderDetailsView extends BorderPane{
 	private VBox middlePane;
 	private HBox actionBtnContainer;
 	private Button addButton, submitOrderButton;
+	
+	private Boolean isSubmitted = false;
 
 	public OrderDetailsView(Order order) {
 		this.order = order;
@@ -68,21 +70,28 @@ public class OrderDetailsView extends BorderPane{
 		
 		submitOrderButton = new Button("Submit Order");
 		submitOrderButton.setOnAction(event -> {
+			order.setOrderStatus("Pending");
+			OrderController.updateOrder(order.getOrderId().toString(), order.getOrderItems(), order.getOrderStatus());
+			
 			OrderListView.setOrderID(null);
 			submitStatusLbl.setText("Success");
 			submitStatusLbl.setTextFill(Color.GREEN);
 			submitOrderButton.setDisable(true);
 			addButton.setDisable(true);
+			isSubmitted = true;
+			
+			Main.getMainPane().setCenter(new OrderDetailsView(order));
 		});
 		
-		// if current orderId is not the same id with temp id at orderListView
+		// if current order status is pending
 		// it means that the user has already submitted, hence the currentOrder can't be editted
 		// or be submitted again
-		if(OrderListView.getOrderID() != order.getOrderId()) {
+		if(order.getOrderStatus().isEmpty() == false) {
 			submitStatusLbl.setText("Can't edit order because order has been submitted");
 			submitStatusLbl.setTextFill(Color.GREEN);
 			submitOrderButton.setDisable(true);
 			addButton.setDisable(true);
+			isSubmitted = true;
 		}
 		
 		actionBtnContainer.getChildren().addAll(addButton, submitOrderButton);
@@ -112,7 +121,7 @@ public class OrderDetailsView extends BorderPane{
 		table.getColumns().addAll(nameColumn , descriptionColumn, priceColumn, quantityColumn);
 		
 		// If order hasn't been submitted, customer can still update order
-		if(OrderListView.getOrderID() == order.getOrderId()) {
+		if(isSubmitted == false) {
 			TableColumn<OrderItem, String> selectActionColumn = new TableColumn<>("Select"); // Header
 			selectActionColumn.setCellFactory(new Callback<TableColumn<OrderItem,String>, TableCell<OrderItem,String>>() {
 				
