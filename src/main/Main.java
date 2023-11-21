@@ -22,7 +22,7 @@ public class Main extends Application {
 	private Scene scene;
 	private static BorderPane mainPane;
 	
-	private User admin = new User(0, "Cashier", "AdminName", "admin@admin.com", "123admin");
+	private User admin = new User(0, "Admin", "AdminName", "admin@admin.com", "123admin");
 	
 	public Main() {
 		// TODO Auto-generated constructor stub
@@ -43,7 +43,7 @@ public class Main extends Application {
 		//TEMPORARY
 		UserController.setCurrentUser(admin);
 		mainPane = new BorderPane();
-		scene = new Scene(mainPane, 700, 500);
+		scene = new Scene(mainPane, 1080, 720);
 		
 		if(UserController.getCurrentUser() != null) {
 			mainPane.setTop(new Navbar());

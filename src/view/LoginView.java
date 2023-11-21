@@ -1,5 +1,6 @@
 package view;
 
+import controller.UserController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,11 +15,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
+import model.User;
 
 public class LoginView extends BorderPane {
 	
 	GridPane contentPane;
-	Label emailLbl, passwordLbl, titleLbl, linkLbl;
+	Label emailLbl, passwordLbl, titleLbl, linkLbl, errorLbl;
 	TextField emailTxt, passwordTxt;
 	Hyperlink gotoRegisterLink;
 	
@@ -31,6 +33,7 @@ public class LoginView extends BorderPane {
 		emailLbl = new Label("Email");
 		passwordLbl = new Label("Password");
 		linkLbl = new Label("Haven't got an account? ");
+		errorLbl = new Label();
 		
 		emailTxt = new TextField();
 		passwordTxt = new TextField();
@@ -45,11 +48,12 @@ public class LoginView extends BorderPane {
 		
 		contentPane.add(emailTxt, 1, 1);
 		contentPane.add(passwordTxt, 1, 2);
+		contentPane.add(errorLbl, 0, 3, 2, 1);
 		
-		contentPane.add(submitBtn, 0, 3, 3, 1);
+		contentPane.add(submitBtn, 0, 4, 2, 1);
 		
-		contentPane.add(linkLbl, 0, 4);
-		contentPane.add(gotoRegisterLink, 1, 4);
+		contentPane.add(linkLbl, 0, 5);
+		contentPane.add(gotoRegisterLink, 1, 5);
 		
 		titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
 		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
@@ -61,6 +65,16 @@ public class LoginView extends BorderPane {
 		contentPane.setHgap(10);
 		
 		contentPane.setAlignment(Pos.TOP_CENTER);
+		
+		submitBtn.setOnAction(e ->{
+			User user = UserController.authenticateUser(emailTxt.getText(), passwordTxt.getText());
+			if(user != null) {
+				UserController.setCurrentUser(user);
+				Main.getMainPane().setTop(new Navbar());
+			}else {
+				errorLbl.setText("User credential invalid");
+			}
+		});
 		
 		this.setTop(titleLbl);
 		this.setCenter(contentPane);

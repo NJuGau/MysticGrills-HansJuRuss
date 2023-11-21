@@ -4,10 +4,8 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Vector;
 
-import controller.MenuItemController;
 import controller.OrderController;
 import controller.UserController;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 import main.Main;
 import model.Order;
+import view.LoginView;
 
 public class OrderListView extends BorderPane{
 	private static Integer orderID = null;
@@ -33,15 +32,17 @@ public class OrderListView extends BorderPane{
 	private Label titleLbl;
 	
 	public OrderListView() {
-		showTitle();
-		
-		
-		initTable();
-		// Get orderID which order status is empty
-		for(Order o : orderList) {
-			if(o.getOrderStatus().isEmpty()) {
-				orderID = o.getOrderId();
-				break;
+		if(!UserController.getCurrentUser().getUserRole().equals("Customer")) {
+			Main.getMainPane().setCenter(new LoginView());
+		}else {
+			showTitle();
+			initTable();
+			// Get orderID which order status is empty
+			for(Order o : orderList) {
+				if(o.getOrderStatus().isEmpty()) {
+					orderID = o.getOrderId();
+					break;
+				}
 			}
 		}
 	}
