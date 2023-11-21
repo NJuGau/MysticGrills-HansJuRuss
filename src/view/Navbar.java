@@ -19,19 +19,22 @@ public class Navbar extends MenuBar{
 
 	public Navbar() {
 		
-		homeLbl = new Label("Menu List");
-		homeMenu = new Menu("", homeLbl);
-		homeLbl.setOnMouseClicked(event -> {
-			Main.getMainPane().setCenter(new MenuCustomerView());
-		});
-		
-		myOrderLbl = new Label("My Order");
-		myOrderMenu = new Menu("", myOrderLbl);
-		myOrderLbl.setOnMouseClicked(event -> {
-			Main.getMainPane().setCenter(new OrderListView());
-		});
-				
-		this.getMenus().addAll(homeMenu, myOrderMenu);
+		if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer") || 
+				UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin")) {
+			homeLbl = new Label("Menu List");
+			homeMenu = new Menu("", homeLbl);
+			homeLbl.setOnMouseClicked(event -> {
+				Main.getMainPane().setCenter(new MenuCustomerView());
+			});
+			
+			myOrderLbl = new Label("My Order");
+			myOrderMenu = new Menu("", myOrderLbl);
+			myOrderLbl.setOnMouseClicked(event -> {
+				Main.getMainPane().setCenter(new OrderListView());
+			});
+					
+			this.getMenus().addAll(homeMenu, myOrderMenu);
+		}
 		
 		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			menuItemManagementMenu = new MenuItem("Menu Item Management");
@@ -51,7 +54,7 @@ public class Navbar extends MenuBar{
 			this.getMenus().addAll(adminMenu);
 		}
 		else if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
-			receiptManagementLbl = new Label("Receipt Management");
+			receiptManagementLbl = new Label("Order Management");
 			receiptManagementMenu = new Menu("", receiptManagementLbl);
 			receiptManagementLbl.setOnMouseClicked(event -> {
 				Main.getMainPane().setCenter(new OrderManagementView());

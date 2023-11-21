@@ -31,6 +31,8 @@ import model.OrderItem;
 import model.User;
 import view.LoginView;
 import view.order_management.cashier.CashierOrderDetailView;
+import view.order_management.chef.ChefOrderDetailView;
+import view.order_management.waiters.WaiterOrderDetailView;
 
 public class OrderManagementView extends BorderPane {
 	
@@ -119,7 +121,7 @@ public class OrderManagementView extends BorderPane {
 							} else {
 								prepareBtn.setOnAction(e -> {
 									Order order = getTableView().getItems().get(getIndex());
-									Main.getMainPane().setCenter(new CashierOrderDetailView(order));
+									Main.getMainPane().setCenter(new ChefOrderDetailView(order));
 								});
 								setGraphic(prepareBtn);
 								setText(null);
@@ -151,7 +153,7 @@ public class OrderManagementView extends BorderPane {
 							} else {
 								serveBtn.setOnAction(e -> {
 									Order order = getTableView().getItems().get(getIndex());
-									Main.getMainPane().setCenter(new CashierOrderDetailView(order));
+									Main.getMainPane().setCenter(new WaiterOrderDetailView(order));
 								});
 								setGraphic(serveBtn);
 								setText(null);
