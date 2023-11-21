@@ -8,8 +8,8 @@ import javafx.scene.control.MenuItem;
 import main.Main;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
+import view.order_management.OrderManagementView;
 import view.order_view.OrderListView;
-import view.receipt_cashier.ReceiptManagementView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
@@ -54,7 +54,7 @@ public class Navbar extends MenuBar{
 			receiptManagementLbl = new Label("Receipt Management");
 			receiptManagementMenu = new Menu("", receiptManagementLbl);
 			receiptManagementLbl.setOnMouseClicked(event -> {
-				Main.getMainPane().setCenter(new ReceiptManagementView());
+				Main.getMainPane().setCenter(new OrderManagementView());
 			});
 			this.getMenus().addAll(receiptManagementMenu);
 		}
