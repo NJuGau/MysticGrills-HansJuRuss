@@ -3,6 +3,7 @@ package view.menu_item_view_customer;
 import java.util.Vector;
 
 import controller.MenuItemController;
+import controller.UserController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -22,14 +23,21 @@ import main.Main;
 import model.MenuItem;
 import view.menu_item_view_admin.MenuItemDeleteView;
 import view.menu_item_view_admin.MenuItemUpdateView;
+import view.receipt_cashier.ReceiptManagementView;
 
 public class MenuCustomerView extends BorderPane {
 	private Label titleLbl;
 
 	public MenuCustomerView() {
-		init();
-		
-		initTable();
+		if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin") == true || 
+				UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer")) {
+				init();
+				initTable();
+		}
+		else { // We don't want to chef or Waiters or Cashier make a new order so we disable Menu
+			Main.getMainPane().setCenter(new ReceiptManagementView());
+			return;
+		}
 	}
 	
 	private void init() {
