@@ -34,7 +34,6 @@ public class MenuCustomerView extends BorderPane {
 		else { 
 			init();
 			initTable();
-		}
 	}
 	
 	private void init() {
