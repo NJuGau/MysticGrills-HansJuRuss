@@ -9,7 +9,7 @@ import model.Receipt;
 public class ReceiptController {
 	public static String createReceipt(Order order, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
 		//TODO: Validate type and amount, validate order exists
-		return null;
+		return "Receipt is invalid";
 	}
 	
 	public static String updateReceipt(Integer orderId, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {

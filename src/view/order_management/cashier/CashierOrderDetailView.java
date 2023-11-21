@@ -1,4 +1,4 @@
-package view.receipt_cashier;
+package view.order_management.cashier;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -31,10 +31,11 @@ import model.Order;
 import model.OrderItem;
 import model.Receipt;
 import view.LoginView;
+import view.order_management.OrderManagementView;
 
-public class OrderDetailView extends BorderPane {
+public class CashierOrderDetailView extends BorderPane {
 	
-	private Label titleLbl, orderIdLbl, orderIdContentLbl, nameLbl, nameContentLbl, statusLbl, statusContentLbl, totalPriceLbl, totalPriceContentLbl, paymentTypeLbl, paymentAmountLbl;
+	private Label titleLbl, orderIdLbl, orderIdContentLbl, nameLbl, nameContentLbl, statusLbl, statusContentLbl, totalPriceLbl, totalPriceContentLbl, paymentTypeLbl, paymentAmountLbl, errorLbl;
 	private TextField paymentAmountTxt;
 	private ComboBox<String> paymentTypeBox; 
 	private VBox contentBox;
@@ -44,7 +45,7 @@ public class OrderDetailView extends BorderPane {
 	private TableView<OrderItem> detailTable;
 	private ObservableList<OrderItem> detailData;
 	
-	public OrderDetailView(Order order) {
+	public CashierOrderDetailView(Order order) {
 		if(!UserController.getCurrentUser().getUserRole().equals("Cashier")) {
 			Main.getMainPane().setCenter(new LoginView());
 			return;
@@ -59,6 +60,7 @@ public class OrderDetailView extends BorderPane {
 		statusContentLbl = new Label(order.getOrderStatus());
 		totalPriceLbl = new Label("Total Price: ");
 		totalPriceContentLbl = new Label(order.getOrderTotal().toString());
+		errorLbl = new Label();
 		
 		paymentAmountLbl = new Label("Payment Amount: ");
 		paymentTypeLbl = new Label("Payment Type: ");
@@ -92,19 +94,32 @@ public class OrderDetailView extends BorderPane {
 		paymentPane.add(paymentAmountTxt, 1, 1);
 		paymentPane.add(paymentTypeLbl, 0, 2);
 		paymentPane.add(paymentTypeBox, 1, 2);
+		paymentPane.add(errorLbl, 0, 3, 2, 1);
 		
 		contentBox.getChildren().addAll(headerPane, detailTable, paymentPane);
 		btnGroup.getChildren().addAll(backBtn, payBtn);
 		
 		backBtn.setOnAction(e ->{
-			Main.getMainPane().setCenter(new ReceiptManagementView());
+			Main.getMainPane().setCenter(new OrderManagementView());
 		});
 		
 		payBtn.setOnAction(e ->{
-			String id = ReceiptController.createReceipt(order, paymentTypeBox.getValue(), Double.parseDouble(paymentAmountTxt.getText()), new Date(Calendar.getInstance().getTimeInMillis()));
-			//TODO: Check string whether it is correct or not, if it is correct, return ID
-			Receipt receipt = ReceiptController.getReceiptById(Integer.parseInt(id));
-			Main.getMainPane().setCenter(new ReceiptDetailView(receipt));
+			//TODO: Check for amount so it didnt throw exception
+			try {
+				double amount = Double.parseDouble(paymentAmountTxt.getText());
+				String retVal = ReceiptController.createReceipt(order, paymentTypeBox.getValue(), amount, new Date(Calendar.getInstance().getTimeInMillis()));
+				Integer id = 0;
+				try {
+					id = Integer.parseInt(retVal);
+					Receipt receipt = ReceiptController.getReceiptById(id);
+					Main.getMainPane().setCenter(new ReceiptDetailView(receipt));
+				} catch (NumberFormatException e1) {
+					//It is wrong, go to validation
+					errorLbl.setText(retVal);
+				}
+			} catch (NumberFormatException e1) {
+				errorLbl.setText("Payment amount must be filled");
+			}
 		});
 		
 		titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));

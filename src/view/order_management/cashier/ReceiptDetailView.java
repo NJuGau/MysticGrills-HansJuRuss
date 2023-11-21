@@ -1,4 +1,4 @@
-package view.receipt_cashier;
+package view.order_management.cashier;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
