@@ -19,6 +19,8 @@ public class ReceiptDetailView extends BorderPane {
 	private GridPane headerPane, paymentPane;
 	
 	public ReceiptDetailView(Receipt receipt) {
-		// TODO Auto-generated constructor stub
+		titleLbl = new Label("Order Detail");
+		receiptIdLbl = new Label("Receipt Id: ");
+		receiptIdContentLbl = new Label(receipt.getReceiptId().toString());
 	}
 }

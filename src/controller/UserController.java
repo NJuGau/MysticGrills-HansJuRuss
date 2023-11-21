@@ -73,11 +73,7 @@ public class UserController {
 	}
 	
 	public static User authenticateUser(String userEmail, String userPassword) {
-		String loginValidation = validateLogin(userEmail, userPassword);
-		if(loginValidation != null) {
-			return null; //TODO: Somehow return loginValidation to view
-		}
-		User user = authenticateUser(userEmail, userPassword);
+		User user = User.authenticateUser(userEmail, userPassword);
 		return user;
 	}
 	
@@ -130,15 +126,4 @@ public class UserController {
 		return null;
 	}
 	
-	private static String validateLogin(String userEmail, String userPassword) {
-		if(userEmail.isEmpty()) {
-			return "User email must be filled";
-		}
-		else if(userPassword.isEmpty()) {
-			return "User password must be filled";
-		}else if(authenticateUser(userEmail, userPassword) == null) {
-			return "Credential invalid";
-		}
-		return null;
-	}
 }

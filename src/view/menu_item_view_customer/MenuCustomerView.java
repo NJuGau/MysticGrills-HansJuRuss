@@ -27,17 +27,13 @@ public class MenuCustomerView extends BorderPane {
 	private Label titleLbl;
 
 	public MenuCustomerView() {
-		if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin") || 
-				UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer")) {
-				init();
-				initTable();
-				System.out.println(1);
-		}
-		else { // We don't want to chef or Waiters or Cashier make a new order so we disable Menu
+		if(!UserController.getCurrentUser().getUserRole().equals("Customer")) {
+			// We don't want to chef or Waiters or Cashier make a new order so we disable Menu
 			Main.getMainPane().setCenter(new OrderManagementView());
-			System.out.println("Should reach here");
 		}
-		
+		else { 
+			init();
+			initTable();
 	}
 	
 	private void init() {

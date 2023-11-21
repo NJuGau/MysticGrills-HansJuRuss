@@ -13,14 +13,20 @@ import view.order_view.OrderListView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
-	private Label homeLbl, receiptManagementLbl, myOrderLbl;
-	private Menu homeMenu, receiptManagementMenu, myOrderMenu, adminMenu;
-	private MenuItem menuItemManagementMenu, userManagementMenu;
+	private Label homeLbl, orderManagementLbl, myOrderLbl, logoutLbl, menuItemManagementLbl, userManagementLbl;
+	private Menu homeMenu, orderManagementMenu, myOrderMenu, logoutMenu, menuItemManagementMenu, userManagementMenu;
 
 	public Navbar() {
 		
-		if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer") || 
-				UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin")) {
+		logoutLbl = new Label("Logout");
+		logoutMenu = new Menu("", logoutLbl);
+		logoutLbl.setOnMouseClicked(event -> {
+			UserController.setCurrentUser(null);
+			Main.getMainPane().setTop(null);
+			Main.getMainPane().setCenter(new LoginView());
+		});
+		
+		if(UserController.getCurrentUser().getUserRole().equals("Customer")) {
 			homeLbl = new Label("Menu List");
 			homeMenu = new Menu("", homeLbl);
 			homeLbl.setOnMouseClicked(event -> {
@@ -33,33 +39,32 @@ public class Navbar extends MenuBar{
 				Main.getMainPane().setCenter(new OrderListView());
 			});
 					
-			this.getMenus().addAll(homeMenu, myOrderMenu);
+			this.getMenus().addAll(homeMenu, myOrderMenu, logoutMenu);
 		}
 		
 		if(UserController.getCurrentUser().getUserRole().equals("Admin")) {
-			menuItemManagementMenu = new MenuItem("Menu Item Management");
-			menuItemManagementMenu.setOnAction(event -> {
+			menuItemManagementLbl = new Label("Menu Item Management");
+			menuItemManagementMenu = new Menu("", menuItemManagementLbl);
+			menuItemManagementLbl.setOnMouseClicked(event -> {
 				Main.getMainPane().setCenter(new MenuItemManagementView());
 			});
 			
-			userManagementMenu = new MenuItem("User Management");
-			userManagementMenu.setOnAction(event -> {
+			userManagementLbl = new Label("User Management");
+			userManagementMenu = new Menu("", userManagementLbl);
+			userManagementLbl.setOnMouseClicked((event -> {
 				Main.getMainPane().setCenter(new UserManagementView());
-			});
+			}));;
 			
-			adminMenu = new Menu("Admin");
-			adminMenu.getItems().addAll(menuItemManagementMenu, userManagementMenu);
-			
-			
-			this.getMenus().addAll(adminMenu);
+			this.getMenus().addAll(menuItemManagementMenu, userManagementMenu, logoutMenu);
 		}
-		else if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
-			receiptManagementLbl = new Label("Order Management");
-			receiptManagementMenu = new Menu("", receiptManagementLbl);
-			receiptManagementLbl.setOnMouseClicked(event -> {
+
+		else if(UserController.getCurrentUser().getUserRole().equals("Cashier") || UserController.getCurrentUser().getUserRole().equals("Chef") || UserController.getCurrentUser().getUserRole().equals("Waiter")) {
+			orderManagementLbl = new Label("Order Management");
+			orderManagementMenu = new Menu("", orderManagementLbl);
+			orderManagementLbl.setOnMouseClicked(event -> {
 				Main.getMainPane().setCenter(new OrderManagementView());
 			});
-			this.getMenus().addAll(receiptManagementMenu);
+			this.getMenus().addAll(orderManagementMenu, logoutMenu);
 		}
 		
 		

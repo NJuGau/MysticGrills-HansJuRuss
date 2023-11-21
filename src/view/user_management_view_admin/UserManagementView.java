@@ -33,19 +33,18 @@ public class UserManagementView extends BorderPane {
 		
 		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new LoginView());
-			return;
+		}else {
+			titleLbl = new Label("User Management");
+			
+			titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
+			BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
+			BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
+			
+			initTable();
+			
+			this.setTop(titleLbl);
+			this.setCenter(table);
 		}
-		
-		titleLbl = new Label("User Management");
-		
-		titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
-		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
-		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
-		
-		initTable();
-		
-		this.setTop(titleLbl);
-		this.setCenter(table);
 	}
 	
 	@SuppressWarnings("unchecked")

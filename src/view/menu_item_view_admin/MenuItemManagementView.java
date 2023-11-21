@@ -33,30 +33,29 @@ public class MenuItemManagementView extends BorderPane {
 	public MenuItemManagementView() {
 		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
 			Main.getMainPane().setCenter(new MenuCustomerView());
-			return;
+		}else {
+			// Show Title
+			titleLbl = new Label("Menu Item Management");
+			titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
+			this.setTop(titleLbl);
+			BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
+			BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
+			
+			// Show Table
+			initTable();
+			
+			// Add New Menu Items
+			actions = new HBox();
+			addMenuItemBtn = new Button("Add Menu Items");
+			addMenuItemBtn.setOnAction(event -> {
+				navigateToAddMenu();
+			});
+			actions.getChildren().addAll(addMenuItemBtn);
+			HBox.setMargin(addMenuItemBtn, new Insets(0, 10, 0, 10));
+			this.setBottom(actions);
+			BorderPane.setAlignment(actions, Pos.BOTTOM_CENTER);
+			BorderPane.setMargin(actions, new Insets(10, 0, 10, 0));
 		}
-		
-		// Show Title
-		titleLbl = new Label("Menu Item Management");
-		titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
-		this.setTop(titleLbl);
-		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
-		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
-		
-		// Show Table
-		initTable();
-		
-		// Add New Menu Items
-		actions = new HBox();
-		addMenuItemBtn = new Button("Add Menu Items");
-		addMenuItemBtn.setOnAction(event -> {
-			navigateToAddMenu();
-		});
-		actions.getChildren().addAll(addMenuItemBtn);
-		HBox.setMargin(addMenuItemBtn, new Insets(0, 10, 0, 10));
-		this.setBottom(actions);
-		BorderPane.setAlignment(actions, Pos.BOTTOM_CENTER);
-		BorderPane.setMargin(actions, new Insets(10, 0, 10, 0));
 	}
 	
 	TableView<model.MenuItem> table;
