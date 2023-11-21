@@ -32,12 +32,7 @@ public class UserController {
 		}else if(confirmPasswordValidation != null) {
 			return confirmPasswordValidation;
 		}
-		String dbValidation = User.createUser(userRole, userName, userEmail, userPassword);
-		if(dbValidation != null) {
-			return null;
-		}else {
-			return dbValidation; 
-		}
+		return User.createUser(userRole, userName, userEmail, userPassword);
 	}
 	
 	public static String updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
@@ -55,21 +50,11 @@ public class UserController {
 		}else if(roleValidation != null) {
 			return roleValidation;
 		}
-		String dbValidation = User.updateUser(userId, userRole, userName, userEmail, userPassword); 
-		if(dbValidation != null) {
-			return null;
-		}else {
-			return dbValidation;
-		}
+		return User.updateUser(userId, userRole, userName, userEmail, userPassword); 
 	}
 	
 	public static String deleteUser(Integer userId) {
-		String dbValidation = User.deleteUser(userId);
-		if(dbValidation != null) {
-			return null;
-		}else {
-			return dbValidation;
-		}
+		return User.deleteUser(userId);
 	}
 	
 	public static User authenticateUser(String userEmail, String userPassword) {
@@ -97,8 +82,13 @@ public class UserController {
 		if(userEmail.isEmpty()) {
 			return "User email cannot be empty";
 		}
-		//TODO: insert unique algo
-		return "";
+		Vector<User> userList = UserController.getAllUsers();
+		for(User u: userList) {
+			if(u.getUserEmail() == userEmail) {
+				return "User email must be unique";
+			}
+		}
+		return null;
 	}
 	
 	private static String validateUserPassword(String userPassword) {

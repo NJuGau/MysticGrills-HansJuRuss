@@ -8,18 +8,41 @@ import model.Receipt;
 
 public class ReceiptController {
 	public static String createReceipt(Order order, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
-		//TODO: Validate type and amount, validate order exists
-		return "Receipt is invalid";
+		String orderIdValidation = validateOrderId(order.getOrderId());
+		String amountValidation = validatePaymentAmount(receiptPaymentAmount, order.getOrderTotal());
+		String typeValidation = validateReceiptType(receiptPaymentType);
+		
+		if(orderIdValidation != null) {
+			return orderIdValidation;
+		}else if(amountValidation != null) {
+			return amountValidation;
+		}else if(typeValidation != null) {
+			return typeValidation;
+		}
+		//if all is correct, return the newly created receipt ID, in String
+		return ReceiptController.createReceipt(order, receiptPaymentType, receiptPaymentAmount, receiptPaymentDate);
 	}
 	
 	public static String updateReceipt(Integer orderId, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
-		//TODO: Validate type and amount, validate order exists
-		return null;
+		String orderIdValidation = validateOrderId(orderId);
+		
+		if(orderIdValidation != null) {
+			return orderIdValidation;
+		}
+		Order order = OrderController.getOrderByOrderId(orderId);
+		String amountValidation = validatePaymentAmount(receiptPaymentAmount, order.getOrderTotal());
+		String typeValidation = validateReceiptType(receiptPaymentType);
+		if(amountValidation != null) {
+			return amountValidation;
+		}else if(typeValidation != null) {
+			return typeValidation;
+		}
+		return ReceiptController.updateReceipt(orderId, receiptPaymentType, receiptPaymentAmount, receiptPaymentDate);
 	}
 	
 	public static String deleteReceipt(Integer orderId) {
 		//TODO: Validate that database successfully deletes data
-		return null;
+		return Receipt.deleteReceipt(orderId);
 	}
 	
 	public static Receipt getReceiptById(Integer receiptId) {
@@ -28,5 +51,29 @@ public class ReceiptController {
 	
 	public static Vector<Receipt> getAllReceipts(){
 		return Receipt.getAllReceipts();
+	}
+	
+	private static String validateOrderId(Integer orderId) {
+		Vector<Order> orderList = OrderController.getAllOrders();
+		for(Order o : orderList) {
+			if(orderId == o.getOrderId()) {
+				return null;
+			}
+		}
+		return "Order ID Not Found";
+	}
+	
+	private static String validatePaymentAmount(Double paymentAmount, Double totalPrice) {
+		if(paymentAmount < totalPrice) {
+			return "payment amount must be greater than or equal to total price";
+		}
+		return null;
+	}
+	
+	private static String validateReceiptType(String type) {
+		if(!type.equals("Cash") && !type.equals("Debit") && !type.equals("Credit")) {
+			return "payment type must be either 'Cash', 'Debit', or 'Credit'";
+		}
+		return null;
 	}
 }
