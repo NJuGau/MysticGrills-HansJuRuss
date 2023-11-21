@@ -17,6 +17,7 @@ import view.Navbar;
 import view.menu_item_view_admin.MenuItemAddView;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
+import view.order_management.OrderManagementView;
 
 public class Main extends Application {
 	private Scene scene;
@@ -45,9 +46,17 @@ public class Main extends Application {
 		mainPane = new BorderPane();
 		scene = new Scene(mainPane, 1080, 720);
 		
+
 		if(UserController.getCurrentUser() != null) {
 			mainPane.setTop(new Navbar());
-			mainPane.setCenter(new MenuCustomerView());
+			if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer") || 
+					UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin")) {
+				mainPane.setCenter(new MenuCustomerView());
+			}
+			else {
+				mainPane.setCenter(new OrderManagementView());
+			}
+			
 		}
 		else {
 			mainPane.setCenter(new LoginView()); 

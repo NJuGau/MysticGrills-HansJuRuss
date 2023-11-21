@@ -57,6 +57,7 @@ public class Navbar extends MenuBar{
 			
 			this.getMenus().addAll(menuItemManagementMenu, userManagementMenu, logoutMenu);
 		}
+
 		else if(UserController.getCurrentUser().getUserRole().equals("Cashier") || UserController.getCurrentUser().getUserRole().equals("Chef") || UserController.getCurrentUser().getUserRole().equals("Waiter")) {
 			orderManagementLbl = new Label("Order Management");
 			orderManagementMenu = new Menu("", orderManagementLbl);
