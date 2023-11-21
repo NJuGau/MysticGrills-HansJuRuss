@@ -21,9 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Callback;
 import main.Main;
 import model.MenuItem;
-import view.menu_item_view_admin.MenuItemDeleteView;
-import view.menu_item_view_admin.MenuItemUpdateView;
-import view.receipt_cashier.ReceiptManagementView;
+import view.order_management.OrderManagementView;
 
 public class MenuCustomerView extends BorderPane {
 	private Label titleLbl;
@@ -35,7 +33,7 @@ public class MenuCustomerView extends BorderPane {
 				initTable();
 		}
 		else { // We don't want to chef or Waiters or Cashier make a new order so we disable Menu
-			Main.getMainPane().setCenter(new ReceiptManagementView());
+			Main.getMainPane().setCenter(new OrderManagementView());
 			return;
 		}
 	}
