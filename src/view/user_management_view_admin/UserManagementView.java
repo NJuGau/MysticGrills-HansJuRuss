@@ -118,10 +118,6 @@ public class UserManagementView extends BorderPane {
 		table.getColumns().addAll(idColumn, nameColumn, emailColumn, passwordColumn, roleColumn, removeAction, changeRoleAction);
 		
 		userList = UserController.getAllUsers();
-		//Temporary only a.k.a. dummy data
-		userList.add(new User(1, "Admin", "Budi", "Budi@sinub.ac.id", "bUd1"));
-		userList.add(new User(2, "Chef", "Jono", "Jono@sinub.ac.id", "joN0"));
-		userList.add(new User(3, "Customer", "Rita", "Rita@sinub.ac.id", "r1tA"));
 		
 		userData = FXCollections.observableArrayList(userList);
 		table.setItems(userData);		

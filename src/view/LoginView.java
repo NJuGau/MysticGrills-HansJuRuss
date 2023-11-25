@@ -16,6 +16,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
 import model.User;
+import view.menu_item_view_admin.MenuItemManagementView;
+import view.menu_item_view_customer.MenuCustomerView;
+import view.order_management.OrderManagementView;
 
 public class LoginView extends BorderPane {
 	
@@ -71,6 +74,13 @@ public class LoginView extends BorderPane {
 			if(user != null) {
 				UserController.setCurrentUser(user);
 				Main.getMainPane().setTop(new Navbar());
+				if(user.getUserRole().equals("Customer")) {
+					Main.getMainPane().setCenter(new MenuCustomerView());
+				}else if(user.getUserRole().equals("Admin")) {
+					Main.getMainPane().setCenter(new MenuItemManagementView());
+				}else if(user.getUserRole().equals("Waiter") || user.getUserRole().equals("Cashier") && user.getUserRole().equals("Chef")) {
+					Main.getMainPane().setCenter(new OrderManagementView());
+				}
 			}else {
 				errorLbl.setText("User credential invalid");
 			}

@@ -46,22 +46,21 @@ public class Main extends Application {
 		mainPane = new BorderPane();
 		scene = new Scene(mainPane, 1080, 720);
 		
-
-		if(UserController.getCurrentUser() != null) {
-			mainPane.setTop(new Navbar());
-			if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer") || 
-					UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin")) {
-				mainPane.setCenter(new MenuCustomerView());
-			}
-			else {
-				mainPane.setCenter(new OrderManagementView());
-			}
-			
-		}
-		else {
-			mainPane.setCenter(new LoginView()); 
-		}
-		
+//		if(UserController.getCurrentUser() != null) {
+//			mainPane.setTop(new Navbar());
+//			if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer") || 
+//					UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin")) {
+//				mainPane.setCenter(new MenuCustomerView());
+//			}
+//			else {
+//				mainPane.setCenter(new OrderManagementView());
+//			}
+//			
+//		}
+//		else {
+//			mainPane.setCenter(new LoginView()); 
+//		}
+		mainPane.setCenter(new LoginView());
 		arg0.setTitle("Mystic Grills");
 		arg0.setResizable(false);
 		arg0.getIcons().clear();

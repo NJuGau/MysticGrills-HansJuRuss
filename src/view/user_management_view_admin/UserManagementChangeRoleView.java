@@ -19,7 +19,7 @@ import view.LoginView;
 public class UserManagementChangeRoleView extends BorderPane{
 	
 	private GridPane contentPane;
-	private Label titleLbl, idLbl, idContentLbl, nameLbl, nameContentLbl, emailLbl, emailContentLbl, passwordLbl, passwordContentLbl, roleLbl;
+	private Label titleLbl, idLbl, idContentLbl, nameLbl, nameContentLbl, emailLbl, emailContentLbl, passwordLbl, passwordContentLbl, roleLbl, errorLbl;
 	
 	private ComboBox<String> roleComboBox;
 	
@@ -44,6 +44,7 @@ public class UserManagementChangeRoleView extends BorderPane{
 		passwordLbl = new Label("Password: ");
 		passwordContentLbl = new Label(user.getUserPassword());
 		roleLbl = new Label("Role: ");
+		errorLbl = new Label();
 		
 		roleComboBox = new ComboBox<String>();
 		roleComboBox.getItems().addAll("Admin", "Chef", "Waiter", "Cashier", "Customer");
@@ -66,6 +67,7 @@ public class UserManagementChangeRoleView extends BorderPane{
 		contentPane.add(passwordContentLbl, 1, 3);
 		contentPane.add(roleLbl, 0, 4);
 		contentPane.add(roleComboBox, 1, 4);
+		contentPane.add(errorLbl, 0, 5, 2, 1);
 		
 		idLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
 		nameLbl.setFont(Font.font("Arial", FontWeight.BOLD, BASELINE_OFFSET_SAME_AS_HEIGHT));
@@ -93,8 +95,13 @@ public class UserManagementChangeRoleView extends BorderPane{
 		this.setBottom(btnGroup);
 		
 		updateBtn.setOnAction(e -> {
-			UserController.updateUser(user.getUserId(), roleComboBox.getValue(), user.getUserName(), user.getUserEmail(), user.getUserPassword());
-			Main.getMainPane().setCenter(new UserManagementView());
+			System.out.println(roleComboBox.getValue());
+			String err = UserController.updateUser(user.getUserId(), roleComboBox.getValue(), user.getUserName(), user.getUserEmail(), user.getUserPassword());
+			if(err == null) {
+				Main.getMainPane().setCenter(new UserManagementView());
+			}else {
+				errorLbl.setText(err);
+			}
 		});
 		
 		cancelBtn.setOnAction(e ->{
