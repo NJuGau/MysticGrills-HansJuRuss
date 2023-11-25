@@ -110,7 +110,7 @@ public class UserController {
 	}
 	
 	private static String validateUserRole(String userRole) {
-		if(!(userRole.equals("Admin") && userRole.equals("Chef") && userRole.equals("Waiter") && userRole.equals("Cashier") && userRole.equals("Customer"))) {
+		if(!userRole.equals("Admin") && !userRole.equals("Chef") && !userRole.equals("Waiter") && !userRole.equals("Cashier") && !userRole.equals("Customer")) {
 			return "User role must be Admin, Chef, Waiter, Cashier, or Customer";
 		}
 		return null;
