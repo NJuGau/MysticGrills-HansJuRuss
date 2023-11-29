@@ -1,6 +1,11 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
+
+import controller.MenuItemController;
+import database.Connect;
 
 public class OrderItem {
 	private Integer orderId;
@@ -40,29 +45,54 @@ public class OrderItem {
 	
 	// CRUD
 	public static String createOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
-		// TODO add SQL Query to add orderItem to Database
-		// Don't forget to update orderTotal in order in database
+		String query = String.format("INSERT INTO `orderItem` (orderId, menuItemId, quantity) VALUES ('%d', '%d', '%s')", 
+				orderId, menuItem.getMenuItemId(), quantity);
+		Connect.getConnection().executeUpdate(query);
+		
+//		// Don't forget to update orderTotal in order in database
+//		String updateOrderTotalQuery = String.format("UPDATE `order` SET orderTotal = orderTotal + 1"
+//				+ "WHERE orderId = '%d'", orderId);
+//		Connect.getConnection().executeUpdate(updateOrderTotalQuery);
 		
 		return null;
 	}
 	
 	public static String updateOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
-		// TODO add SQL Query to update orderItem to database
+		String query = String.format("UPDATE `orderItem` SET menuItemId = '%d', quantity = '%d' WHERE orderId = '%d'", menuItem.getMenuItemId(), quantity, orderId);
+		Connect.getConnection().executeUpdate(query);
 		
 		return null;
 	}
 	
 	public static String deleteOrderItem(Integer orderId) {
-		// TODO add SQL Query to delete orderItem from database
-		// Don't forget to update orderTotal in order in database
+		String query = String.format("DELETE FROM `orderItem` WHERE orderId  = '%d'", orderId);
+		Connect.getConnection().executeUpdate(query);
+		
+//		// Don't forget to update orderTotal in order in database
+//		String updateOrderTotalQuery = String.format("UPDATE `order` SET orderTotal = orderTotal - 1"
+//				+ "WHERE orderId = '%d'", orderId);
+//		Connect.getConnection().executeUpdate(updateOrderTotalQuery);
 		
 		return null;
 	}
 	
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(Integer orderId) {
-		// TODO add SQL Query to get all order item by orderId from database
+		String query = String.format("SELECT * FROM `orderItem` WHERE orderId = '%d'", orderId);
+		ResultSet res = Connect.getConnection().executeQuery(query);
+		Vector<OrderItem> orderList = new Vector<OrderItem>();
 		
-		return new Vector<OrderItem>();
+		try {
+			while(res.next()) {
+				model.MenuItem menuItem = MenuItemController.getMenuItemByID(res.getInt(2));
+				Integer quantity = res.getInt(3);
+				
+				orderList.add(new OrderItem(orderId, menuItem, quantity));
+			}
+			return orderList;
+			
+		} catch (SQLException e) {
+			return null;
+		}
 	}
 	
 

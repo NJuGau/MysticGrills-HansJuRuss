@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
+import model.Order;
 import model.OrderItem;
 import view.menu_item_view_customer.MenuCustomerView;
 
@@ -79,7 +80,7 @@ public class OrderItemsUpdateView extends BorderPane{
 		// Show Back Button
 		backBtn = new Button("Back");
 		backBtn.setOnAction(event -> {
-			Main.getMainPane().setCenter(new OrderListView());
+			Main.getMainPane().setCenter(new OrderDetailsView(Order.getOrderByOrderId(orderItem.getOrderId())));
 		});
 		
 		bottomContainer.getChildren().addAll(submitBtn, backBtn);
@@ -106,7 +107,7 @@ public class OrderItemsUpdateView extends BorderPane{
 		menuItemNameTxt = new Label(orderItem.getMenuItem().getMenuItemName());
 		menuItemDescTxt = new Label(orderItem.getMenuItem().getMenuItemDescription());
 		menuItemPriceTxt = new Label(orderItem.getMenuItem().getMenuItemPrice().toString());
-		qtySpinner = new Spinner<Integer>(1, Integer.MAX_VALUE, 1);
+		qtySpinner = new Spinner<Integer>(0, Integer.MAX_VALUE, 1);
 		
 		qtyValue = orderItem.getQuantity();
 		qtySpinner.getValueFactory().setValue(orderItem.getQuantity());
