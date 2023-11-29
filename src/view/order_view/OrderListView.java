@@ -39,7 +39,7 @@ public class OrderListView extends BorderPane{
 			initTable();
 			// Get orderID which order status is empty
 			for(Order o : orderList) {
-				if(o.getOrderStatus().isEmpty()) {
+				if(o.getOrderStatus().equalsIgnoreCase("null")) {
 					orderID = o.getOrderId();
 					break;
 				}
@@ -102,10 +102,6 @@ public class OrderListView extends BorderPane{
 		
 		// set data source untuk table
 		orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
-		
-		orderList.add(new Order(1, UserController.getCurrentUser(), null, "", new Date(Calendar.getInstance().getTimeInMillis())));
-		orderList.add(new Order(2, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
-		orderList.add(new Order(3, UserController.getCurrentUser(), null, "Pending", new Date(Calendar.getInstance().getTimeInMillis())));
 		
 		// observable
 		orderData = FXCollections.observableArrayList(orderList);

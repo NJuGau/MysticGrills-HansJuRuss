@@ -168,27 +168,6 @@ public class OrderManagementView extends BorderPane {
 			receiptList = OrderController.getAllOrders();
 		}
 		
-		//Temporary only a.k.a. dummy data
-		User u1 = new User(3, "Customer", "Rita", "Rita@sinub.ac.id", "r1tA");
-		User u2 = new User(4, "Customer", "Tina", "Tina@sinub.ac.id", "r1tA");
-		
-		MenuItem m1 = new MenuItem(1, "Cola", "Deez Nuts", (double) 50);
-		MenuItem m2 = new MenuItem(2, "Fanta", "Deez Nutss", (double) 100);
-		MenuItem m3 = new MenuItem(3, "Sprite", "Deez Nutsss", (double) 120);
-		
-		Vector<OrderItem> orderList = new Vector<>();
-		orderList.add(new OrderItem(1, m1, 2));
-		orderList.add(new OrderItem(1, m2, 3));
-		
-		Vector<OrderItem> orderList2 = new Vector<>();
-		orderList2.add(new OrderItem(2, m3, 1));
-		
-		Order o1 = new Order(1, u1, orderList, "Prepared", new Date(Calendar.getInstance().getTimeInMillis()));
-		Order o2 = new Order(2, u2, orderList2, "Served", new Date(Calendar.getInstance().getTimeInMillis()));
-		
-		receiptList.add(o1);
-		receiptList.add(o2);
-		
 		receiptData = FXCollections.observableArrayList(receiptList);
 		table.setItems(receiptData);
 	}

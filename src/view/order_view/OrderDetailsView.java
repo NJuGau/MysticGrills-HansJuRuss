@@ -74,6 +74,9 @@ public class OrderDetailsView extends BorderPane{
 			OrderController.updateOrder(order.getOrderId().toString(), order.getOrderItems(), order.getOrderStatus());
 			
 			OrderListView.setOrderID(null);
+			
+			//TODO DElete this only for testing
+			System.out.println(OrderListView.getOrderID());
 			submitStatusLbl.setText("Success");
 			submitStatusLbl.setTextFill(Color.GREEN);
 			submitOrderButton.setDisable(true);
@@ -86,7 +89,7 @@ public class OrderDetailsView extends BorderPane{
 		// if current order status is pending
 		// it means that the user has already submitted, hence the currentOrder can't be editted
 		// or be submitted again
-		if(order.getOrderStatus().isEmpty() == false) {
+		if(order.getOrderStatus().equalsIgnoreCase("null") == false) {
 			submitStatusLbl.setText("Can't edit order because order has been submitted");
 			submitStatusLbl.setTextFill(Color.GREEN);
 			submitOrderButton.setDisable(true);
@@ -189,14 +192,6 @@ public class OrderDetailsView extends BorderPane{
 		
 		// set data source untuk table
 		orderItemList = OrderItemController.getAllOrderItemsByOrderId(order.getOrderId().toString());
-		
-		// Mockup data
-		orderItemList.add(
-				new OrderItem(order.getOrderId(), new MenuItem(1, "Cola", "Deez Nuts", (double) 50), 10));
-		orderItemList.add(
-				new OrderItem(order.getOrderId(), new MenuItem(2, "Fanta", "Deez Nuts", (double) 50), 10));
-		orderItemList.add(
-				new OrderItem(order.getOrderId(), new MenuItem(3, "Coffee", "Deez Nuts", (double) 50), 10));
 		
 		// observable
 		orderItemData = FXCollections.observableArrayList(orderItemList);

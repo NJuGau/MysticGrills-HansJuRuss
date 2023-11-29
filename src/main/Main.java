@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import model.MenuItem;
+import model.Order;
 import model.User;
 import view.LoginView;
 import view.Navbar;
@@ -23,7 +25,7 @@ public class Main extends Application {
 	private Scene scene;
 	private static BorderPane mainPane;
 	
-	private User admin = new User(0, "Admin", "AdminName", "admin@admin.com", "123admin");
+	private User admin = new User(69, "Admin", "AdminName", "admin@admin.com", "123admin");
 	
 	public Main() {
 		// TODO Auto-generated constructor stub
@@ -33,8 +35,6 @@ public class Main extends Application {
 		return mainPane;
 	}
 	
-	
-
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -60,6 +60,8 @@ public class Main extends Application {
 //		else {
 //			mainPane.setCenter(new LoginView()); 
 //		}
+		
+		
 		mainPane.setCenter(new LoginView());
 		arg0.setTitle("Mystic Grills");
 		arg0.setResizable(false);

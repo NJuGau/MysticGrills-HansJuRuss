@@ -141,9 +141,6 @@ public class MenuItemManagementView extends BorderPane {
 		
 		// set data source untuk table
 		menuItemList = MenuItemController.getAllMenuItems();
-		menuItemList.add(new MenuItem(1, "Cola", "Deez Nuts", (double) 50));
-		menuItemList.add(new MenuItem(2, "Fanta", "Deez Nuts", (double) 50));
-		menuItemList.add(new MenuItem(3, "Coffee", "Deez Nuts", (double) 50));
 		
 		// observable
 		menuItemData = FXCollections.observableArrayList(menuItemList);

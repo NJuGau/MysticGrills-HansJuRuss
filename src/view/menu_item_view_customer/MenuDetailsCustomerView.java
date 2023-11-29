@@ -37,6 +37,7 @@ public class MenuDetailsCustomerView extends BorderPane{
 
 	public MenuDetailsCustomerView(model.MenuItem item) {	
 		this.item = item;
+		System.out.println(OrderListView.getOrderID());
 		
 		showTopComponent();
 		this.setTop(titleLbl);
@@ -64,6 +65,8 @@ public class MenuDetailsCustomerView extends BorderPane{
 			if(OrderListView.getOrderID() == null) {
 				OrderListView.setOrderID(OrderController.createOrder(
 						UserController.getCurrentUser(), null, new Date(Calendar.getInstance().getTimeInMillis())));
+				// TODO DELETE this for testing only
+				System.out.println(OrderListView.getOrderID());
 			}
 			
 			// Add menu item that is bought into database
