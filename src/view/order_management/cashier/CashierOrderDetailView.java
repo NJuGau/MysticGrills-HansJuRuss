@@ -105,6 +105,7 @@ public class CashierOrderDetailView extends BorderPane {
 		
 		payBtn.setOnAction(e ->{
 			//TODO: Check for amount so it didnt throw exception
+			System.out.println("help");
 			try {
 				double amount = Double.parseDouble(paymentAmountTxt.getText());
 				String retVal = ReceiptController.createReceipt(order, paymentTypeBox.getValue(), amount, new Date(Calendar.getInstance().getTimeInMillis()));
@@ -115,6 +116,7 @@ public class CashierOrderDetailView extends BorderPane {
 					Main.getMainPane().setCenter(new ReceiptDetailView(receipt));
 				} catch (NumberFormatException e1) {
 					//It is wrong, go to validation
+					System.out.println("receipt is not made lol");
 					errorLbl.setText(retVal);
 				}
 			} catch (NumberFormatException e1) {

@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -52,17 +53,24 @@ public class User {
 	}
 	
 	public static String deleteUser(Integer userId) {
-		String query = String.format("DELETE FROM `user` WHERE userId = %d", userId);
-		Connect.getConnection().executeUpdate(query);
+		String query = "DELETE FROM `user` WHERE userId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setInt(1, userId);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
 		return null;
 	}
 	
 	public static User getUserById(Integer userId) {
-		String query = String.format("SELECT * FROM `user` WHERE userId = %d", userId);
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		String query = "SELECT * FROM `user` WHERE userId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		User u = null;
 		try {
-			//TODO: Test first
+			ps.setInt(1, userId);
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			res.next();
 			int id = res.getInt("userId");
 			String role = res.getString("userRole");
@@ -71,29 +79,49 @@ public class User {
 			String password = res.getString("userPassword");
 			u = new User(id, role, name, email, password);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		return u;
 	}
 	
 	public static String createUser(String userRole, String userName, String userEmail, String userPassword) {
-		String query = String.format("INSERT INTO `user` (userRole, userName, userEmail, userPassword) VALUES ('%s', '%s', '%s', '%s')", userRole, userName, userEmail, userPassword);
-		Connect.getConnection().executeUpdate(query);
+		String query = "INSERT INTO `user` (userRole, userName, userEmail, userPassword) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setString(1, userRole);
+			ps.setString(2, userName);
+			ps.setString(3, userEmail);
+			ps.setString(4, userPassword);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
 		return null;
 	}
 	
 	public static String updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
-		String query = String.format("UPDATE `user` SET userRole = '%s', userName = '%s', userEmail = '%s', userPassword = '%s' WHERE userId = %d", userRole, userName, userEmail, userPassword, userId);
-		Connect.getConnection().executeUpdate(query);
+		String query = "UPDATE `user` SET userRole = ?, userName = ?, userEmail = ?, userPassword = ? WHERE userId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		
+		try {
+			ps.setString(1, userRole);
+			ps.setString(2, userName);
+			ps.setString(3, userEmail);
+			ps.setString(4, userPassword);
+			ps.setInt(5, userId);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
 		return null;
 	}
 	
 	public static Vector<User> getAllUsers(){
 		Vector<User> userList = new Vector<User>();
 		String query = "SELECT * FROM `user`";
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			while(res.next()) {
 				int id = res.getInt("userId");
 				String role = res.getString("userRole");
@@ -104,29 +132,30 @@ public class User {
 				userList.add(u);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		return userList;
 	}
 	
 	public static User authenticateUser(String userEmail, String userPassword) {
-		String query = String.format("SELECT * FROM `user` WHERE userEmail = '%s' AND userPassword = '%s'", userEmail, userPassword);
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		String query = "SELECT * FROM `user` WHERE userEmail = ? AND userPassword = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		User u = null;
 		try {
-			//TODO: Test first
+			ps.setString(1, userEmail);
+			ps.setString(2, userPassword);
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			while(res.next()) {
 			int id = res.getInt("userId");
 			String role = res.getString("userRole");
 			String name = res.getString("userName");
 			String email = res.getString("userEmail");
 			String password = res.getString("userPassword");
-			User u = new User(id, role, name, email, password);
-			return u;
+			u = new User(id, role, name, email, password);
 			}
 		} catch (SQLException e) {
 			return null;
 		}
-		return null;
+		return u;
 	}
 }

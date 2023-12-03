@@ -25,8 +25,6 @@ public class Main extends Application {
 	private Scene scene;
 	private static BorderPane mainPane;
 	
-	private User admin = new User(69, "Admin", "AdminName", "admin@admin.com", "123admin");
-	
 	public Main() {
 		// TODO Auto-generated constructor stub
 	}
@@ -41,26 +39,9 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		//TEMPORARY
-		UserController.setCurrentUser(admin);
+		
 		mainPane = new BorderPane();
 		scene = new Scene(mainPane, 1080, 720);
-		
-//		if(UserController.getCurrentUser() != null) {
-//			mainPane.setTop(new Navbar());
-//			if(UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Customer") || 
-//					UserController.getCurrentUser().getUserRole().equalsIgnoreCase("Admin")) {
-//				mainPane.setCenter(new MenuCustomerView());
-//			}
-//			else {
-//				mainPane.setCenter(new OrderManagementView());
-//			}
-//			
-//		}
-//		else {
-//			mainPane.setCenter(new LoginView()); 
-//		}
-		
 		
 		mainPane.setCenter(new LoginView());
 		arg0.setTitle("Mystic Grills");

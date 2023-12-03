@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -45,9 +46,16 @@ public class OrderItem {
 	
 	// CRUD
 	public static String createOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
-		String query = String.format("INSERT INTO `orderItem` (orderId, menuItemId, quantity) VALUES ('%d', '%d', '%s')", 
-				orderId, menuItem.getMenuItemId(), quantity);
-		Connect.getConnection().executeUpdate(query);
+		String query = "INSERT INTO `orderItem` (orderId, menuItemId, quantity) VALUES (?, ?, ?)";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setInt(1, orderId);
+			ps.setInt(2, menuItem.getMenuItemId());
+			ps.setInt(3, quantity);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
 		
 //		// Don't forget to update orderTotal in order in database
 //		String updateOrderTotalQuery = String.format("UPDATE `order` SET orderTotal = orderTotal + 1"
@@ -58,15 +66,29 @@ public class OrderItem {
 	}
 	
 	public static String updateOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
-		String query = String.format("UPDATE `orderItem` SET menuItemId = '%d', quantity = '%d' WHERE orderId = '%d'", menuItem.getMenuItemId(), quantity, orderId);
-		Connect.getConnection().executeUpdate(query);
-		
+		String query = "UPDATE `orderItem` SET menuItemId = ?, quantity = ? WHERE orderId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setInt(1, menuItem.getMenuItemId());
+			ps.setInt(2, quantity);
+			ps.setInt(3, orderId);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
+		//TODO: Don't forget to update orderTotal in order in database
 		return null;
 	}
 	
 	public static String deleteOrderItem(Integer orderId) {
-		String query = String.format("DELETE FROM `orderItem` WHERE orderId  = '%d'", orderId);
-		Connect.getConnection().executeUpdate(query);
+		String query = "DELETE FROM `orderItem` WHERE orderId  = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setInt(1, orderId);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
 		
 //		// Don't forget to update orderTotal in order in database
 //		String updateOrderTotalQuery = String.format("UPDATE `order` SET orderTotal = orderTotal - 1"
@@ -77,11 +99,13 @@ public class OrderItem {
 	}
 	
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(Integer orderId) {
-		String query = String.format("SELECT * FROM `orderItem` WHERE orderId = '%d'", orderId);
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		String query = "SELECT * FROM `orderItem` WHERE orderId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		Vector<OrderItem> orderList = new Vector<OrderItem>();
 		
 		try {
+			ps.setInt(1, orderId);
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			while(res.next()) {
 				model.MenuItem menuItem = MenuItemController.getMenuItemByID(res.getInt(2));
 				Integer quantity = res.getInt(3);

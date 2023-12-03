@@ -20,7 +20,7 @@ public class ReceiptController {
 			return typeValidation;
 		}
 		//if all is correct, return the newly created receipt ID, in String
-		return ReceiptController.createReceipt(order, receiptPaymentType, receiptPaymentAmount, receiptPaymentDate);
+		return Receipt.createReceipt(order, receiptPaymentType, receiptPaymentAmount, receiptPaymentDate).toString();
 	}
 	
 	public static String updateReceipt(Integer orderId, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
@@ -67,6 +67,7 @@ public class ReceiptController {
 		if(paymentAmount < totalPrice) {
 			return "payment amount must be greater than or equal to total price";
 		}
+		System.out.println("amount safe");
 		return null;
 	}
 	
@@ -74,6 +75,7 @@ public class ReceiptController {
 		if(!type.equals("Cash") && !type.equals("Debit") && !type.equals("Credit")) {
 			return "payment type must be either 'Cash', 'Debit', or 'Credit'";
 		}
+		System.out.println("type safe");
 		return null;
 	}
 }

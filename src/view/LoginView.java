@@ -78,7 +78,7 @@ public class LoginView extends BorderPane {
 					Main.getMainPane().setCenter(new MenuCustomerView());
 				}else if(user.getUserRole().equals("Admin")) {
 					Main.getMainPane().setCenter(new MenuItemManagementView());
-				}else if(user.getUserRole().equals("Waiter") || user.getUserRole().equals("Cashier") && user.getUserRole().equals("Chef")) {
+				}else if(user.getUserRole().equals("Waiter") || user.getUserRole().equals("Cashier") || user.getUserRole().equals("Chef")) {
 					Main.getMainPane().setCenter(new OrderManagementView());
 				}
 			}else {

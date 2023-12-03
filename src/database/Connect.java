@@ -34,27 +34,24 @@ public final class Connect {
 	public static synchronized Connect getConnection() {
 		return connect = (connect == null) ? new Connect() : connect;
 	}
-
-	public ResultSet executeQuery(String query) {
-			try {
-				st = con.createStatement();
-				rs = st.executeQuery(query);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	
+	public ResultSet executeQuery(PreparedStatement ps) {
+		try {
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return rs;
 	}
 
-	public void executeUpdate(String query) {
-			try {
-				st = con.createStatement();
-				st.executeUpdate(query);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+	public void executeUpdate(PreparedStatement ps) {
+		try {
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public PreparedStatement prepareStatement(String query) {
