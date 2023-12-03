@@ -39,7 +39,7 @@ public class OrderManagementView extends BorderPane {
 	private Label titleLbl;
 	private TableView<Order> table;
 	private ObservableList<Order> receiptData;
-	private Vector<Order> receiptList;
+	private Vector<Order> orderList;
 	
 	public OrderManagementView() {
 		if(!UserController.getCurrentUser().getUserRole().equals("Cashier") && !UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
@@ -60,6 +60,8 @@ public class OrderManagementView extends BorderPane {
 
 	@SuppressWarnings("unchecked")
 	private void initTable() {
+		orderList = new Vector<Order>();
+		Vector<Order> allOrder = OrderController.getAllOrders();
 		table = new TableView<Order>();
 		TableColumn<Order, Integer> orderIdColumn = new TableColumn<Order, Integer>("Order ID");
 		orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
@@ -101,8 +103,12 @@ public class OrderManagementView extends BorderPane {
 			});
 			table.getColumns().addAll(orderIdColumn, dateColumn, customerNameColumn, statusColumn, totalColumn, payAction);
 			
-			//TODO: Get 'Pending' order
-			receiptList = OrderController.getAllOrders();
+			for(Order o: allOrder) {
+				if(o.getOrderStatus().equals("Pending")) {
+					orderList.add(o);
+				}
+			}
+			
 		}else if(UserController.getCurrentUser().getUserRole().equals("Chef")) {
 			TableColumn<Order, String> prepareAction = new TableColumn<Order, String>("View Detail");
 			prepareAction.setCellFactory(new Callback<TableColumn<Order, String>, TableCell<Order, String>>() {
@@ -132,8 +138,11 @@ public class OrderManagementView extends BorderPane {
 			});
 			table.getColumns().addAll(orderIdColumn, dateColumn, customerNameColumn, statusColumn, totalColumn, prepareAction);
 			
-			//TODO: Get 'Paid' order
-			receiptList = OrderController.getAllOrders();
+			for(Order o: allOrder) {
+				if(o.getOrderStatus().equals("Paid")) {
+					orderList.add(o);
+				}
+			}
 			
 		}else if(UserController.getCurrentUser().getUserRole().equals("Waiter")) {
 			TableColumn<Order, String> serveAction = new TableColumn<Order, String>("View Detail");
@@ -164,11 +173,14 @@ public class OrderManagementView extends BorderPane {
 			});
 			table.getColumns().addAll(orderIdColumn, dateColumn, customerNameColumn, statusColumn, totalColumn, serveAction);
 			
-			//TODO: Get 'Prepared' order
-			receiptList = OrderController.getAllOrders();
+			for(Order o: allOrder) {
+				if(o.getOrderStatus().equals("Prepared")) {
+					orderList.add(o);
+				}
+			}
 		}
 		
-		receiptData = FXCollections.observableArrayList(receiptList);
+		receiptData = FXCollections.observableArrayList(orderList);
 		table.setItems(receiptData);
 	}
 }

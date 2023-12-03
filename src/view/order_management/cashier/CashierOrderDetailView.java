@@ -113,10 +113,10 @@ public class CashierOrderDetailView extends BorderPane {
 				try {
 					id = Integer.parseInt(retVal);
 					Receipt receipt = ReceiptController.getReceiptById(id);
+					Order.updateOrder(order.getOrderId(), null, "Paid"); //TODO: Fix update order item
 					Main.getMainPane().setCenter(new ReceiptDetailView(receipt));
 				} catch (NumberFormatException e1) {
 					//It is wrong, go to validation
-					System.out.println("receipt is not made lol");
 					errorLbl.setText(retVal);
 				}
 			} catch (NumberFormatException e1) {
