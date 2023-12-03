@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -76,41 +77,65 @@ public class Order {
 
 	// CRUD Method
 	public static Integer createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
-		String query = String.format("INSERT INTO `order` (userId, orderStatus, orderDate, orderTotal) VALUES ('%d', '%s', '%s', %f)", 
-				orderUser.getUserId(), "null", orderDate, 0.0);
-		Connect.getConnection().executeUpdate(query);
+		String query = "INSERT INTO `order` (userId, orderStatus, orderDate, orderTotal) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setInt(1, orderUser.getUserId());
+			ps.setString(2, "null");
+			ps.setDate(3, orderDate);
+			ps.setDouble(4, 0.0);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e1) {
+			return null;
+		}
 		
 		String lastInsertedIdQuery = "SELECT LAST_INSERT_ID()";
-		ResultSet res = Connect.getConnection().executeQuery(lastInsertedIdQuery);
+		ps = Connect.getConnection().prepareStatement(lastInsertedIdQuery);
 		
 		try {
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			res.next();
 			return res.getInt(1);
-			
 		} catch (SQLException e) {
 			return null;
 		}
 	}
 	
 	public static String updateOrder(Integer orderId, Vector<OrderItem> orderItems, String orderStatus) {
-		String query = String.format("UPDATE `order` SET orderStatus = '%s' "
-				+ "WHERE orderId = '%d'", orderStatus, orderId);
-		Connect.getConnection().executeUpdate(query);
+		String query = "UPDATE `order` SET orderStatus = ? WHERE orderId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setString(1, orderStatus);
+			ps.setInt(2, orderId);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
+		
+		//TODO: update order detail (?)
 		return null;
 	}
 	
 	public static String deleteOrder(Integer orderId) {
-		String query = String.format("DELETE FROM `order` WHERE orderId  = '%d'", orderId);
-		Connect.getConnection().executeUpdate(query);
+		String query = "DELETE FROM `order` WHERE orderId  = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setInt(1, orderId);
+			Connect.getConnection().executeUpdate(ps);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
 		return null;
 	}
 	
 	public static Vector<Order> getOrdersByCustomerId(Integer customerId) {
-		String query = String.format("SELECT * FROM `order` WHERE userId = '%d'", customerId);
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		String query = "SELECT * FROM `order` WHERE userId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		Vector<Order> orderList = new Vector<Order>();
 		
 		try {
+			ps.setInt(1, customerId);
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			while(res.next()) {
 				Integer orderId = res.getInt(1);
 				User orderUser = User.getUserById(res.getInt(2));
@@ -130,11 +155,12 @@ public class Order {
 	}
 	
 	public static Vector<Order> getAllOrders() {
-		String query = String.format("SELECT * FROM `order`");
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		String query = "SELECT * FROM `order`";
 		Vector<Order> orderList = new Vector<Order>();
 		
 		try {
+			PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			while(res.next()) {
 				Integer orderId = res.getInt(1);
 				User orderUser = User.getUserById(res.getInt(2));
@@ -153,10 +179,12 @@ public class Order {
 	}
 	
 	public static Order getOrderByOrderId(Integer orderId) {
-		String query = String.format("SELECT * FROM `order` WHERE orderId  = '%d'", orderId);
-		ResultSet res = Connect.getConnection().executeQuery(query);
+		String query = "SELECT * FROM `order` WHERE orderId  = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		
 		try {
+			ps.setInt(1, orderId);
+			ResultSet res = Connect.getConnection().executeQuery(ps);
 			res.next();
 			User orderUser = User.getUserById(res.getInt(2));
 			Vector<OrderItem> orderItems = OrderItem.getAllOrderItemsByOrderId(orderId);
