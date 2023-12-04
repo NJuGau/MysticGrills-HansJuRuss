@@ -22,5 +22,32 @@ public class ReceiptDetailView extends BorderPane {
 		titleLbl = new Label("Order Detail");
 		receiptIdLbl = new Label("Receipt Id: ");
 		receiptIdContentLbl = new Label(receipt.getReceiptId().toString());
+		orderIdLbl = new Label("Order Id: ");
+		orderIdContentLbl = new Label(receipt.getReceiptOrder().getOrderId().toString());
+		nameLbl = new Label("Customer Name: ");
+		nameContentLbl = new Label(receipt.getReceiptOrder().getOrderUser().getUserName());
+		statusLbl = new Label("Order Status: ");
+		statusContentLbl = new Label(receipt.getReceiptOrder().getOrderStatus());
+		paymentDateLbl = new Label("Payment Date: ");
+		paymentDateContentLbl = new Label(receipt.getReceiptPaymentDate().toString());
+		paymentAmountLbl = new Label("Paid Amount: ");
+		paymentAmountContentLbl = new Label(receipt.getReceiptPaymentAmount().toString());
+		paymentTypeLbl = new Label("Payment Type: ");
+		paymentTypeContentLbl = new Label(receipt.getReceiptPaymentType());
+		totalPriceLbl = new Label("Total Price: ");
+		totalPriceContentLbl = new Label(receipt.getReceiptOrder().getOrderTotal().toString());
+		
+		backBtn = new Button("Back to order management table");
+		contentBox = new VBox();
+		headerPane = new GridPane();
+		paymentPane = new GridPane();
+		
+		initTable();
+		
+	}
+
+	private void initTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }
