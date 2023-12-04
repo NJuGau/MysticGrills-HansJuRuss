@@ -72,7 +72,7 @@ public class ReceiptController {
 	}
 	
 	private static String validateReceiptType(String type) {
-		if(!type.equals("Cash") && !type.equals("Debit") && !type.equals("Credit")) {
+		if(type == null || (!type.equals("Cash") && !type.equals("Debit") && !type.equals("Credit"))) {
 			return "payment type must be either 'Cash', 'Debit', or 'Credit'";
 		}
 		System.out.println("type safe");
