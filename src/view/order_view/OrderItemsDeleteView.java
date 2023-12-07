@@ -87,7 +87,7 @@ public class OrderItemsDeleteView extends BorderPane{
 		submitBtn.setMinWidth(100);
 		submitBtn.setOnAction(event -> {
 			
-			String status = OrderItemController.deleteOrderItem(orderItem.getOrderId().toString());
+			String status = OrderItemController.deleteOrderItem(orderItem.getOrderId().toString(), orderItem.getMenuItem().getMenuItemId().toString());
 			
 			if(status == null) {
 				submitBtn.setDisable(true);

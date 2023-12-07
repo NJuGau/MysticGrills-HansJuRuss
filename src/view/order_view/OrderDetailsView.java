@@ -50,10 +50,6 @@ public class OrderDetailsView extends BorderPane{
 		this.setCenter(middlePane);
 		showOrderData();
 		
-		// TODO if customer satisfied with all the orders, customer should click submit button here
-		// then set currentOrderId to null
-		// so that if customer add new orderItem, it should create new order
-		// TODO add button to add new order too (just navigate to menus page)
 		showActionButton();
 		
 		initTable();
