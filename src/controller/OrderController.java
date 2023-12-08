@@ -9,7 +9,6 @@ import model.OrderItem;
 import model.User;
 
 public class OrderController {
-	private static Vector<Order> orderList = new Vector<>();
 	private static Integer orderID = null;
 
 	public static Integer createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
@@ -44,10 +43,6 @@ public class OrderController {
 		
 		return Order.getOrderByOrderId(orderId);
 	}
-	
-	public static Vector<Order> getActiveUserOrderList() {
-		return orderList;
-	}
 
 	public static Integer calculateCurrentOrderTotal(Vector<OrderItem> orders) {
 		Integer total = 0;
@@ -60,13 +55,14 @@ public class OrderController {
 	}
 	
 	public static void getPendingOrder() {
-		orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
+		Vector<Order> orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
 		for(Order o : orderList) {
 			if(o.getOrderStatus().equalsIgnoreCase("null")) {
 				orderID = o.getOrderId();
-				break;
+				return;
 			}
 		}
+		orderID = null;
 	}
 	
 	public static Integer getOrderID() {
