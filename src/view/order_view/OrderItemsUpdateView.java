@@ -58,7 +58,7 @@ public class OrderItemsUpdateView extends BorderPane{
 				status = null;
 			}
 			else if(qtySpinner.getValue() <= 0) {
-				status = OrderItemController.deleteOrderItem(orderItem.getOrderId().toString());
+				status = OrderItemController.deleteOrderItem(orderItem.getOrderId().toString(), orderItem.getMenuItem().getMenuItemId().toString());
 			}
 			else {
 				status = OrderItemController.updateOrderItem(orderItem.getOrderId().toString(), orderItem.getMenuItem(), qtySpinner.getValue().toString());

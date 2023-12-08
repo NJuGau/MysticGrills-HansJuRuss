@@ -66,12 +66,12 @@ public class OrderItem {
 	}
 	
 	public static String updateOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
-		String query = "UPDATE `orderItem` SET menuItemId = ?, quantity = ? WHERE orderId = ?";
+		String query = "UPDATE `orderItem` SET quantity = ? WHERE orderId = ? AND menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
-			ps.setInt(1, menuItem.getMenuItemId());
-			ps.setInt(2, quantity);
-			ps.setInt(3, orderId);
+			ps.setInt(1, quantity);
+			ps.setInt(2, orderId);
+			ps.setInt(3, menuItem.getMenuItemId());
 			Connect.getConnection().executeUpdate(ps);
 		} catch (SQLException e) {
 			return "Query failed";
@@ -80,11 +80,12 @@ public class OrderItem {
 		return null;
 	}
 	
-	public static String deleteOrderItem(Integer orderId) {
-		String query = "DELETE FROM `orderItem` WHERE orderId  = ?";
+	public static String deleteOrderItem(Integer orderId, Integer menuItemId) {
+		String query = "DELETE FROM `orderItem` WHERE orderId  = ? AND menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
 			ps.setInt(1, orderId);
+			ps.setInt(2, menuItemId);
 			Connect.getConnection().executeUpdate(ps);
 		} catch (SQLException e) {
 			return "Query failed";

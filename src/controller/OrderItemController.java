@@ -7,6 +7,7 @@ import model.OrderItem;
 public class OrderItemController {
 
 	public static String createOrderItem(String orderId, model.MenuItem menuItem, String quantity) {
+		
 		if(menuItem == null) {
 			return "Menu Item must be chosen";
 		}
@@ -21,6 +22,15 @@ public class OrderItemController {
 		
 		if(orderId.isEmpty()) {
 			return "Order ID can't be empty";
+		}
+		
+		// If menuitem has been added to cart, update the quantity
+		Vector<OrderItem> orderItem = OrderItem.getAllOrderItemsByOrderId(Integer.parseInt(orderId));
+		for(OrderItem items: orderItem) {
+			if(items.getMenuItem().getMenuItemId().equals(menuItem.getMenuItemId())) {
+				Integer updatedQuantity = Integer.parseInt(quantity) + items.getQuantity();
+				return OrderItem.updateOrderItem(Integer.parseInt(orderId), menuItem, updatedQuantity);
+			}
 		}
 		
 		return OrderItem.createOrderItem(Integer.parseInt(orderId), menuItem, Integer.parseInt(quantity));
@@ -46,12 +56,16 @@ public class OrderItemController {
 		return OrderItem.updateOrderItem(Integer.parseInt(orderId), menuItem, Integer.parseInt(quantity));
 	}
 	
-	public static String deleteOrderItem(String orderId) {
+	public static String deleteOrderItem(String orderId, String menuItemId) {
 		if(orderId.isEmpty()) {
 			return "Order ID can't be empty";
 		}
 		
-		return OrderItem.deleteOrderItem(Integer.parseInt(orderId));
+		if(menuItemId.isEmpty()) {
+			return "Menu Item ID can't be empty";
+		}
+		
+		return OrderItem.deleteOrderItem(Integer.parseInt(orderId), Integer.parseInt(menuItemId));
 	}
 	
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(String orderId) {
