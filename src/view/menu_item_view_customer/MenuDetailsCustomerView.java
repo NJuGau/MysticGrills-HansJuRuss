@@ -37,7 +37,7 @@ public class MenuDetailsCustomerView extends BorderPane{
 
 	public MenuDetailsCustomerView(model.MenuItem item) {	
 		this.item = item;
-		System.out.println(OrderListView.getOrderID());
+		System.out.println(OrderController.getOrderID());
 		
 		showTopComponent();
 		this.setTop(titleLbl);
@@ -62,16 +62,16 @@ public class MenuDetailsCustomerView extends BorderPane{
 			// If orderID is empty and user click add to orderlist
 			// then create new order row in mysql
 			// should return orderID from newly created orderID in SQL
-			if(OrderListView.getOrderID() == null) {
-				OrderListView.setOrderID(OrderController.createOrder(
+			if(OrderController.getOrderID() == null) {
+				OrderController.setOrderID(OrderController.createOrder(
 						UserController.getCurrentUser(), null, new Date(Calendar.getInstance().getTimeInMillis())));
 				// TODO DELETE this for testing only
-				System.out.println(OrderListView.getOrderID());
+				System.out.println(OrderController.getOrderID());
 			}
 			
 			// Add menu item that is bought into database
 			String status = OrderItemController.createOrderItem(
-					OrderListView.getOrderID().toString(), item, qtySpinner.getValue().toString());
+					OrderController.getOrderID().toString(), item, qtySpinner.getValue().toString());
 			
 			if(status == null) {
 				statusLbl.setText("Success");

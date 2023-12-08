@@ -1,5 +1,6 @@
 package view;
 
+import controller.OrderController;
 import controller.UserController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ import model.User;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
 import view.order_management.OrderManagementView;
+import view.order_view.OrderListView;
 
 public class LoginView extends BorderPane {
 	
@@ -75,6 +77,7 @@ public class LoginView extends BorderPane {
 				UserController.setCurrentUser(user);
 				Main.getMainPane().setTop(new Navbar());
 				if(user.getUserRole().equals("Customer")) {
+					OrderController.getPendingOrder();
 					Main.getMainPane().setCenter(new MenuCustomerView());
 				}else if(user.getUserRole().equals("Admin")) {
 					Main.getMainPane().setCenter(new MenuItemManagementView());

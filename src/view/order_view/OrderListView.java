@@ -27,7 +27,7 @@ import model.Order;
 import view.LoginView;
 
 public class OrderListView extends BorderPane{
-	private static Integer orderID = null;
+	
 	
 	private Label titleLbl;
 	
@@ -37,13 +37,6 @@ public class OrderListView extends BorderPane{
 		}else {
 			showTitle();
 			initTable();
-			// Get orderID which order status is empty
-			for(Order o : orderList) {
-				if(o.getOrderStatus().equalsIgnoreCase("null")) {
-					orderID = o.getOrderId();
-					break;
-				}
-			}
 		}
 	}
 	
@@ -98,7 +91,7 @@ public class OrderListView extends BorderPane{
 		table.getColumns().addAll(idColumn ,nameColumn , statusColumn, dateColumn, actionColumn);
 		
 		// set data source untuk table
-		orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
+		orderList = OrderController.getActiveUserOrderList();
 		
 		// observable
 		orderData = FXCollections.observableArrayList(orderList);
@@ -116,13 +109,4 @@ public class OrderListView extends BorderPane{
 		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
 		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
 	}
-	
-	public static Integer getOrderID() {
-		return orderID;
-	}
-	
-	public static void setOrderID(Integer id) {
-		orderID = id;
-	}
-
 }
