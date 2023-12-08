@@ -18,7 +18,7 @@ public class UserController {
 	public static String createUser(String userRole, String userName, String userEmail, String userPassword, String confirmPassword) {
 		//Assumption: confirm password divalidasi di controller, jadi confirmPassword dimasukkan sebagai param di createUser
 		String nameValidation = validateUserName(userName);
-		String emailValidation = validateUserEmail(userEmail);
+		String emailValidation = validateUserEmail(userEmail, true);
 		String passwordValidation = validateUserPassword(userPassword);
 		String confirmPasswordValidation = validateConfirmPassword(userPassword, confirmPassword);
 		String roleValidation = validateUserRole(userRole);
@@ -31,13 +31,15 @@ public class UserController {
 			return passwordValidation;
 		}else if(confirmPasswordValidation != null) {
 			return confirmPasswordValidation;
+		}else if(roleValidation != null) {
+			return roleValidation;
 		}
 		return User.createUser(userRole, userName, userEmail, userPassword);
 	}
 	
 	public static String updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
 		String nameValidation = validateUserName(userName);
-		String emailValidation = validateUserEmail(userEmail);
+		String emailValidation = validateUserEmail(userEmail, false);
 		String passwordValidation = validateUserPassword(userPassword);	
 		String roleValidation = validateUserRole(userRole); 
 		
@@ -78,14 +80,16 @@ public class UserController {
 		return null;
 	}
 	
-	private static String validateUserEmail(String userEmail) {
+	private static String validateUserEmail(String userEmail, Boolean needUnique) {
 		if(userEmail.isEmpty()) {
 			return "User email cannot be empty";
 		}
-		Vector<User> userList = UserController.getAllUsers();
-		for(User u: userList) {
-			if(u.getUserEmail().equals(userEmail)) {
-				return "User email must be unique";
+		if(needUnique) {
+			Vector<User> userList = UserController.getAllUsers();
+			for(User u: userList) {
+				if(u.getUserEmail().equals(userEmail)) {
+					return "User email must be unique";
+				}
 			}
 		}
 		return null;

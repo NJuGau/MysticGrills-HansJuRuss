@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -19,7 +20,8 @@ public class RegisterView extends BorderPane {
 	
 	GridPane contentPane;
 	Label titleLbl, userNameLbl, emailLbl, passwordLbl, confirmPasswordLbl, linkLbl, errorLbl; 
-	TextField userNameTxt, emailTxt, passwordTxt, confirmPasswordTxt;
+	TextField userNameTxt, emailTxt;
+	PasswordField passwordTxt, confirmPasswordTxt;
 	Button submitBtn;
 	Hyperlink gotoLoginLink;
 	
@@ -36,8 +38,8 @@ public class RegisterView extends BorderPane {
 		
 		userNameTxt = new TextField();
 		emailTxt = new TextField();
-		passwordTxt = new TextField();
-		confirmPasswordTxt = new TextField();
+		passwordTxt = new PasswordField();
+		confirmPasswordTxt = new PasswordField();
 		
 		submitBtn = new Button("Register");
 		
