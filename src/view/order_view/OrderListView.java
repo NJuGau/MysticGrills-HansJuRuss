@@ -65,9 +65,6 @@ public class OrderListView extends BorderPane{
 		TableColumn<Order, String> dateColumn = new TableColumn<>("Date"); // Header
 		dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOrderDate().toString())); // Tipe variable pada model
 		
-		TableColumn<Order, Integer> totalColumn = new TableColumn<>("Total"); // Header
-		totalColumn.setCellValueFactory(new PropertyValueFactory<>("orderTotal")); // Tipe variable pada model
-		
 		TableColumn<Order, String> actionColumn = new TableColumn<>("Action"); // Header
 		actionColumn.setCellFactory(new Callback<TableColumn<Order,String>, TableCell<Order,String>>() {
 			
@@ -98,7 +95,7 @@ public class OrderListView extends BorderPane{
 			}
 		});
 		
-		table.getColumns().addAll(idColumn ,nameColumn , statusColumn, dateColumn, totalColumn, actionColumn);
+		table.getColumns().addAll(idColumn ,nameColumn , statusColumn, dateColumn, actionColumn);
 		
 		// set data source untuk table
 		orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());

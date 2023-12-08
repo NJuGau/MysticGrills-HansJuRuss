@@ -1,5 +1,6 @@
 package view.order_view;
 
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 import controller.OrderController;
@@ -188,6 +189,7 @@ public class OrderDetailsView extends BorderPane{
 		
 		// set data source untuk table
 		orderItemList = OrderItemController.getAllOrderItemsByOrderId(order.getOrderId().toString());
+		putOrderTotal();
 		
 		// observable
 		orderItemData = FXCollections.observableArrayList(orderItemList);
@@ -256,6 +258,12 @@ public class OrderDetailsView extends BorderPane{
 		this.setTop(titleLbl);
 		BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
 		BorderPane.setMargin(titleLbl, new Insets(20, 0, 20, 0));
+	}
+	
+	private void putOrderTotal() {
+		DecimalFormat decimalFormat = new DecimalFormat("#,###.###");
+		String priceDecimalFormat = decimalFormat.format(OrderController.calculateCurrentOrderTotal(orderItemList));
+		totalTxt.setText(priceDecimalFormat);
 	}
 
 }

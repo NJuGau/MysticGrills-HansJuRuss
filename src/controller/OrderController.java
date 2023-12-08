@@ -3,6 +3,7 @@ package controller;
 import java.sql.Date;
 import java.util.Vector;
 
+import model.MenuItem;
 import model.Order;
 import model.OrderItem;
 import model.User;
@@ -40,6 +41,16 @@ public class OrderController {
 	public static Order getOrderByOrderId(Integer orderId) {
 		
 		return Order.getOrderByOrderId(orderId);
+	}
+	
+	public static Integer calculateCurrentOrderTotal(Vector<OrderItem> orders) {
+		Integer total = 0;
+		for(OrderItem o: orders) {
+			Double price = (o.getQuantity()) * o.getMenuItem().getMenuItemPrice();
+			total += price.intValue();
+		}
+		
+		return total;
 	}
 
 }
