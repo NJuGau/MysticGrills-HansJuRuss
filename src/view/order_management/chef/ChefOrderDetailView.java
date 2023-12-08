@@ -90,7 +90,7 @@ public class ChefOrderDetailView extends BorderPane {
 		});
 		
 		prepareBtn.setOnAction(e ->{
-			String status = OrderController.updateOrder(order.getOrderId().toString(), null, "Prepared");
+			String status = OrderController.updateOrder(order.getOrderId().toString(), order.getOrderItems(), "Prepared");
 			statusContentLbl.setText("Prepared");
 			statusContentLbl.setTextFill(Color.ORANGE);
 			if(status == null) {

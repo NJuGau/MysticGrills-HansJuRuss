@@ -86,7 +86,7 @@ public class WaiterOrderDetailView extends BorderPane {
 		});
 		
 		prepareBtn.setOnAction(e ->{
-			String status = OrderController.updateOrder(order.getOrderId().toString(), null, "Served");
+			String status = OrderController.updateOrder(order.getOrderId().toString(), order.getOrderItems(), "Served");
 			statusContentLbl.setText("Served");
 			statusContentLbl.setTextFill(Color.GREEN);
 			if(status == null) {
