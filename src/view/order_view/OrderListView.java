@@ -91,10 +91,10 @@ public class OrderListView extends BorderPane{
 		table.getColumns().addAll(idColumn ,nameColumn , statusColumn, dateColumn, actionColumn);
 		
 		// set data source untuk table
-		orderList = OrderController.getActiveUserOrderList();
+		this.orderList = OrderController.getOrdersByCustomerId(UserController.getCurrentUser().getUserId());
 		
 		// observable
-		orderData = FXCollections.observableArrayList(orderList);
+		orderData = FXCollections.observableArrayList(this.orderList);
 		
 		// masukin data ke table
 		table.setItems(orderData);
