@@ -70,10 +70,10 @@ public class OrderDetailsView extends BorderPane{
 			order.setOrderStatus("Pending");
 			OrderController.updateOrder(order.getOrderId().toString(), order.getOrderItems(), order.getOrderStatus());
 			
-			OrderListView.setOrderID(null);
+			OrderController.setOrderID(null);
 			
 			//TODO DElete this only for testing
-			System.out.println(OrderListView.getOrderID());
+			System.out.println(OrderController.getOrderID());
 			submitStatusLbl.setText("Success");
 			submitStatusLbl.setTextFill(Color.GREEN);
 			submitOrderButton.setDisable(true);
