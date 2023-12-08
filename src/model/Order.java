@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import controller.OrderController;
 import database.Connect;
 
 public class Order {
@@ -102,11 +103,12 @@ public class Order {
 	}
 	
 	public static String updateOrder(Integer orderId, Vector<OrderItem> orderItems, String orderStatus) {
-		String query = "UPDATE `order` SET orderStatus = ? WHERE orderId = ?";
+		String query = "UPDATE `order` SET orderStatus = ?, orderTotal = ? WHERE orderId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
 			ps.setString(1, orderStatus);
-			ps.setInt(2, orderId);
+			ps.setDouble(2, OrderController.calculateCurrentOrderTotal(orderItems));
+			ps.setInt(3, orderId);
 			Connect.getConnection().executeUpdate(ps);
 		} catch (SQLException e) {
 			return "Query failed";

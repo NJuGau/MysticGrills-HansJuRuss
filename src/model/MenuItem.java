@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import controller.OrderController;
 import database.Connect;
 
 public class MenuItem {
@@ -101,7 +102,6 @@ public class MenuItem {
 		} catch (SQLException e) {
 			return "Query failed";
 		}
-		
 		return null;
 	}
 	
