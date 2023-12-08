@@ -9,6 +9,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -26,7 +27,8 @@ public class LoginView extends BorderPane {
 	
 	GridPane contentPane;
 	Label emailLbl, passwordLbl, titleLbl, linkLbl, errorLbl;
-	TextField emailTxt, passwordTxt;
+	TextField emailTxt;
+	PasswordField passwordTxt;
 	Hyperlink gotoRegisterLink;
 	
 	Button submitBtn;
@@ -41,7 +43,7 @@ public class LoginView extends BorderPane {
 		errorLbl = new Label();
 		
 		emailTxt = new TextField();
-		passwordTxt = new TextField();
+		passwordTxt = new PasswordField();
 		
 		submitBtn = new Button("Login");
 		
