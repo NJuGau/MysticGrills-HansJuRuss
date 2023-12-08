@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import controller.OrderController;
+import controller.ReceiptController;
 import database.Connect;
 
 public class User {
@@ -60,6 +62,19 @@ public class User {
 			Connect.getConnection().executeUpdate(ps);
 		} catch (SQLException e) {
 			return "Query failed";
+		}
+		Vector<Order> orders = OrderController.getOrdersByCustomerId(userId);
+		for(Order o: orders) {
+			String deleteOrderItemWithMenuItemIdQuery = "DELETE FROM `orderItem` WHERE orderId = ?";
+			PreparedStatement ps2 = Connect.getConnection().prepareStatement(deleteOrderItemWithMenuItemIdQuery);
+			try {
+				ps2.setInt(1, o.getOrderId());
+				Connect.getConnection().executeUpdate(ps2);
+			} catch (SQLException e) {
+				return "Query failed";
+			}
+			OrderController.deleteOrder(o.getOrderId());
+			ReceiptController.deleteReceipt(o.getOrderId());
 		}
 		return null;
 	}
