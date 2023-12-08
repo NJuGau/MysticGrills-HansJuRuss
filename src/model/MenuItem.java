@@ -84,14 +84,24 @@ public class MenuItem {
 	}
 	
 	public static String deleteMenuItem(Integer menuItemId) {
-		String query = "DELETE FROM `menuItem` WHERE menuItemId = ?";
-		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		String deleteMenuItemQuery = "DELETE FROM `menuItem` WHERE menuItemId = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(deleteMenuItemQuery);
 		try {
 			ps.setInt(1, menuItemId);
 			Connect.getConnection().executeUpdate(ps);
 		} catch (SQLException e) {
 			return "Query failed";
 		}
+		
+		String deleteOrderItemWithMenuItemIdQuery = "DELETE FROM `orderItem` WHERE menuItemId = ?";
+		PreparedStatement ps2 = Connect.getConnection().prepareStatement(deleteOrderItemWithMenuItemIdQuery);
+		try {
+			ps2.setInt(1, menuItemId);
+			Connect.getConnection().executeUpdate(ps2);
+		} catch (SQLException e) {
+			return "Query failed";
+		}
+		
 		return null;
 	}
 	
