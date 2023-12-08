@@ -84,7 +84,7 @@ public class UserController {
 		}
 		Vector<User> userList = UserController.getAllUsers();
 		for(User u: userList) {
-			if(u.getUserEmail() == userEmail) {
+			if(u.getUserEmail().equals(userEmail)) {
 				return "User email must be unique";
 			}
 		}
