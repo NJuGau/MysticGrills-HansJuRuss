@@ -9,12 +9,14 @@ import main.Main;
 import view.menu_item_view_admin.MenuItemManagementView;
 import view.menu_item_view_customer.MenuCustomerView;
 import view.order_management.OrderManagementView;
+import view.order_management.cashier.CashierOrderDetailView;
+import view.order_management.cashier.CashierReceiptManagementView;
 import view.order_view.OrderListView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
-	private Label homeLbl, orderManagementLbl, myOrderLbl, logoutLbl, menuItemManagementLbl, userManagementLbl;
-	private Menu homeMenu, orderManagementMenu, myOrderMenu, logoutMenu, menuItemManagementMenu, userManagementMenu;
+	private Label homeLbl, orderManagementLbl, myOrderLbl, logoutLbl, menuItemManagementLbl, userManagementLbl, receiptManagementLbl;
+	private Menu homeMenu, orderManagementMenu, myOrderMenu, logoutMenu, menuItemManagementMenu, userManagementMenu, receiptManagementMenu;
 
 	public Navbar() {
 		
@@ -64,7 +66,17 @@ public class Navbar extends MenuBar{
 			orderManagementLbl.setOnMouseClicked(event -> {
 				Main.getMainPane().setCenter(new OrderManagementView());
 			});
-			this.getMenus().addAll(orderManagementMenu, logoutMenu);
+			
+			if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
+				receiptManagementLbl = new Label("Receipt Management");
+				receiptManagementMenu = new Menu("", receiptManagementLbl);
+				receiptManagementLbl.setOnMouseClicked(e ->{
+					Main.getMainPane().setCenter(new CashierReceiptManagementView());
+				});
+				this.getMenus().addAll(orderManagementMenu, receiptManagementMenu, logoutMenu);
+			}else {
+				this.getMenus().addAll(orderManagementMenu, logoutMenu);
+			}
 		}
 		
 		
