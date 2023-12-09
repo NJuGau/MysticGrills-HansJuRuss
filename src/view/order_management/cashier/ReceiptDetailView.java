@@ -42,7 +42,7 @@ public class ReceiptDetailView extends BorderPane {
 		nameLbl = new Label("Customer Name: ");
 		nameContentLbl = new Label(receipt.getReceiptOrder().getOrderUser().getUserName());
 		statusLbl = new Label("Order Status: ");
-		statusContentLbl = new Label(receipt.getReceiptOrder().getOrderStatus());
+		statusContentLbl = new Label("Paid");
 		paymentDateLbl = new Label("Payment Date: ");
 		paymentDateContentLbl = new Label(receipt.getReceiptPaymentDate().toString());
 		paymentAmountLbl = new Label("Paid Amount: ");
