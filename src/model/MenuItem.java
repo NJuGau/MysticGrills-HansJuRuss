@@ -118,7 +118,7 @@ public class MenuItem {
 	}
 	
 	public static String deleteMenuItem(Integer menuItemId) {
-Vector<Order> orders = OrderController.getAllOrders();
+		Vector<Order> orders = OrderController.getAllOrders();
 		
 		for(Order o: orders) {
 			Boolean menuFound = false;

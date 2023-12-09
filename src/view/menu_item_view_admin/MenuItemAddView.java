@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -95,6 +96,13 @@ public class MenuItemAddView extends BorderPane {
 		nameTxt = new TextField();
 		descTxt = new TextArea();
 		priceTxt = new TextField();
+		priceTxt.setTextFormatter(new TextFormatter<>(formatter -> {
+            if (formatter.getControlNewText().matches("\\d*")) {
+                return formatter;
+            } else {
+                return null;
+            }
+		}));
 		
 		promptPane.setAlignment(Pos.TOP_LEFT);
 		promptPane.setVgap(10);

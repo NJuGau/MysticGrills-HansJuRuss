@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -66,6 +67,13 @@ public class CashierOrderDetailView extends BorderPane {
 		paymentTypeLbl = new Label("Payment Type: ");
 		
 		paymentAmountTxt = new TextField();
+		paymentAmountTxt.setTextFormatter(new TextFormatter<>(formatter -> {
+			if (formatter.getControlNewText().matches("\\d*")) {
+				return formatter;
+			} else {
+				return null;
+			}
+		}));
 		paymentTypeBox = new ComboBox<>();
 		
 		paymentTypeBox.getItems().addAll("Cash", "Debit", "Credit");
