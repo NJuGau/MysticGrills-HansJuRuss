@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import controller.MenuItemController;
 import controller.OrderController;
 import database.Connect;
 
@@ -70,6 +71,38 @@ public class MenuItem {
 	}
 	
 	public static String updateMenuItem(Integer menuItemId, String menuItemName, String menuItemDescription, Double menuItemPrice) {
+		Vector<Order> orders = OrderController.getAllOrders();
+		
+		for(Order o: orders) {
+			Boolean menuFound = false;
+			Integer orderQuantity = null;
+			Double oldMenuItemPrice = null;
+			Vector<OrderItem> orderItemList =  o.getOrderItems();
+			
+			for(OrderItem orderItem : orderItemList) {
+				if(orderItem.getMenuItem().getMenuItemId() == menuItemId){
+					orderQuantity = orderItem.getQuantity();
+					oldMenuItemPrice = orderItem.getMenuItem().getMenuItemPrice();
+					menuFound = true;
+					break;
+				}
+			}
+			
+			if(menuFound) {
+				Double newOrderTotal = o.getOrderTotal() - (oldMenuItemPrice * orderQuantity) + (menuItemPrice * orderQuantity);
+				String updateOrderTotalQuery = "UPDATE `order` SET orderTotal = ? WHERE orderId = ?";
+				
+				PreparedStatement ps = Connect.getConnection().prepareStatement(updateOrderTotalQuery);
+				try {
+					ps.setDouble(1, newOrderTotal);
+					ps.setInt(2, o.getOrderId());
+					Connect.getConnection().executeUpdate(ps);
+				} catch (SQLException e) {
+					return "Query failed";
+				}
+			}
+		}
+		
 		String query = "UPDATE `menuItem` SET menuItemName = ?, menuItemDescription = ?, menuItemPrice = ? WHERE menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
@@ -85,6 +118,38 @@ public class MenuItem {
 	}
 	
 	public static String deleteMenuItem(Integer menuItemId) {
+Vector<Order> orders = OrderController.getAllOrders();
+		
+		for(Order o: orders) {
+			Boolean menuFound = false;
+			Integer orderQuantity = null;
+			Double oldMenuItemPrice = null;
+			Vector<OrderItem> orderItemList =  o.getOrderItems();
+			
+			for(OrderItem orderItem : orderItemList) {
+				if(orderItem.getMenuItem().getMenuItemId() == menuItemId){
+					orderQuantity = orderItem.getQuantity();
+					oldMenuItemPrice = orderItem.getMenuItem().getMenuItemPrice();
+					menuFound = true;
+					break;
+				}
+			}
+			
+			if(menuFound) {
+				Double newOrderTotal = o.getOrderTotal() - (oldMenuItemPrice * orderQuantity);
+				String updateOrderTotalQuery = "UPDATE `order` SET orderTotal = ? WHERE orderId = ?";
+				
+				PreparedStatement ps = Connect.getConnection().prepareStatement(updateOrderTotalQuery);
+				try {
+					ps.setDouble(1, newOrderTotal);
+					ps.setInt(2, o.getOrderId());
+					Connect.getConnection().executeUpdate(ps);
+				} catch (SQLException e) {
+					return "Query failed";
+				}
+			}
+		}
+		
 		String deleteMenuItemQuery = "DELETE FROM `menuItem` WHERE menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(deleteMenuItemQuery);
 		try {
@@ -102,6 +167,7 @@ public class MenuItem {
 		} catch (SQLException e) {
 			return "Query failed";
 		}
+		
 		return null;
 	}
 	
