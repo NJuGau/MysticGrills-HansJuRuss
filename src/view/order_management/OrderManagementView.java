@@ -23,6 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -56,7 +57,9 @@ public class OrderManagementView extends BorderPane {
 			titleLbl = new Label("Order Management");
 			idLbl = new Label("Order Id: ");
 			noteLbl = new Label("Note: Press one of the button in the table to select id");
+			noteLbl.setTextFill(Color.GREEN);
 			errorLbl = new Label();
+			errorLbl.setTextFill(Color.RED);
 			idTxt = new TextField();
 			cancelBtn = new Button("Cancel | Wipe Id");
 			idBox = new VBox();
@@ -74,7 +77,7 @@ public class OrderManagementView extends BorderPane {
 			selectActionBtn();
 			
 			btnGroup.getChildren().addAll(cancelBtn, actionBtn);
-			idBox.getChildren().addAll(idTxtGroup, errorLbl, btnGroup);
+			idBox.getChildren().addAll(idTxtGroup, noteLbl, errorLbl, btnGroup);
 			
 			titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
 			BorderPane.setAlignment(titleLbl, Pos.TOP_CENTER);
