@@ -72,5 +72,16 @@ public class OrderController {
 	public static void setOrderID(Integer id) {
 		orderID = id;
 	}
+	
+	public static Vector<Order> getOrderByStatus(String status){
+		Vector<Order> allOrder = OrderController.getAllOrders();
+		Vector<Order> orders = new Vector<>();
+		for(Order o: allOrder) {
+			if(o.getOrderStatus().equals(status)) {
+				orders.add(o);
+			}
+		}
+		return orders;
+	}
 
 }
