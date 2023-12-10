@@ -45,7 +45,7 @@ public class OrderChangeView extends BorderPane {
 	private Label idLbl, noteLbl, errorLbl;	
 	
 	public OrderChangeView() {
-		if(!UserController.getCurrentUser().getUserRole().equals("Cashier") && !UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
+		if(!UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
 			Main.getMainPane().setCenter(new LoginView());
 		}else {
 			titleLbl = new Label("Change Order");
