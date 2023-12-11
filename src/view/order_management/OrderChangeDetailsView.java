@@ -1,6 +1,7 @@
 package view.order_management;
 
 import java.text.DecimalFormat;
+import java.util.Optional;
 import java.util.Vector;
 
 import controller.OrderController;
@@ -11,7 +12,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -42,6 +46,7 @@ public class OrderChangeDetailsView extends BorderPane {
 	private GridPane dataPane;
 	private VBox middlePane;
 	private HBox actionBtnContainer;
+	private Alert deleteAlert;
 	private Button addButton, deleteOrderBtn;
 
 	public OrderChangeDetailsView(Order order) {
@@ -75,6 +80,8 @@ public class OrderChangeDetailsView extends BorderPane {
 	private void showActionButton() {
 		actionBtnContainer = new HBox();
 		submitStatusLbl = new Label();
+		deleteAlert = new Alert(AlertType.CONFIRMATION);
+		deleteAlert.setContentText("Are you sure you want to delete this order?");
 		
 		addButton = new Button("Add new order");
 		addButton.setOnAction(event -> {
@@ -84,15 +91,20 @@ public class OrderChangeDetailsView extends BorderPane {
 		
 		deleteOrderBtn = new Button("Delete this Order");
 		deleteOrderBtn.setOnAction(event -> {
-			order.setOrderStatus("Pending");
-			OrderController.deleteOrder(order.getOrderId());
 			
-			submitStatusLbl.setText("Success");
-			submitStatusLbl.setTextFill(Color.GREEN);
-			addButton.setDisable(true);
-			deleteOrderBtn.setDisable(true);
-			
-			Main.getMainPane().setCenter(new OrderChangeView());
+			Optional<ButtonType> removeResult = deleteAlert.showAndWait();
+			ButtonType calcRes = removeResult.orElse(ButtonType.CANCEL);
+			if(calcRes == ButtonType.OK) {
+				order.setOrderStatus("Pending");
+				OrderController.deleteOrder(order.getOrderId());
+				
+				submitStatusLbl.setText("Success");
+				submitStatusLbl.setTextFill(Color.GREEN);
+				addButton.setDisable(true);
+				deleteOrderBtn.setDisable(true);
+				
+				Main.getMainPane().setCenter(new OrderChangeView());
+			}
 		});
 		
 		actionBtnContainer.getChildren().addAll(addButton, deleteOrderBtn);
