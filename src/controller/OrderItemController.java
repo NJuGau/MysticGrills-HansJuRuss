@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Vector;
 
+import model.Order;
 import model.OrderItem;
 
 public class OrderItemController {
@@ -29,11 +30,17 @@ public class OrderItemController {
 		for(OrderItem items: orderItem) {
 			if(items.getMenuItem().getMenuItemId().equals(menuItem.getMenuItemId())) {
 				Integer updatedQuantity = Integer.parseInt(quantity) + items.getQuantity();
-				return OrderItem.updateOrderItem(Integer.parseInt(orderId), menuItem, updatedQuantity);
+//				Integer updatedTotal = (int) (updatedQuantity * items.getMenuItem().getMenuItemPrice());
+				
+				OrderItem.updateOrderItem(Integer.parseInt(orderId), menuItem, updatedQuantity);
+				Order toUpdateOrder = Order.getOrderByOrderId(Integer.parseInt(orderId));
+				return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 			}
 		}
 		
-		return OrderItem.createOrderItem(Integer.parseInt(orderId), menuItem, Integer.parseInt(quantity));
+		OrderItem.createOrderItem(Integer.parseInt(orderId), menuItem, Integer.parseInt(quantity));
+		Order toUpdateOrder = Order.getOrderByOrderId(Integer.parseInt(orderId));
+		return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 	}
 	
 	public static String updateOrderItem(String orderId, model.MenuItem menuItem, String quantity) {
@@ -53,7 +60,9 @@ public class OrderItemController {
 			return "Order ID can't be empty";
 		}
 		
-		return OrderItem.updateOrderItem(Integer.parseInt(orderId), menuItem, Integer.parseInt(quantity));
+		OrderItem.updateOrderItem(Integer.parseInt(orderId), menuItem, Integer.parseInt(quantity));
+		Order toUpdateOrder = Order.getOrderByOrderId(Integer.parseInt(orderId));
+		return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 	}
 	
 	public static String deleteOrderItem(String orderId, String menuItemId) {
@@ -65,7 +74,9 @@ public class OrderItemController {
 			return "Menu Item ID can't be empty";
 		}
 		
-		return OrderItem.deleteOrderItem(Integer.parseInt(orderId), Integer.parseInt(menuItemId));
+		OrderItem.deleteOrderItem(Integer.parseInt(orderId), Integer.parseInt(menuItemId));
+		Order toUpdateOrder = Order.getOrderByOrderId(Integer.parseInt(orderId));
+		return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 	}
 	
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(String orderId) {

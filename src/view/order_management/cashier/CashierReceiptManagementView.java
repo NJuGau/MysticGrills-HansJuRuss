@@ -70,13 +70,13 @@ public class CashierReceiptManagementView extends BorderPane {
 		totalColumn.setCellValueFactory(new PropertyValueFactory<>("receiptPaymentAmount"));
 		TableColumn<Receipt, String> typeColumn = new TableColumn<Receipt, String>("Payment Type");
 		typeColumn.setCellValueFactory(new PropertyValueFactory<>("receiptPaymentType"));
-		TableColumn<Receipt, String> viewAction = new TableColumn<Receipt, String>("View Detail");
+		TableColumn<Receipt, String> viewAction = new TableColumn<Receipt, String>("View Receipt Detail");
 		viewAction.setCellFactory(new Callback<TableColumn<Receipt, String>, TableCell<Receipt, String>>() {
 
 			@Override
 			public TableCell<Receipt, String> call(TableColumn<Receipt, String> arg0) {
 				TableCell<Receipt, String> cell = new TableCell<>() {
-					Button serveBtn = new Button("Serve Receipt");
+					Button selectBtn = new Button("Select");
 
 					@Override
 					protected void updateItem(String item, boolean empty) {
@@ -84,11 +84,11 @@ public class CashierReceiptManagementView extends BorderPane {
 							setGraphic(null);
 							setText(null);
 						} else {
-							serveBtn.setOnAction(e -> {
+							selectBtn.setOnAction(e -> {
 								Receipt receipt = getTableView().getItems().get(getIndex());
 								Main.getMainPane().setCenter(new ReceiptDetailView(receipt));
 							});
-							setGraphic(serveBtn);
+							setGraphic(selectBtn);
 							setText(null);
 						}
 					};

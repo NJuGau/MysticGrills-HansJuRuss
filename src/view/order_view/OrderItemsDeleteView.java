@@ -21,6 +21,7 @@ import javafx.scene.text.FontWeight;
 import main.Main;
 import model.OrderItem;
 import view.menu_item_view_customer.MenuCustomerView;
+import view.order_management.OrderChangeView;
 
 public class OrderItemsDeleteView extends BorderPane{
 	private Label titleLbl, statusLbl;
@@ -103,7 +104,12 @@ public class OrderItemsDeleteView extends BorderPane{
 		// Show Back Button
 		backBtn = new Button("Back");
 		backBtn.setOnAction(event -> {
-			Main.getMainPane().setCenter(new OrderListView());
+			if(UserController.getCurrentUser().getUserRole().equals("Chef") || UserController.getCurrentUser().getUserRole().equals("Waiter")) {
+				Main.getMainPane().setCenter(new OrderChangeView());
+			}
+			else {
+				Main.getMainPane().setCenter(new OrderListView());	
+			}
 		});
 		
 		Label confirmLbl = new Label("Confirm Delete order item: ");

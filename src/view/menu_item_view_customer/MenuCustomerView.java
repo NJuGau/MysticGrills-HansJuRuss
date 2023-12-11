@@ -27,7 +27,7 @@ public class MenuCustomerView extends BorderPane {
 	private Label titleLbl;
 
 	public MenuCustomerView() {
-		if(!UserController.getCurrentUser().getUserRole().equals("Customer")) {
+		if(!UserController.getCurrentUser().getUserRole().equals("Customer") && !UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
 			// We don't want to chef or Waiters or Cashier make a new order so we disable Menu
 			Main.getMainPane().setCenter(new OrderManagementView());
 		}

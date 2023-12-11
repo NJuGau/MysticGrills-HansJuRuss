@@ -58,7 +58,7 @@ public class WaiterOrderDetailView extends BorderPane {
 		errorLbl = new Label();
 		
 		backBtn = new Button("Back");
-		prepareBtn = new Button("Prepare Order");
+		prepareBtn = new Button("Serve Order");
 		
 		initTable(order.getOrderItems());
 		

@@ -1,13 +1,10 @@
 package view.order_management;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.Vector;
 
 import controller.OrderController;
-import controller.ReceiptController;
 import controller.UserController;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,27 +28,29 @@ import javafx.util.Callback;
 import main.Main;
 import model.Order;
 import view.LoginView;
+import view.Navbar;
 import view.order_management.cashier.CashierOrderDetailView;
 import view.order_management.chef.ChefOrderDetailView;
 import view.order_management.waiters.WaiterOrderDetailView;
 
-public class OrderManagementView extends BorderPane {
-	
+
+public class OrderChangeView extends BorderPane {
 	private Label titleLbl;
 	private TableView<Order> table;
 	private ObservableList<Order> orderData;
 	private Vector<Order> orderList;
 	private VBox idBox;
 	private HBox idTxtGroup, btnGroup;
-	private Button actionBtn, cancelBtn;
+	private Button updateBtn, cancelBtn;
 	private TextField idTxt;
 	private Label idLbl, noteLbl, errorLbl;	
+	private Order selectedOrder;
 	
-	public OrderManagementView() {
-		if(!UserController.getCurrentUser().getUserRole().equals("Cashier") && !UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
+	public OrderChangeView() {
+		if(!UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
 			Main.getMainPane().setCenter(new LoginView());
 		}else {
-			titleLbl = new Label("Order Management");
+			titleLbl = new Label("Change Order");
 			idLbl = new Label("Order Id: ");
 			noteLbl = new Label("Note: Press one of the button in the table to select id");
 			noteLbl.setTextFill(Color.GREEN);
@@ -59,6 +58,8 @@ public class OrderManagementView extends BorderPane {
 			errorLbl.setTextFill(Color.RED);
 			idTxt = new TextField();
 			cancelBtn = new Button("Cancel | Wipe Id");
+			updateBtn = new Button("Update Order");
+			
 			idBox = new VBox();
 			idTxtGroup = new HBox();
 			btnGroup = new HBox();
@@ -71,9 +72,15 @@ public class OrderManagementView extends BorderPane {
 				idTxt.setText("");
 			});
 			
-			selectActionBtn();
+			updateBtn.setOnMouseClicked(e -> {
+				OrderController.setOrderID(selectedOrder.getOrderId());
+				// Update Navbar
+				Main.getMainPane().setTop(new Navbar());
+				
+				Main.getMainPane().setCenter(new OrderChangeDetailsView(selectedOrder));
+			});
 			
-			btnGroup.getChildren().addAll(cancelBtn, actionBtn);
+			btnGroup.getChildren().addAll(cancelBtn, updateBtn);
 			idBox.getChildren().addAll(idTxtGroup, noteLbl, errorLbl, btnGroup);
 			
 			titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
@@ -83,6 +90,7 @@ public class OrderManagementView extends BorderPane {
 			BorderPane.setMargin(idBox, new Insets(20, 0, 20, 20));
 			
 			HBox.setMargin(cancelBtn, new Insets(0, 20, 0, 0));
+			HBox.setMargin(updateBtn, new Insets(0, 20, 0, 0));
 			VBox.setMargin(idTxtGroup, new Insets(0, 0, 10, 0));
 			VBox.setMargin(errorLbl, new Insets(0, 0, 10, 0));
 			VBox.setMargin(btnGroup, new Insets(0, 0, 10, 0));
@@ -92,58 +100,6 @@ public class OrderManagementView extends BorderPane {
 			this.setTop(titleLbl);
 			this.setCenter(table);
 			this.setBottom(idBox);
-		}
-	}
-
-	private void selectActionBtn() {
-		if(UserController.getCurrentUser().getUserRole().equals("Cashier")) {
-			actionBtn = new Button("Pay Order");
-			actionBtn.setOnMouseClicked(e ->{
-				Integer id;
-				try {
-					id = Integer.parseInt(idTxt.getText());
-				} catch (NumberFormatException e1) {
-					id = -1;
-				}
-				if(id != -1) {
-					Order order = OrderController.getOrderByOrderId(id);
-					Main.getMainPane().setCenter(new CashierOrderDetailView(order));
-				}else {
-					errorLbl.setText("Please select one of the order!");
-				}
-			});
-		}else if(UserController.getCurrentUser().getUserRole().equals("Chef")) {
-			actionBtn = new Button("Prepare Order");
-			actionBtn.setOnMouseClicked(e ->{
-				Integer id;
-				try {
-					id = Integer.parseInt(idTxt.getText());
-				} catch (NumberFormatException e1) {
-					id = -1;
-				}
-				if(id != -1) {
-					Order order = OrderController.getOrderByOrderId(id);
-					Main.getMainPane().setCenter(new ChefOrderDetailView(order));
-				}else {
-					errorLbl.setText("Please select one of the order!");
-				}
-			});
-		}else if(UserController.getCurrentUser().getUserRole().equals("Waiter")) {
-			actionBtn = new Button("Serve Order");
-			actionBtn.setOnMouseClicked(e ->{
-				Integer id;
-				try {
-					id = Integer.parseInt(idTxt.getText());
-				} catch (NumberFormatException e1) {
-					id = -1;
-				}
-				if(id != -1) {
-					Order order = OrderController.getOrderByOrderId(id);
-					Main.getMainPane().setCenter(new WaiterOrderDetailView(order));
-				}else {
-					errorLbl.setText("Please select one of the order!");
-				}
-			});
 		}
 	}
 
@@ -178,8 +134,8 @@ public class OrderManagementView extends BorderPane {
 								setText(null);
 							} else {
 								payBtn.setOnAction(e -> {
-									Order order = getTableView().getItems().get(getIndex());
-									idTxt.setText(order.getOrderId().toString());
+									selectedOrder = getTableView().getItems().get(getIndex());
+									idTxt.setText(selectedOrder.getOrderId().toString());
 								});
 								setGraphic(payBtn);
 								setText(null);
@@ -191,19 +147,9 @@ public class OrderManagementView extends BorderPane {
 			});
 			table.getColumns().addAll(orderIdColumn, dateColumn, customerNameColumn, statusColumn, totalColumn, payAction);
 			
-			
-			
-		if (UserController.getCurrentUser().getUserRole().equals("Cashier")) {
-			orderList = OrderController.getOrderByStatus("Served");
-		}else if(UserController.getCurrentUser().getUserRole().equals("Chef")) {
-			orderList = OrderController.getOrderByStatus("Pending");
-		}else if(UserController.getCurrentUser().getUserRole().equals("Waiter")) {
-			orderList = OrderController.getOrderByStatus("Prepared");
-		}
+		orderList = OrderController.getOrderByStatus("Pending");
 		
 		orderData = FXCollections.observableArrayList(orderList);
 		table.setItems(orderData);
 	}
-	
-	
 }

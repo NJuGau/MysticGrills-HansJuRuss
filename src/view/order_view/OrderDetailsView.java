@@ -62,6 +62,7 @@ public class OrderDetailsView extends BorderPane{
 		
 		addButton = new Button("Add new order");
 		addButton.setOnAction(event -> {
+			OrderController.setOrderID(order.getOrderId());
 			Main.getMainPane().setCenter(new MenuCustomerView());
 		});
 		
@@ -111,6 +112,7 @@ public class OrderDetailsView extends BorderPane{
 		
 		TableColumn<OrderItem, String> descriptionColumn = new TableColumn<>("Menu Item Description"); // Header
 		descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMenuItem().getMenuItemDescription()));
+		descriptionColumn.setPrefWidth(400);
 		
 		TableColumn<OrderItem, String> priceColumn = new TableColumn<>("Menu Item Price"); // Header
 		priceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMenuItem().getMenuItemPrice().toString()));
