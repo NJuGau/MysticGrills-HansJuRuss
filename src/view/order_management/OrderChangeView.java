@@ -28,6 +28,7 @@ import javafx.util.Callback;
 import main.Main;
 import model.Order;
 import view.LoginView;
+import view.Navbar;
 import view.order_management.cashier.CashierOrderDetailView;
 import view.order_management.chef.ChefOrderDetailView;
 import view.order_management.waiters.WaiterOrderDetailView;
@@ -40,9 +41,10 @@ public class OrderChangeView extends BorderPane {
 	private Vector<Order> orderList;
 	private VBox idBox;
 	private HBox idTxtGroup, btnGroup;
-	private Button updateBtn, removeBtn, cancelBtn;
+	private Button updateBtn, cancelBtn;
 	private TextField idTxt;
 	private Label idLbl, noteLbl, errorLbl;	
+	private Order selectedOrder;
 	
 	public OrderChangeView() {
 		if(!UserController.getCurrentUser().getUserRole().equals("Chef") && !UserController.getCurrentUser().getUserRole().equals("Waiter")) {
@@ -57,7 +59,6 @@ public class OrderChangeView extends BorderPane {
 			idTxt = new TextField();
 			cancelBtn = new Button("Cancel | Wipe Id");
 			updateBtn = new Button("Update Order");
-			removeBtn = new Button("Remove Order");
 			
 			idBox = new VBox();
 			idTxtGroup = new HBox();
@@ -72,14 +73,14 @@ public class OrderChangeView extends BorderPane {
 			});
 			
 			updateBtn.setOnMouseClicked(e -> {
-				//TODO: go to update page
+				OrderController.setOrderID(selectedOrder.getOrderId());
+				// Update Navbar
+				Main.getMainPane().setTop(new Navbar());
+				
+				Main.getMainPane().setCenter(new OrderChangeDetailsView(selectedOrder));
 			});
 			
-			removeBtn.setOnMouseClicked(e -> {
-				//TODO: go to remove page
-			});
-			
-			btnGroup.getChildren().addAll(cancelBtn, updateBtn, removeBtn);
+			btnGroup.getChildren().addAll(cancelBtn, updateBtn);
 			idBox.getChildren().addAll(idTxtGroup, noteLbl, errorLbl, btnGroup);
 			
 			titleLbl.setFont(Font.font("Open Sans", FontWeight.BLACK, FontPosture.REGULAR, 24));
@@ -133,8 +134,8 @@ public class OrderChangeView extends BorderPane {
 								setText(null);
 							} else {
 								payBtn.setOnAction(e -> {
-									Order order = getTableView().getItems().get(getIndex());
-									idTxt.setText(order.getOrderId().toString());
+									selectedOrder = getTableView().getItems().get(getIndex());
+									idTxt.setText(selectedOrder.getOrderId().toString());
 								});
 								setGraphic(payBtn);
 								setText(null);

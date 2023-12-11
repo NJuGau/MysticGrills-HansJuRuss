@@ -1,5 +1,6 @@
 package view;
 
+import controller.OrderController;
 import controller.UserController;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -27,6 +28,7 @@ public class Navbar extends MenuBar{
 		logoutMenu = new Menu("", logoutLbl);
 		logoutLbl.setOnMouseClicked(event -> {
 			UserController.setCurrentUser(null);
+			OrderController.setOrderID(null);
 			Main.getMainPane().setTop(null);
 			Main.getMainPane().setCenter(new LoginView());
 		});
@@ -82,6 +84,15 @@ public class Navbar extends MenuBar{
 					actionOrderMenuItem = new MenuItem("Prepare Order");
 				}else {
 					actionOrderMenuItem = new MenuItem("Serve Order");
+				}
+				
+				if(OrderController.getOrderID() != null) {
+					homeLbl = new Label("Menu List");
+					homeMenu = new Menu("", homeLbl);
+					homeLbl.setOnMouseClicked(event -> {
+						Main.getMainPane().setCenter(new MenuCustomerView());
+					});		
+					this.getMenus().add(homeMenu);
 				}
 				
 				actionOrderMenuItem.setOnAction(e -> {

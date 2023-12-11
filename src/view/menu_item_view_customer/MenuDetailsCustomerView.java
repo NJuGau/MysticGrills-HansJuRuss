@@ -21,6 +21,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import main.Main;
 import model.OrderItem;
+import view.order_management.OrderChangeView;
 import view.order_view.OrderListView;
 
 public class MenuDetailsCustomerView extends BorderPane{
@@ -35,7 +36,7 @@ public class MenuDetailsCustomerView extends BorderPane{
 	
 	private model.MenuItem item;
 
-	public MenuDetailsCustomerView(model.MenuItem item) {	
+	public MenuDetailsCustomerView(model.MenuItem item) {
 		this.item = item;
 		System.out.println(OrderController.getOrderID());
 		

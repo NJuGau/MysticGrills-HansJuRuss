@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import controller.OrderController;
 import controller.OrderItemController;
+import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import main.Main;
 import model.Order;
 import model.OrderItem;
 import view.menu_item_view_customer.MenuCustomerView;
+import view.order_management.OrderChangeView;
 
 public class OrderItemsUpdateView extends BorderPane{
 	private Label titleLbl, statusLbl;
@@ -80,7 +82,12 @@ public class OrderItemsUpdateView extends BorderPane{
 		// Show Back Button
 		backBtn = new Button("Back");
 		backBtn.setOnAction(event -> {
-			Main.getMainPane().setCenter(new OrderDetailsView(Order.getOrderByOrderId(orderItem.getOrderId())));
+			if(UserController.getCurrentUser().getUserRole().equals("Chef") || UserController.getCurrentUser().getUserRole().equals("Waiter")) {
+				Main.getMainPane().setCenter(new OrderChangeView());
+			}
+			else {
+				Main.getMainPane().setCenter(new OrderDetailsView(Order.getOrderByOrderId(orderItem.getOrderId())));	
+			}
 		});
 		
 		bottomContainer.getChildren().addAll(submitBtn, backBtn);
