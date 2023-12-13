@@ -26,6 +26,7 @@ import model.Receipt;
 import view.order_management.OrderManagementView;
 
 public class ReceiptDetailView extends BorderPane {
+	//Halaman receipt detail yang hanya dapat dilihat oleh cashier. Ditampilkan detail dari receipt yang dipilih.
 	private Label titleLbl, receiptIdLbl, receiptIdContentLbl, orderIdLbl, orderIdContentLbl, nameLbl, nameContentLbl, statusLbl, statusContentLbl, paymentDateLbl, paymentDateContentLbl, paymentAmountLbl, paymentAmountContentLbl, paymentTypeLbl, paymentTypeContentLbl, totalPriceLbl, totalPriceContentLbl;
 	private Button backBtn;
 	private TableView<OrderItem> detailTable;

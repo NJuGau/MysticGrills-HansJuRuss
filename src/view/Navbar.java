@@ -18,12 +18,13 @@ import view.order_view.OrderListView;
 import view.user_management_view_admin.UserManagementView;
 
 public class Navbar extends MenuBar{
+	//komponen navbar
 	private Label homeLbl, orderManagementLbl, myOrderLbl, logoutLbl, menuItemManagementLbl, userManagementLbl, receiptManagementLbl;
 	private Menu homeMenu, orderManagementMenu, myOrderMenu, logoutMenu, menuItemManagementMenu, userManagementMenu, receiptManagementMenu;
 	private MenuItem actionOrderMenuItem, changeOrderMenuItem;
 
 	public Navbar() {
-		
+		//memasang komponen navbar sesuai dengan role user
 		logoutLbl = new Label("Logout");
 		logoutMenu = new Menu("", logoutLbl);
 		logoutLbl.setOnMouseClicked(event -> {
@@ -86,6 +87,8 @@ public class Navbar extends MenuBar{
 					actionOrderMenuItem = new MenuItem("Serve Order");
 				}
 				
+				//Menu list hanya akan muncul ketika chef atau waiter telah melakukan change order sebelumnya.
+				//Menu yang ditambahkan selanjutnya akan ditambahkan pada order terakhir yang dipilih chef / waiter.
 				if(OrderController.getOrderID() != null) {
 					homeLbl = new Label("Menu List");
 					homeMenu = new Menu("", homeLbl);

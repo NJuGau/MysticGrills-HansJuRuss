@@ -20,6 +20,7 @@ import main.Main;
 import view.menu_item_view_customer.MenuCustomerView;
 
 public class MenuItemAddView extends BorderPane {
+	//Halaman menambahkan menuItem yang hanya dapat diakses admin
 	private Button backBtn, submitBtn;
 	private Label titleLbl;
 	private GridPane promptPane;
@@ -50,7 +51,6 @@ public class MenuItemAddView extends BorderPane {
 	}
 	
 	public void showActionBtn() {
-//		TODO: Add Logic to submit MenuItem
 		submitBtn = new Button("Submit");
 		submitBtn.setOnAction(event -> {
 			String status = 
@@ -58,7 +58,6 @@ public class MenuItemAddView extends BorderPane {
 							nameTxt.getText(), descTxt.getText(), priceTxt.getText());
 			
 			if(status == null) {
-				// TODO add Add Menu Item SQL Logic
 				statusLbl.setText("Success");
 				statusLbl.setTextFill(Color.GREEN);
 				

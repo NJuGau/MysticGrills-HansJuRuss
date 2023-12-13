@@ -17,7 +17,7 @@ import javafx.scene.text.FontWeight;
 import main.Main;
 
 public class RegisterView extends BorderPane {
-	
+	//halaman register
 	GridPane contentPane;
 	Label titleLbl, userNameLbl, emailLbl, passwordLbl, confirmPasswordLbl, linkLbl, errorLbl; 
 	TextField userNameTxt, emailTxt;

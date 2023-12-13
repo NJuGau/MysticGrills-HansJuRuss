@@ -17,7 +17,7 @@ import model.User;
 import view.LoginView;
 
 public class UserManagementChangeRoleView extends BorderPane{
-	
+	//User change role page yang hanya dapat diakses oleh admin. Admin dapat mengganti role dari user yang telah dipilih sebelumnya.
 	private GridPane contentPane;
 	private Label titleLbl, idLbl, idContentLbl, nameLbl, nameContentLbl, emailLbl, emailContentLbl, passwordLbl, passwordContentLbl, roleLbl, errorLbl;
 	

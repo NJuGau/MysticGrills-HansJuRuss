@@ -24,6 +24,7 @@ import model.MenuItem;
 import view.order_management.OrderManagementView;
 
 public class MenuCustomerView extends BorderPane {
+	//Halaman menu item yang dapat diakses hanya oleh customer. Disini, customer bisa memilih menu item untuk ditambahkan ke order. 
 	private Label titleLbl;
 
 	public MenuCustomerView() {
@@ -54,16 +55,16 @@ public class MenuCustomerView extends BorderPane {
 		TableColumn<model.MenuItem, Integer> idColumn = new TableColumn<>("ID"); // Header
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemId")); // Tipe variable pada model
 		
-		TableColumn<model.MenuItem, String> nameColumn = new TableColumn<>("Name"); // Header
-		nameColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemName")); // Tipe variable pada model
+		TableColumn<model.MenuItem, String> nameColumn = new TableColumn<>("Name"); 
+		nameColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemName")); 
 		
-		TableColumn<model.MenuItem, String> descColumn = new TableColumn<>("Description"); // Header
-		descColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemDescription")); // Tipe variable pada model
+		TableColumn<model.MenuItem, String> descColumn = new TableColumn<>("Description"); 
+		descColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemDescription")); 
 		
-		TableColumn<model.MenuItem, String> priceColumn = new TableColumn<>("Price"); // Header
-		priceColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemPrice")); // Tipe variable pada model
+		TableColumn<model.MenuItem, String> priceColumn = new TableColumn<>("Price"); 
+		priceColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemPrice")); 
 		
-		TableColumn<model.MenuItem, String> actionColumn = new TableColumn<>("Action"); // Header
+		TableColumn<model.MenuItem, String> actionColumn = new TableColumn<>("Action"); 
 		actionColumn.setCellValueFactory(new PropertyValueFactory<>("menuItemName"));
 		actionColumn.setCellFactory(new Callback<TableColumn<MenuItem,String>, TableCell<MenuItem,String>>() {
 			
@@ -74,7 +75,6 @@ public class MenuCustomerView extends BorderPane {
 					
 					@Override
 					protected void updateItem(String item, boolean empty) {
-						// TODO Auto-generated method stub
 						super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);

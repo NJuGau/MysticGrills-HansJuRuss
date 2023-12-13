@@ -35,6 +35,7 @@ import view.LoginView;
 import view.order_management.OrderManagementView;
 
 public class ChefOrderDetailView extends BorderPane {
+	//Halaman detail order yang hanya dapat diakses chef. Chef dapat menekan tombol untuk mengubah order ke status 'Prepared'.
 	private Label titleLbl, orderIdLbl, orderIdContentLbl, nameLbl, nameContentLbl, statusLbl, statusContentLbl, totalPriceLbl, totalPriceContentLbl, errorLbl;
 	private VBox contentBox;
 	private HBox btnGroup;

@@ -5,6 +5,7 @@ import java.util.Vector;
 import model.User;
 
 public class UserController {
+	//static variable untuk menyimpan user yang sedang login
 	private static User currentUser;
 
 	public static User getCurrentUser() {
@@ -15,6 +16,7 @@ public class UserController {
 		UserController.currentUser = currentUser;
 	}
 	
+	//CREATE method
 	public static String createUser(String userRole, String userName, String userEmail, String userPassword, String confirmPassword) {
 		//Assumption: confirm password divalidasi di controller, jadi confirmPassword dimasukkan sebagai param di createUser
 		String nameValidation = validateUserName(userName);
@@ -37,6 +39,7 @@ public class UserController {
 		return User.createUser(userRole, userName, userEmail, userPassword);
 	}
 	
+	//UPDATE method
 	public static String updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
 		String nameValidation = validateUserName(userName);
 		String emailValidation = validateUserEmail(userEmail, false);
@@ -55,19 +58,23 @@ public class UserController {
 		return User.updateUser(userId, userRole, userName, userEmail, userPassword); 
 	}
 	
+	//DELETE method
 	public static String deleteUser(Integer userId) {
 		return User.deleteUser(userId);
 	}
 	
+	//SELECT by email and password method
 	public static User authenticateUser(String userEmail, String userPassword) {
 		User user = User.authenticateUser(userEmail, userPassword);
 		return user;
 	}
 	
+	//SELECT all method
 	public static Vector<User> getAllUsers(){
 		return User.getAllUsers();
 	}
 	
+	//SELECT by user Id method
 	public static User getUserById(Integer userId) {
 		return User.getUserById(userId);
 	}

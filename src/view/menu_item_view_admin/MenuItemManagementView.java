@@ -25,7 +25,7 @@ import model.MenuItem;
 import view.menu_item_view_customer.MenuCustomerView;
 
 public class MenuItemManagementView extends BorderPane {
-	
+	//Halaman menu item management yang hanya dapat diakses admin. Berisi table view yang dapat digunakan untuk memilih menu item untuk di update / remove
 	private Label titleLbl;
 	private Button addMenuItemBtn;
 	private HBox actions;
@@ -87,7 +87,6 @@ public class MenuItemManagementView extends BorderPane {
 					
 					@Override
 					protected void updateItem(String item, boolean empty) {
-						// TODO Auto-generated method stub
 						super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);
@@ -117,7 +116,6 @@ public class MenuItemManagementView extends BorderPane {
 					
 					@Override
 					protected void updateItem(String item, boolean empty) {
-						// TODO Auto-generated method stub
 						super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);

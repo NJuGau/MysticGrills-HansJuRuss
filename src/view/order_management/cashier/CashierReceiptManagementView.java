@@ -31,6 +31,7 @@ import view.LoginView;
 import view.order_management.waiters.WaiterOrderDetailView;
 
 public class CashierReceiptManagementView extends BorderPane {
+	//Halaman receipt managament yang hanya dapat diakses cashier. Akan ditampilkan list of receipt yang dapat dipilih untuk dilihat detailnya.
 	private Label titleLbl;
 	private TableView<Receipt> table;
 	private ObservableList<Receipt> receiptData;

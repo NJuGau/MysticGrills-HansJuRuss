@@ -24,7 +24,7 @@ import view.order_management.OrderManagementView;
 import view.order_view.OrderListView;
 
 public class LoginView extends BorderPane {
-	
+	//Halaman login
 	GridPane contentPane;
 	Label emailLbl, passwordLbl, titleLbl, linkLbl, errorLbl;
 	TextField emailTxt;
@@ -77,6 +77,7 @@ public class LoginView extends BorderPane {
 			User user = UserController.authenticateUser(emailTxt.getText(), passwordTxt.getText());
 			if(user != null) {
 				UserController.setCurrentUser(user);
+				//melakukan set mainPane sesuai role
 				Main.getMainPane().setTop(new Navbar());
 				if(user.getUserRole().equals("Customer")) {
 					OrderController.getPendingOrder();

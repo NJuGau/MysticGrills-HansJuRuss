@@ -25,6 +25,7 @@ import view.menu_item_view_customer.MenuCustomerView;
 import view.order_management.OrderChangeView;
 
 public class OrderItemsUpdateView extends BorderPane{
+	//Halaman order item update. User dapat melakukan update order item quantity yang telah dipilih dalam halaman detail.
 	private Label titleLbl, statusLbl;
 	
 	private Label orderIdLbl, orderIdTxt, menuItemNameLbl, menuItemNameTxt, 

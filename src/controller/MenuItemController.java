@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class MenuItemController {
 	
-	// CRUD Method
+	// CREATE method
 	public static String createMenuItem(String menuItemName, String menuItemDescription, String menuItemPrice) {
 		String nameValidation = validateMenuItemName(menuItemName);
 		if(nameValidation != null) {
@@ -24,6 +24,7 @@ public class MenuItemController {
 		return model.MenuItem.createMenuItem(menuItemName, menuItemDescription, Double.parseDouble(menuItemPrice));
 	}
 	
+	//UPDATE method
 	public static String updateMenuItem(Integer menuItemId, String menuItemName, String menuItemDescription, String menuItemPrice) {
 		String nameValidation = validateMenuItemName(menuItemName);
 		if(nameValidation != null) {
@@ -42,14 +43,17 @@ public class MenuItemController {
 		return model.MenuItem.updateMenuItem(menuItemId, menuItemName, menuItemDescription, Double.parseDouble(menuItemPrice));
 	}
 	
+	//DELETE method
 	public static String deleteMenuItem(Integer menuItemId) {
 		return model.MenuItem.deleteMenuItem(menuItemId);
 	}
 	
+	//SELECT by Id method
 	public static model.MenuItem getMenuItemByID(Integer menuItemId){
 		return model.MenuItem.getMenuItemByID(menuItemId);
 	}
 	
+	//SELECT all method
 	public static Vector<model.MenuItem> getAllMenuItems(){
 		return model.MenuItem.getAllMenuItems();
 	}

@@ -35,7 +35,7 @@ import view.LoginView;
 import view.order_management.OrderManagementView;
 
 public class CashierOrderDetailView extends BorderPane {
-	
+	//Halaman detail order yang hanya dapat diakses cahsier. Cashier dapat menambahkan informasi pembayaran untuk mengubah status order ke 'paid'. Order yang sudah 'paid' akan dibuatkan receipt.
 	private Label titleLbl, orderIdLbl, orderIdContentLbl, nameLbl, nameContentLbl, statusLbl, statusContentLbl, totalPriceLbl, totalPriceContentLbl, paymentTypeLbl, paymentAmountLbl, errorLbl;
 	private TextField paymentAmountTxt;
 	private ComboBox<String> paymentTypeBox; 

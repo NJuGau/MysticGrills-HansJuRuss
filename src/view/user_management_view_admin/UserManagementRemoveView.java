@@ -16,6 +16,7 @@ import model.User;
 import view.LoginView;
 
 public class UserManagementRemoveView extends BorderPane {
+	//User remove confirmation page yang hanya dapat diakses oleh admin. Admin dapat melakukan konfirmasi remove user yang telah dipilih.
 	GridPane contentPane;
 	Label titleLbl, idLbl, idContentLbl, nameLbl, nameContentLbl, emailLbl, emailContentLbl, passwordLbl, passwordContentLbl, roleLbl, roleContentLbl, confirmLbl;
 	

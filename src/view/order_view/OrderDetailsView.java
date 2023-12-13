@@ -31,6 +31,7 @@ import model.OrderItem;
 import view.menu_item_view_customer.MenuCustomerView;
 
 public class OrderDetailsView extends BorderPane{
+	//Halaman order detail yang hanya dapat diakses customer. Digunakan untuk menampilkan order yang dipilih dan dapat melakukan update dan delete order item dan melakukan submit order.
 	private Order order;
 	
 	private Label titleLbl, orderIdLbl, orderIdTxt, userLbl, userTxt, statusLbl, statusTxt,
@@ -73,7 +74,6 @@ public class OrderDetailsView extends BorderPane{
 			
 			OrderController.setOrderID(null);
 			
-			//TODO DElete this only for testing
 			System.out.println(OrderController.getOrderID());
 			submitStatusLbl.setText("Success");
 			submitStatusLbl.setTextFill(Color.GREEN);

@@ -54,6 +54,7 @@ public class User {
 		this.userPassword = userPassword;
 	}
 	
+	//DELETE method
 	public static String deleteUser(Integer userId) {
 		String query = "DELETE FROM `user` WHERE userId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -63,6 +64,8 @@ public class User {
 		} catch (SQLException e) {
 			return "Query failed";
 		}
+		
+		//menghapus order yang memiliki user bersangkutan
 		Vector<Order> orders = OrderController.getOrdersByCustomerId(userId);
 		for(Order o: orders) {
 			String deleteOrderItemWithMenuItemIdQuery = "DELETE FROM `orderItem` WHERE orderId = ?";
@@ -79,6 +82,7 @@ public class User {
 		return null;
 	}
 	
+	//SELECT by user Id method
 	public static User getUserById(Integer userId) {
 		String query = "SELECT * FROM `user` WHERE userId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -99,6 +103,7 @@ public class User {
 		return u;
 	}
 	
+	//CREATE method
 	public static String createUser(String userRole, String userName, String userEmail, String userPassword) {
 		String query = "INSERT INTO `user` (userRole, userName, userEmail, userPassword) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -114,6 +119,7 @@ public class User {
 		return null;
 	}
 	
+	//UPDATE method
 	public static String updateUser(Integer userId, String userRole, String userName, String userEmail, String userPassword) {
 		String query = "UPDATE `user` SET userRole = ?, userName = ?, userEmail = ?, userPassword = ? WHERE userId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -131,6 +137,7 @@ public class User {
 		return null;
 	}
 	
+	//SELECT all method
 	public static Vector<User> getAllUsers(){
 		Vector<User> userList = new Vector<User>();
 		String query = "SELECT * FROM `user`";
@@ -152,6 +159,7 @@ public class User {
 		return userList;
 	}
 	
+	//SELECT by email and password method
 	public static User authenticateUser(String userEmail, String userPassword) {
 		String query = "SELECT * FROM `user` WHERE userEmail = ? AND userPassword = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);

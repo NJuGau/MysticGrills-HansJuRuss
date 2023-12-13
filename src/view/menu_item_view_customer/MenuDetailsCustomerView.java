@@ -25,7 +25,7 @@ import view.order_management.OrderChangeView;
 import view.order_view.OrderListView;
 
 public class MenuDetailsCustomerView extends BorderPane{
-
+	//Halaman menu item detail yang dapat diakses customer. Disini, customer dapat mengisi quantity dan melakukan konfirmasi pemesanan menu item.
 	private Button backBtn, submitBtn;
 	private Label titleLbl;
 	private GridPane promptPane;
@@ -55,7 +55,6 @@ public class MenuDetailsCustomerView extends BorderPane{
 	}
 	
 	public void showActionBtn() {
-//		TODO: Add Logic to submit MenuItem
 		submitBtn = new Button("Add");
 		submitBtn.setMinWidth(100);
 		submitBtn.setOnAction(event -> {

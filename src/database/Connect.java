@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class Connect {
+	
+	//Ganti USERNAME, PASSWORD, DATABASE, dan HOST saat konfigurasi database
 	private final String USERNAME = "root";
 	private final String PASSWORD = "";
 	private final String DATABASE = "mysticgrills_hansjuruss";
@@ -35,6 +37,7 @@ public final class Connect {
 		return connect = (connect == null) ? new Connect() : connect;
 	}
 	
+	//executeQuery untuk SELECT
 	public ResultSet executeQuery(PreparedStatement ps) {
 		try {
 			rs = ps.executeQuery();
@@ -45,6 +48,7 @@ public final class Connect {
 		return rs;
 	}
 
+	//executeUpdate untuk CREATE, UPDATE, DELETE
 	public void executeUpdate(PreparedStatement ps) {
 		try {
 			ps.executeUpdate();

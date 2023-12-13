@@ -30,7 +30,7 @@ import view.LoginView;
 import view.order_management.OrderManagementView;
 
 public class WaiterOrderDetailView extends BorderPane {
-
+	//Halaman detail order yang hanya dapat diakses waiter. Waiter dapat menekan tombol untuk mengubah order ke status 'served'.
 	private Label titleLbl, orderIdLbl, orderIdContentLbl, nameLbl, nameContentLbl, statusLbl, statusContentLbl, totalPriceLbl, totalPriceContentLbl, errorLbl;
 	private VBox contentBox;
 	private HBox btnGroup;
