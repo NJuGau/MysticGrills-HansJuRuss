@@ -23,7 +23,7 @@ import model.User;
 import view.LoginView;
 
 public class UserManagementView extends BorderPane {
-	
+	//Halaman user management yang hanya dapat diakses oleh admin. Admin dapat melihat semua user dan dapat melakukan remove atau update role user.
 	private Label titleLbl;
 	private TableView<User> table;
 	private ObservableList<User> userData;

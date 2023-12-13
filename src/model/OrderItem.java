@@ -44,7 +44,7 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 	
-	// CRUD
+	// CREATE method
 	public static String createOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
 		String query = "INSERT INTO `orderItem` (orderId, menuItemId, quantity) VALUES (?, ?, ?)";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -57,14 +57,10 @@ public class OrderItem {
 			return "Query failed";
 		}
 		
-//		// Don't forget to update orderTotal in order in database
-//		String updateOrderTotalQuery = String.format("UPDATE `order` SET orderTotal = orderTotal + 1"
-//				+ "WHERE orderId = '%d'", orderId);
-//		Connect.getConnection().executeUpdate(updateOrderTotalQuery);
-		
 		return null;
 	}
 	
+	//UPDATE method
 	public static String updateOrderItem(Integer orderId, model.MenuItem menuItem, Integer quantity) {
 		String query = "UPDATE `orderItem` SET quantity = ? WHERE orderId = ? AND menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -76,10 +72,10 @@ public class OrderItem {
 		} catch (SQLException e) {
 			return "Query failed";
 		}
-		//TODO: Don't forget to update orderTotal in order in database
 		return null;
 	}
 	
+	//DELETE method
 	public static String deleteOrderItem(Integer orderId, Integer menuItemId) {
 		String query = "DELETE FROM `orderItem` WHERE orderId  = ? AND menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -90,15 +86,10 @@ public class OrderItem {
 		} catch (SQLException e) {
 			return "Query failed";
 		}
-		
-//		// Don't forget to update orderTotal in order in database
-//		String updateOrderTotalQuery = String.format("UPDATE `order` SET orderTotal = orderTotal - 1"
-//				+ "WHERE orderId = '%d'", orderId);
-//		Connect.getConnection().executeUpdate(updateOrderTotalQuery);
-		
 		return null;
 	}
 	
+	//SELECT by orderId method
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(Integer orderId) {
 		String query = "SELECT * FROM `orderItem` WHERE orderId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);

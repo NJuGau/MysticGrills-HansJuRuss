@@ -36,7 +36,12 @@ import view.order_management.chef.ChefOrderDetailView;
 import view.order_management.waiters.WaiterOrderDetailView;
 
 public class OrderManagementView extends BorderPane {
-	
+	/*
+	 * Halaman order management yang dapat diakses chef, waiter, dan cashier:
+	 * Chef dapat melihat 'pending' order dan dapat mmemilih order untuk melakukan prepare order.
+	 * Waiter dapat melihat 'prepared' order dan dapat mmemilih order untuk melakukan serve order.
+	 * Cashier dapat melihat 'served' order dan dapat memilih order untuk melakukan pay order.
+	 */
 	private Label titleLbl;
 	private TableView<Order> table;
 	private ObservableList<Order> orderData;

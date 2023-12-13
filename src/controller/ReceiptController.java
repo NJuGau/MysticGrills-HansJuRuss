@@ -7,6 +7,7 @@ import model.Order;
 import model.Receipt;
 
 public class ReceiptController {
+	//CREATE method
 	public static String createReceipt(Order order, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
 		String orderIdValidation = validateOrderId(order.getOrderId());
 		String amountValidation = validatePaymentAmount(receiptPaymentAmount, order.getOrderTotal());
@@ -23,6 +24,7 @@ public class ReceiptController {
 		return Receipt.createReceipt(order, receiptPaymentType, receiptPaymentAmount, receiptPaymentDate).toString();
 	}
 	
+	//UPDATE method
 	public static String updateReceipt(Integer orderId, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
 		String orderIdValidation = validateOrderId(orderId);
 		
@@ -40,19 +42,22 @@ public class ReceiptController {
 		return ReceiptController.updateReceipt(orderId, receiptPaymentType, receiptPaymentAmount, receiptPaymentDate);
 	}
 	
+	//DELETE method
 	public static String deleteReceipt(Integer orderId) {
-		//TODO: Validate that database successfully deletes data
 		return Receipt.deleteReceipt(orderId);
 	}
 	
+	//SELECT by receipt Id method
 	public static Receipt getReceiptById(Integer receiptId) {
-		return Receipt.getReceiptById(receiptId); //TODO: Make validation if Id is not found
+		return Receipt.getReceiptById(receiptId);
 	}
 	
+	//SELECT all method
 	public static Vector<Receipt> getAllReceipts(){
 		return Receipt.getAllReceipts();
 	}
 	
+	//validation
 	private static String validateOrderId(Integer orderId) {
 		Vector<Order> orderList = OrderController.getAllOrders();
 		for(Order o : orderList) {

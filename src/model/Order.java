@@ -12,7 +12,7 @@ import database.Connect;
 public class Order {
 	private Integer orderId;
 	private User orderUser;
-	private Vector<OrderItem> orderItems;
+	private Vector<OrderItem> orderItems; // digunakan untuk menyimpan order item yang dimiliki order
 	private String orderStatus;
 	private Date orderDate;
 	private Double orderTotal;
@@ -76,7 +76,7 @@ public class Order {
 		this.orderTotal = orderTotal;
 	}
 
-	// CRUD Method
+	// CREATE method
 	public static Integer createOrder(User orderUser, Vector<OrderItem> orderItems, Date orderDate) {
 		String query = "INSERT INTO `order` (userId, orderStatus, orderDate, orderTotal) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -90,6 +90,7 @@ public class Order {
 			return null;
 		}
 		
+		//untuk mengambil Id yang baru saja diinsert
 		String lastInsertedIdQuery = "SELECT LAST_INSERT_ID()";
 		ps = Connect.getConnection().prepareStatement(lastInsertedIdQuery);
 		
@@ -102,22 +103,23 @@ public class Order {
 		}
 	}
 	
+	//UPDATE method
 	public static String updateOrder(Integer orderId, Vector<OrderItem> orderItems, String orderStatus) {
 		String query = "UPDATE `order` SET orderStatus = ?, orderTotal = ? WHERE orderId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
 			ps.setString(1, orderStatus);
-			ps.setDouble(2, OrderController.calculateCurrentOrderTotal(orderItems));
+			ps.setDouble(2, OrderController.calculateCurrentOrderTotal(orderItems)); //mengupdate order total setiap kali orderItem masuk
 			ps.setInt(3, orderId);
 			Connect.getConnection().executeUpdate(ps);
 		} catch (SQLException e) {
 			return "Query failed";
 		}
 		
-		//TODO: update order detail (?)
 		return null;
 	}
 	
+	//DELETE method
 	public static String deleteOrder(Integer orderId) {
 		String query = "DELETE FROM `order` WHERE orderId  = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -130,6 +132,7 @@ public class Order {
 		return null;
 	}
 	
+	//SELECT by customerId method
 	public static Vector<Order> getOrdersByCustomerId(Integer customerId) {
 		String query = "SELECT * FROM `order` WHERE userId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -156,6 +159,7 @@ public class Order {
 
 	}
 	
+	//SELECT all method
 	public static Vector<Order> getAllOrders() {
 		String query = "SELECT * FROM `order`";
 		Vector<Order> orderList = new Vector<Order>();
@@ -180,6 +184,7 @@ public class Order {
 		}
 	}
 	
+	//SELECT by Order Id method
 	public static Order getOrderByOrderId(Integer orderId) {
 		String query = "SELECT * FROM `order` WHERE orderId  = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);

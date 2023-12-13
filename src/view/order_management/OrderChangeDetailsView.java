@@ -39,6 +39,7 @@ import view.order_view.OrderItemsDeleteView;
 import view.order_view.OrderItemsUpdateView;
 
 public class OrderChangeDetailsView extends BorderPane {
+	//Halaman change order detail yang dapat diakses waiter dan chef. Mereka dapat mengganti order item dalam order ataupun menghapus order.
 	private Order order;
 	
 	private Label titleLbl, orderIdLbl, orderIdTxt, userLbl, userTxt, statusLbl, statusTxt,

@@ -56,6 +56,7 @@ public class Receipt {
 		this.receiptPaymentType = receiptPaymentType;
 	}
 	
+	//CREATE method
 	public static Integer createReceipt(Order order, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
 		String preparedQuery = "INSERT INTO receipt (orderId, receiptPaymentAmount, receiptPaymentDate, receiptPaymentType) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(preparedQuery);
@@ -69,6 +70,7 @@ public class Receipt {
 		} catch (SQLException e1) {
 			return null;
 		}
+		//mengambil id yang baru saja diinsert
 		String lastInsertedIdQuery = "SELECT LAST_INSERT_ID()";
 		ps = Connect.getConnection().prepareStatement(lastInsertedIdQuery);
 		
@@ -82,6 +84,7 @@ public class Receipt {
 		}
 	}
 	
+	//UPDATE method
 	public static String updateReceipt(Integer orderId, String receiptPaymentType, Double receiptPaymentAmount, Date receiptPaymentDate) {
 		String preparedQuery = "UPDATE receipt SET receiptPaymentAmount = ?, receiptPaymentDate = ?, receiptPaymentType = ? WHERE orderId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(preparedQuery);
@@ -98,6 +101,7 @@ public class Receipt {
 		return null;		
 	}
 	
+	//DELETE method
 	public static String deleteReceipt(Integer orderId) {
 		String preparedQuery = "DELETE FROM receipt WHERE orderId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(preparedQuery);
@@ -111,6 +115,7 @@ public class Receipt {
 		return null;
 	}
 	
+	//SELECT by receipt id method
 	public static Receipt getReceiptById(Integer receiptId) {
 		String preparedQuery = "SELECT * FROM receipt WHERE receiptId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(preparedQuery);
@@ -131,6 +136,7 @@ public class Receipt {
 		return receipt;
 	}
 	
+	//SELECT all method
 	public static Vector<Receipt> getAllReceipts(){
 		String preparedQuery = "SELECT * FROM receipt";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(preparedQuery);

@@ -23,10 +23,12 @@ import view.order_management.OrderManagementView;
 
 public class Main extends Application {
 	private Scene scene;
+	
+	//mainPane akan diakses di dalam semua view untuk melakukan pergantian view
 	private static BorderPane mainPane;
 	
 	public Main() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public static BorderPane getMainPane() {

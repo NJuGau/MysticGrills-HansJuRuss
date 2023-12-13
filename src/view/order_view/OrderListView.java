@@ -28,7 +28,7 @@ import view.LoginView;
 
 public class OrderListView extends BorderPane{
 	
-	
+	//Halaman order list view yang hanya dapat diakses oleh customer. Customer dapat melihat order yang dimilikinya dan dapat memilihnya untuk melihat detail.
 	private Label titleLbl;
 	
 	public OrderListView() {
@@ -49,16 +49,16 @@ public class OrderListView extends BorderPane{
 		TableColumn<Order, Integer> idColumn = new TableColumn<>("ID"); // Header
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("orderId")); // Tipe variable pada model
 		
-		TableColumn<Order, String> nameColumn = new TableColumn<>("Customer"); // Header
+		TableColumn<Order, String> nameColumn = new TableColumn<>("Customer"); 
 		nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOrderUser().getUserName()));
 		
-		TableColumn<Order, String> statusColumn = new TableColumn<>("Status"); // Header
-		statusColumn.setCellValueFactory(new PropertyValueFactory<>("orderStatus")); // Tipe variable pada model
+		TableColumn<Order, String> statusColumn = new TableColumn<>("Status"); 
+		statusColumn.setCellValueFactory(new PropertyValueFactory<>("orderStatus")); 
 		
-		TableColumn<Order, String> dateColumn = new TableColumn<>("Date"); // Header
-		dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOrderDate().toString())); // Tipe variable pada model
+		TableColumn<Order, String> dateColumn = new TableColumn<>("Date"); 
+		dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOrderDate().toString())); 
 		
-		TableColumn<Order, String> actionColumn = new TableColumn<>("Action"); // Header
+		TableColumn<Order, String> actionColumn = new TableColumn<>("Action"); 
 		actionColumn.setCellFactory(new Callback<TableColumn<Order,String>, TableCell<Order,String>>() {
 			
 			@Override
@@ -68,7 +68,6 @@ public class OrderListView extends BorderPane{
 					
 					@Override
 					protected void updateItem(String item, boolean empty) {
-						// TODO Auto-generated method stub
 						super.updateItem(item, empty);
                         if (empty) {
                             setGraphic(null);

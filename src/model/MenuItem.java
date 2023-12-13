@@ -55,7 +55,7 @@ public class MenuItem {
 		this.menuItemPrice = menuItemPrice;
 	}
 	
-	// CRUD
+	// CREATE method
 	public static String createMenuItem(String menuItemName, String menuItemDescription, Double menuItemPrice) {		
 		String query = "INSERT INTO `menuItem` (menuItemName, menuItemDescription, menuItemPrice) VALUES (?, ?, ?)";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -70,9 +70,11 @@ public class MenuItem {
 		return null;
 	}
 	
+	// UPDATE method
 	public static String updateMenuItem(Integer menuItemId, String menuItemName, String menuItemDescription, Double menuItemPrice) {
 		Vector<Order> orders = OrderController.getAllOrders();
 		
+		//update order total yang memliki menuItem yang bersangkutan
 		for(Order o: orders) {
 			Boolean menuFound = false;
 			Integer orderQuantity = null;
@@ -103,6 +105,7 @@ public class MenuItem {
 			}
 		}
 		
+		//updating menu item
 		String query = "UPDATE `menuItem` SET menuItemName = ?, menuItemDescription = ?, menuItemPrice = ? WHERE menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
 		try {
@@ -117,9 +120,11 @@ public class MenuItem {
 		return null;
 	}
 	
+	//DELETE method
 	public static String deleteMenuItem(Integer menuItemId) {
 		Vector<Order> orders = OrderController.getAllOrders();
 		
+		//mengupdate order total yang memiliki menuItem yang bersangkutan
 		for(Order o: orders) {
 			Boolean menuFound = false;
 			Integer orderQuantity = null;
@@ -150,6 +155,7 @@ public class MenuItem {
 			}
 		}
 		
+		//menghapus menu item
 		String deleteMenuItemQuery = "DELETE FROM `menuItem` WHERE menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(deleteMenuItemQuery);
 		try {
@@ -159,6 +165,7 @@ public class MenuItem {
 			return "Query failed";
 		}
 		
+		//menghapus order item yang memiliki menu item yang bersangkutan
 		String deleteOrderItemWithMenuItemIdQuery = "DELETE FROM `orderItem` WHERE menuItemId = ?";
 		PreparedStatement ps2 = Connect.getConnection().prepareStatement(deleteOrderItemWithMenuItemIdQuery);
 		try {
@@ -171,6 +178,7 @@ public class MenuItem {
 		return null;
 	}
 	
+	//SELECT by menuItem Id method
 	public static model.MenuItem getMenuItemByID(Integer menuItemId){		
 		String query = "SELECT * FROM `menuItem` WHERE menuItemId = ?";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
@@ -189,6 +197,7 @@ public class MenuItem {
 		}
 	}
 	
+	//SELECT all method
 	public static Vector<model.MenuItem> getAllMenuItems(){
 		String query = "SELECT * FROM `menuItem`";
 		PreparedStatement ps = Connect.getConnection().prepareStatement(query);

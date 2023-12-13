@@ -7,6 +7,7 @@ import model.OrderItem;
 
 public class OrderItemController {
 
+	//CREATE method
 	public static String createOrderItem(String orderId, model.MenuItem menuItem, String quantity) {
 		
 		if(menuItem == null) {
@@ -43,6 +44,7 @@ public class OrderItemController {
 		return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 	}
 	
+	//UPDATE method
 	public static String updateOrderItem(String orderId, model.MenuItem menuItem, String quantity) {
 		if(menuItem == null) {
 			return "Menu Item must be chosen";
@@ -65,6 +67,7 @@ public class OrderItemController {
 		return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 	}
 	
+	//DELETE method
 	public static String deleteOrderItem(String orderId, String menuItemId) {
 		if(orderId.isEmpty()) {
 			return "Order ID can't be empty";
@@ -79,6 +82,7 @@ public class OrderItemController {
 		return Order.updateOrder(Integer.parseInt(orderId), toUpdateOrder.getOrderItems(), toUpdateOrder.getOrderStatus());
 	}
 	
+	//SELECT order item by order id
 	public static Vector<OrderItem> getAllOrderItemsByOrderId(String orderId) {
 		
 		if(orderId.isEmpty()) {

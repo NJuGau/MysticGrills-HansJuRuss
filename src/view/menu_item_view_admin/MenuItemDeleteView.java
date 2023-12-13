@@ -17,6 +17,7 @@ import main.Main;
 import view.menu_item_view_customer.MenuCustomerView;
 
 public class MenuItemDeleteView extends BorderPane{
+	//Halaman konfirmasi delete menu item yang hanya dapat diakses admin
 	private Button backBtn, submitBtn;
 	private Label titleLbl;
 	private GridPane promptPane;
@@ -27,7 +28,6 @@ public class MenuItemDeleteView extends BorderPane{
 	public MenuItemDeleteView(model.MenuItem item) {
 
 		if(!UserController.getCurrentUser().getUserRole().equals("Admin")) {
-			// TODO Fill node with homepage
 			Main.getMainPane().setCenter(new BorderPane());
 		}
 		
@@ -46,7 +46,6 @@ public class MenuItemDeleteView extends BorderPane{
 	}
 	
 	public void showActionBtn() {
-//		TODO: Add Logic to submit MenuItem
 		submitBtn = new Button("Yes");
 		submitBtn.setMinWidth(100);
 		submitBtn.setOnAction(event -> {
@@ -54,7 +53,6 @@ public class MenuItemDeleteView extends BorderPane{
 					MenuItemController.deleteMenuItem(Integer.parseInt(idTxt.getText()));
 			
 			if(status == null) {
-				// TODO add Deletion SQL Logic
 				Main.getMainPane().setCenter(new MenuItemManagementView());
 			}
 			else {

@@ -35,6 +35,7 @@ import view.order_management.waiters.WaiterOrderDetailView;
 
 
 public class OrderChangeView extends BorderPane {
+	//Halaman order change management yang dapat diakses chef dan waiter. Akan ditampilkan 'pending' order. Mereka dapat memilih order untuk diubah ataupun dihapus.
 	private Label titleLbl;
 	private TableView<Order> table;
 	private ObservableList<Order> orderData;

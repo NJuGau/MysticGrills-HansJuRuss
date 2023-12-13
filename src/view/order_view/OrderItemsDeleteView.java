@@ -24,6 +24,7 @@ import view.menu_item_view_customer.MenuCustomerView;
 import view.order_management.OrderChangeView;
 
 public class OrderItemsDeleteView extends BorderPane{
+	//Halaman order item delete confirmation. User dapat melakukan konfirmasi deletion order item yang telah dipilih dalam halaman detail.
 	private Label titleLbl, statusLbl;
 	private Button submitBtn, backBtn;
 	private Label orderIdLbl, orderIdTxt, menuItemNameLbl, menuItemNameTxt, 
