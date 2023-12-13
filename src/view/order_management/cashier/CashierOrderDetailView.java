@@ -112,8 +112,6 @@ public class CashierOrderDetailView extends BorderPane {
 		});
 		
 		payBtn.setOnAction(e ->{
-			//TODO: Check for amount so it didnt throw exception
-			System.out.println("help");
 			try {
 				double amount = Double.parseDouble(paymentAmountTxt.getText());
 				String retVal = ReceiptController.createReceipt(order, paymentTypeBox.getValue(), amount, new Date(Calendar.getInstance().getTimeInMillis()));

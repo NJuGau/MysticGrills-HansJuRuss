@@ -95,7 +95,6 @@ public class UserManagementChangeRoleView extends BorderPane{
 		this.setBottom(btnGroup);
 		
 		updateBtn.setOnAction(e -> {
-			System.out.println(roleComboBox.getValue());
 			String err = UserController.updateUser(user.getUserId(), roleComboBox.getValue(), user.getUserName(), user.getUserEmail(), user.getUserPassword());
 			if(err == null) {
 				Main.getMainPane().setCenter(new UserManagementView());

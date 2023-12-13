@@ -77,7 +77,6 @@ public class Receipt {
 		try {
 			ResultSet res = Connect.getConnection().executeQuery(ps);
 			res.next();
-			System.out.println(res.getInt(1));
 			return res.getInt(1);
 		} catch (SQLException e) {
 			return null;

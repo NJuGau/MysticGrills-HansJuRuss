@@ -72,7 +72,6 @@ public class ReceiptController {
 		if(paymentAmount < totalPrice) {
 			return "payment amount must be greater than or equal to total price";
 		}
-		System.out.println("amount safe");
 		return null;
 	}
 	
@@ -80,7 +79,6 @@ public class ReceiptController {
 		if(type == null || (!type.equals("Cash") && !type.equals("Debit") && !type.equals("Credit"))) {
 			return "payment type must be either 'Cash', 'Debit', or 'Credit'";
 		}
-		System.out.println("type safe");
 		return null;
 	}
 }
