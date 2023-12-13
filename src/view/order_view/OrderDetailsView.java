@@ -74,7 +74,6 @@ public class OrderDetailsView extends BorderPane{
 			
 			OrderController.setOrderID(null);
 			
-			System.out.println(OrderController.getOrderID());
 			submitStatusLbl.setText("Success");
 			submitStatusLbl.setTextFill(Color.GREEN);
 			submitOrderButton.setDisable(true);
